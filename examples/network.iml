@@ -1,0 +1,25 @@
+package network ;
+import iml.lang.* ;
+
+meta type NetworkTool ;
+
+type Priviledge finite |user, su, root| ;
+
+type Service ;
+
+type Host {
+	services : Set<Service>;
+};
+
+type Router ;
+
+type Network {
+	hosts : Set<Host> ;
+	routers : Set<Router>;
+	connect : (Host,Router) ~> Bool ;
+} ;
+
+/*In smt-lib this could be a function that takes Network
+and returns a set of (Host,Host) pairs
+*/
+connectRelation <<p0:DomainSpecificTool , p:NetworkTool >> : Network ~> ( (Host,Host) ~> Bool ) ;

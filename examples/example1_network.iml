@@ -1,0 +1,21 @@
+package example1 ;
+import iml.lang.*;
+import network.* ;
+
+/*Do we need to have a syntactic sugar for the following*/
+ssh : Service ;
+
+type Network1 extends Network {
+	
+	/*Define two hosts and a router*/
+	host1: Host := Host(services->contains(ssh)) ;
+	host2: Host ;
+	router : Router ;
+
+	/*configure host2 to run ssh and connect the network*/
+	config <<a:Assertion>> : Bool := {
+		connect(host1,router) && connect(host2,router) ;
+	} ;
+
+}
+
