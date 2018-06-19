@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="5">
+  <element id="0" manual="true">
+    <element id="13">
+      <element id="14">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+        <contentFilters/>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>i1_to_a</seg>
+      </bo>
+      <contentFilters/>
+    </element>
+    <element id="5">
+      <element id="6">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+        <contentFilters/>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>i2_to_a</seg>
+      </bo>
+      <contentFilters/>
+    </element>
+    <element id="3">
+      <element id="4">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+        <contentFilters/>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>s2_to_o1</seg>
+      </bo>
+      <contentFilters/>
+    </element>
+    <element id="12" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>i1</seg>
+      </bo>
+      <position y="98.0"/>
+      <contentFilters/>
+    </element>
+    <element id="15" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>i2</seg>
+      </bo>
+      <position y="48.0"/>
+      <contentFilters/>
+    </element>
+    <element id="2" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>n</seg>
+      </bo>
+      <position y="210.0"/>
+      <contentFilters/>
+    </element>
+    <element id="1" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>o1</seg>
+      </bo>
+      <position x="266.0" y="98.0"/>
+      <contentFilters/>
+    </element>
+    <element id="7">
+      <element id="10" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>alpha</seg>
+        </bo>
+        <position y="110.0"/>
+        <contentFilters/>
+      </element>
+      <element id="9" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>i1</seg>
+        </bo>
+        <position y="60.0"/>
+        <contentFilters/>
+      </element>
+      <element id="11" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>i2</seg>
+        </bo>
+        <position y="10.0"/>
+        <contentFilters/>
+      </element>
+      <element id="8" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>o1</seg>
+        </bo>
+        <position x="180.0" y="60.0"/>
+        <contentFilters/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>s2_sub</seg>
+      </bo>
+      <position x="41.0" y="38.0"/>
+      <size width="213.0" height="160.0"/>
+      <contentFilters>
+        <filter>features</filter>
+        <filter>internalFeatures</filter>
+        <filter>processorFeatures</filter>
+        <filter>connections</filter>
+        <filter>flowSpecifications</filter>
+      </contentFilters>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>s1.impl</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="299.0" height="262.0"/>
+    <contentFilters>
+      <filter>features</filter>
+      <filter>internalFeatures</filter>
+      <filter>processorFeatures</filter>
+      <filter>connections</filter>
+      <filter>flowSpecifications</filter>
+      <filter>subcomponents</filter>
+    </contentFilters>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>utrc::test1::s1.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>

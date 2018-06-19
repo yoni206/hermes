@@ -1,0 +1,16 @@
+package hermes.iml.aadl ;
+import iml.lang.* ;
+type Integer sameas Int;
+type Float sameas Real ;
+type Boolean sameas Bool ;
+meta type system ;
+meta type implementation ;
+meta type in ;
+meta type out;
+meta type port;
+meta type connection;
+meta type subcomponent;
+type Connection<type T> {
+	source : T ;
+	target : T;
+}

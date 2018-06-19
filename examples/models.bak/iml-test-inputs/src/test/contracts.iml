@@ -1,0 +1,3 @@
+package hermes.iml.contracts;
+meta type Assume ;
+meta type Guarantee;

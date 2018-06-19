@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="5">
+  <element id="0" manual="true">
+    <element id="4">
+      <bo>
+        <seg>classifier</seg>
+        <seg>s1</seg>
+      </bo>
+      <position x="221.0" y="85.0"/>
+      <size width="76.0" height="35.0"/>
+      <contentFilters>
+        <filter>generalizations</filter>
+      </contentFilters>
+    </element>
+    <element id="1">
+      <element id="2">
+        <bo>
+          <seg>realization</seg>
+        </bo>
+        <bendpoints>
+          <point x="217.0" y="114.5"/>
+          <point x="229.0" y="114.5"/>
+        </bendpoints>
+        <contentFilters/>
+      </element>
+      <bo>
+        <seg>classifier</seg>
+        <seg>s1.impl</seg>
+      </bo>
+      <position x="93.0" y="85.0"/>
+      <size width="108.0" height="35.0"/>
+      <contentFilters>
+        <filter>generalizations</filter>
+      </contentFilters>
+    </element>
+    <element id="3">
+      <bo>
+        <seg>classifier</seg>
+        <seg>s2</seg>
+      </bo>
+      <position x="93.0" y="38.0"/>
+      <size width="76.0" height="35.0"/>
+      <contentFilters>
+        <filter>generalizations</filter>
+      </contentFilters>
+    </element>
+    <bo>
+      <seg>package</seg>
+      <seg>utrc::test1</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="309.0" height="132.0"/>
+    <contentFilters>
+      <filter>classifiers</filter>
+    </contentFilters>
+  </element>
+  <config type="package" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>package</seg>
+      <seg>utrc::test1</seg>
+    </context>
+  </config>
+</diagram:Diagram>
