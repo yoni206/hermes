@@ -37,7 +37,7 @@
 (declare-const example1.ssh network.Service )
 
 ; Network1
-(declare-sort example1.Network1 0 )
+(declare-sort example1.Network1 0 :mysort panda :mysort pandi)
 (declare-fun example1.Network1.host1 (network.Network) network.Host )
 ; Rember to assert this for each new instance of Network 1
 (define-fun example1.Network1.host1.__init ( (n network.Network) ) Bool
