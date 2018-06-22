@@ -14,6 +14,9 @@ from parser.HermesListener import HermesListener
 from parser.generated.SMTLIBv2Visitor import SMTLIBv2Visitor
 from parser.HermesVisitor import HermesVisitor
 from typing import *
+from pysmt.oracles import get_logic
+from pysmt.rewritings import conjunctive_partition
+
 pp = pprint.PrettyPrinter(indent=4)
 
 class InnerType:
@@ -99,17 +102,15 @@ class PortfolioSolver:
         for it in self._all_inner_types:
             if it.is_bv:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
                 else:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
             else:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
                 else:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
 
-    #returns all conjuncts of a formula, not only the top level ones
-    #e.g.a get_all_conjuncts(a/\(b/\ c)) = {a,b,c}
     def _solve_partitioned_problem(self):
         result = "SAT"
         for solver_name in self._solvers_to_sets_of_formulas.keys():
@@ -207,6 +208,12 @@ def process_file(input_file, no_ann_file):
     formula = script.get_last_formula()
 
     formulas = get_all_conjuncts(formula)
+    for f in formulas:
+        print('************************************')
+        for conj in conjunctive_partition(f):
+            print('panda formula = ', conj.serialize(100))
+            logic = get_logic(conj)
+            print('panda ', f, ': ', logic)
     portfolio_solver = PortfolioSolver(formulas)
     satunsat = portfolio_solver.solve()
     print(satunsat)

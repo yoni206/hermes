@@ -1,3 +1,4 @@
+(set-logic ALLT)
 (declare-sort hermes.iml.aadl.Connection_Real 0)
 (declare-fun hermes.iml.aadl.Connection_Real.source (hermes.iml.aadl.Connection_Real) Real) 
 (declare-fun hermes.iml.aadl.Connection_Real.target (hermes.iml.aadl.Connection_Real) Real) 
