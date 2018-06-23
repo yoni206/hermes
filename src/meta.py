@@ -19,6 +19,7 @@ from pysmt.rewritings import conjunctive_partition
 
 pp = pprint.PrettyPrinter(indent=4)
 
+
 class InnerType:
     def __init__(self, is_array=False, is_bv=False, is_int=False):
         self.is_array = is_array
