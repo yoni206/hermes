@@ -1,4 +1,4 @@
-
+from enum import Enum
 
 class Values(Enum):
     TRUE = 3

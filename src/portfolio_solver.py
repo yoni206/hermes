@@ -1,9 +1,9 @@
 from pysmt.logics import QF_NRA, QF_NIRA
 from pysmt.shortcuts import Solver, get_env
 from pysmt.exceptions import SolverReturnedUnknownResultError
-
-
-
+from enum import Enum
+from six.moves import cStringIO
+from pysmt.smtlib.parser import SmtLibParser
 
 DREAL_NAME = "dreal"
 DREAL_PATH = "/home/yoniz/git/dreal/bin/dReal"
@@ -88,8 +88,15 @@ class InnerType:
             result[formula] = InnerType.inner_type_of_formula(formula)
         return result
 
+
+
 class PortfolioSolver:
-    def __init__(self, formulas):
+    def __init__(self, smtlib_str):
+        stream = cStringIO(smtlib_str)
+        parser = SmtLibParser()
+        script = parser.get_script(stream)
+        formula = script.get_last_formula()
+        formulas = formula.args
         self._all_inner_types = InnerType.get_all_inner_types()
         self._map_inner_types_to_solvers()
         self._map_solvers_to_formulas(formulas)
@@ -114,7 +121,7 @@ class PortfolioSolver:
                     self._inner_type_to_solver[it] = "z3"
 
     def _solve_partitioned_problem(self):
-        result = "SAT"
+        result = SolverResult.SAT
         for solver_name in self._solvers_to_sets_of_formulas.keys():
             solver = Solver(solver_name)
             formulas = self._solvers_to_sets_of_formulas[solver_name]
@@ -124,11 +131,11 @@ class PortfolioSolver:
                 solver_result = solver.solve()
                 print(solver_name, ': ', solver_result)
                 if solver.solve() is False:
-                    result = "UNSAT"
+                    result = SolverResult.UNSAT
                     break
             except SolverReturnedUnknownResultError:
                 print(solver_name, ': unknown')
-                result = "UNKNOWN"
+                result = SolverResult.UNKNOWN
                 break
         return result
 

@@ -3,7 +3,7 @@ import pprint
 from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
-from portolio_solver import SolverResult, PortfolioSolver
+from portfolio_solver import SolverResult, PortfolioSolver
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -177,12 +177,15 @@ class EntailmentNode(Node):
     def execute(self):
         kb_smtlib = self._kb.smtlib
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
+        print('panda kb = ', kb_smtlib)
+        print('panda g = ', g_smtlib)
         smtlib = kb_smtlib + g_smtlib + "(check-sat)"
-        solver_result = _graph.portfolio_solver.solve(smtlib)
+        solver = PortfolioSolver(smtlib)
+        solver_result = solver.solve()
         if solver_result == SolverResult.SAT:
-            result = Values.False
+            result = Values.FALSE
         elif solver_result == SolverResult.UNSAT:
-            result = Values.True
+            result = Values.TRUE
         elif solver_result == SolverResult.UNKNOWN:
             result = Values.UNKNOWN
         else:
@@ -214,6 +217,8 @@ class DoneNode(Node):
     def get_outgoing_edges(self):
         return set([])
 
+    def execute(self):
+        pass
 
 class StartNode(Node):
     def __init__(self, name):
@@ -236,6 +241,9 @@ class StartNode(Node):
 
     def get_outgoing_edges(self):
         return self._output_edges
+
+    def execute(self):
+        pass
 
 class AndNode(Node):
     def __init__(self, name):
@@ -265,6 +273,9 @@ class AndNode(Node):
     def get_outgoing_edges(self):
         return [self._output]
 
+    def execute(self):
+        _output = TriValLogic.kleene_and(_conjuncts)
+
 class ReasoningGraph:
 
     def __init__(self, sexp_str):
@@ -273,7 +284,6 @@ class ReasoningGraph:
         self._start_nodes = set([])
         self._done_nodes = set([])
         self._generate_reasoning_graph_from_sexp()
-
 
     def execute(self):
         raise NotImplementedError("currently we only executre reasoning dags")
@@ -300,6 +310,8 @@ class ReasoningGraph:
         if edge_type is EdgeType.SIMPLE:
             edge = SimpleEdge(edge_name, src_node, dest_node)
         elif edge_type is EdgeType.SMTLIB:
+            label = label[1:-1] #remove wrapping ( and )
+            label = label.replace("\\", "")
             edge = SmtLibEdge(edge_name, src_node, dest_node, label)
         elif edge_type is EdgeType.BOOLX:
             edge = BoolXEdge(edge_name, src_node, dest_node, label)
@@ -345,7 +357,7 @@ class ReasoningDag(ReasoningGraph):
         topo = self._topo_sort()
         for node in topo:
             print('panda executing: ', node)
-            #node.execute()
+            node.execute()
 
 
     def _topo_sort(self):
