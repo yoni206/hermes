@@ -5,11 +5,15 @@ class Values(IntEnum):
     UNKNOWN = 2
     FALSE = 1
 
+    def to_string(v):
+        if v == Values.TRUE:
+            return "true"
+        elif v == Values.FALSE:
+            return "false"
+        elif v == Values.UNKNOWN:
+            return "unknown"
+
 class TriValLogic:
     def kleene_and(conjuncts):
         return min([int(x) for x in conjuncts])
-
-def to_int(v):
-    return int(v)
-
 

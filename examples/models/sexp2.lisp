@@ -15,7 +15,8 @@
 					(= (hermes.iml.aadl.Connection_Real.source x!1) (hermes.iml.aadl.Connection_Real.target x!1))
 				)
 
-
+                (declare-const r1 Real)
+                (assert (= r1 0))
 				(declare-sort utrc.test1.S1 0)
 				(declare-fun utrc.test1.S1.i1 (utrc.test1.S1) Real)
 				(declare-fun utrc.test1.S1.i2 (utrc.test1.S1) Real)
@@ -323,6 +324,5 @@
 	(edge e6 n2.valid n3.in (boolX (__)))
 	(edge e7 n3.out n4.in (boolX (__)))
 	
-	(edge e8 n1.cmodel __ (evaluate ((smt25 ((get-value .....))) (__) ) ((smt25 ((get-value .....))) (__) )) )
-	(edge e9 n2.cmodel __ (evaluate ((smt25 ((get-value .....))) (__) )) )
+	(edge e8 n1.cmodel __ (evaluate ((get-value (r1)))))
 )

@@ -96,15 +96,17 @@ class InnerType:
 class PortfolioSolver:
     def __init__(self, smtlib_str):
         stream = cStringIO(smtlib_str)
-        env = reset_env()
-        parser = ExtendedSmtLibParser(environment=env)
+        self._env = reset_env()
+        parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
         formula = script.get_last_formula()
         formulas = formula.args()
+        self._smtlib = smtlib_str
         self._all_inner_types = InnerType.get_all_inner_types()
         self._map_inner_types_to_solvers()
         self._map_solvers_to_formulas(formulas)
         self._add_dreal()
+
 
     def _add_dreal(self):
         env = get_env()
@@ -115,14 +117,14 @@ class PortfolioSolver:
         for it in self._all_inner_types:
             if it.is_bv:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
                 else:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
             else:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
                 else:
-                    self._inner_type_to_solver[it] = "z3"
+                    self._inner_type_to_solver[it] = "cvc4"
 
     def _solve_partitioned_problem(self):
         result = SolverResult.SAT
@@ -145,6 +147,19 @@ class PortfolioSolver:
 
     def solve(self):
         return self._solve_partitioned_problem()
+
+    def get_value(self, smtlib_get_value):
+        smtlib = self._smtlib + " " + smtlib_get_value
+        stream = cStringIO(smtlib)
+        parser = ExtendedSmtLibParser(environment=self._env)
+        script = parser.get_script(stream)
+        for get_val_cmd in script.filter_by_command_name("get-value"):
+            print('panda ', get_val_cmd)
+            exprs = get_val_cmd.args
+            print('panda ', exprs)
+        solver = Solver('z3')
+        solver.get_value(exprs.pop())
+
 
     def _map_solvers_to_formulas(self, formulas):
         variables = PortfolioSolver._get_free_variables_of_formulas(formulas)

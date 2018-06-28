@@ -34,6 +34,8 @@ class STRING_CONSTANTS:
     IN = "in"
     OUT = "out"
 
+
+
 class EdgeType(Enum):
     SIMPLE = 1
     SMTLIB = 2
@@ -52,6 +54,18 @@ class EdgeType(Enum):
         else:
             assert(False)
 
+    def to_string(e):
+        if e == EdgeType.SIMPLE:
+            return "simple"
+        elif e == EdgeType.SMTLIB:
+            return "smtlib"
+        elif e == EdgeType.BOOLX:
+            return "boolX"
+        elif e == EdgeType.EVALUATE:
+            return "evaluate"
+        else:
+            assert(False)
+
 class Edge:
     def __init__(self, name, src, dest):
         self.name = name
@@ -66,7 +80,7 @@ class Edge:
     #    return str(self.__dict__)
 
     def __str__(self):
-        return " ".join(["(edge ", self.name, self.src.name,
+        return " ".join(["(edge ", EdgeType.to_string(self.get_type()), self.name, self.src.name,
                     self.dest.name, ")"])
 
     def str(self):
@@ -87,6 +101,9 @@ class SmtLibEdge(Edge):
     def get_type(self):
         return EdgeType.SMTLIB
 
+
+
+
 class BoolXEdge(Edge):
     def __init__(self, name, src, dest, boolx):
         super().__init__(name, src, dest)
@@ -96,13 +113,23 @@ class BoolXEdge(Edge):
         return EdgeType.BOOLX
 
     def __str__(self):
-        return " ".join(["(edge ", self.name, self.src.name,
+        raise NotImplementedError("must be overriden")
+
+
+class UnsolvedBoolXEdge(BoolXEdge):
+    def __str__(self):
+        return " ".join(["(edge ", EdgeType.to_string(self.get_type()), self.name, self.src.name,
                      self.dest.name, self.boolx,  ")"])
 
+class SolvedBoolXEdge(BoolXEdge):
+    def __str__(self):
+        return " ".join(["(edge ", self.name, self.src.name,
+                     self.dest.name, Values.to_string(self.boolx),  ")"])
+
 class EvaluateEdge(Edge):
-    def __init__(self, name, src, dest, get_value_cmds):
+    def __init__(self, name, src, dest, wanted_values):
         super().__init__(name, src, dest)
-        self.get_value_cmds = get_value_cmds
+        self.wanted_values = wanted_values
 
     def get_type(self):
         return EdgeType.EVALUATE
@@ -127,11 +154,22 @@ class NodeType(Enum):
             assert(False)
         return result
 
-
+    def to_string(node_type):
+        if node_type == NodeType.ENTAILMENT:
+            return STRING_CONSTANTS.ENTAILMENT
+        elif node_type == NodeType.AND:
+            return STRING_CONSTANTS.AND
+        elif node_type == NodeType.DONE:
+            return STRING_CONSTANTS.DONE
+        elif node_type == NodeType.START:
+            return STRING_CONSTANTS.START
+        else:
+            assert(False)
 
 class Node:
-    def __init__(self, name):
+    def __init__(self, name, graph):
         self.name = name
+        self.graph = graph
 
     def get_type(self):
         raise NotImplementedError("get_type() must be overriden by sub-classes")
@@ -151,27 +189,52 @@ class Node:
     def execute(self):
         raise NotImplementedError("must be overriden")
 
-    def __repr__(self):
-        return "( node " + self.name + " incoming: " + \
-            " ".join(e.name for e in self.get_incoming_edges()) \
-            + " outgoing: " + " ".join(e.name for e in self.get_outgoing_edges()) + " )"
+    def replace_edge(self, old, new):
+        raise NotImplementedError("most be overriden")
+
+    #def __repr__(self):
+    #    return "( node " + self.name + " incoming: " + \
+    #        " ".join(e.name for e in self.get_incoming_edges()) \
+    #        + " outgoing: " + " ".join(e.name for e in self.get_outgoing_edges()) + " )"
+
+    def __str__(self):
+        return "(" + \
+                " ".join([NodeType.to_string(self.get_type()), self.name]) + \
+                ")"
+
+
+    def str(self):
+        return self.__str__()
 
 
 class EntailmentNode(Node):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
         self._kb = None #edge
         self._g = None #edge
         self._valid = None #edge
         self._counter_model = None #edge
 
+
+    def replace_edge(self, old, new):
+        if old == self._kb:
+            self._kb = new
+        elif old == self._g:
+            self._g == new
+        elif old == self._valid:
+            self._valid = new
+        elif old == self._counter_model:
+            self._counter_model = new
+        else:
+            assert(False)
+
     def get_type(self):
         return NodeType.ENTAILMENT
 
-    def generate_from_sexp(e):
+    def generate_from_sexp(e, graph):
         node_name = dumps(car(e))
         node_sexp_after_name = cdr(e)
-        return EntailmentNode(node_name)
+        return EntailmentNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         if (port_name == STRING_CONSTANTS.KB):
@@ -193,14 +256,16 @@ class EntailmentNode(Node):
 
     def get_outgoing_edges(self):
         result = set([])
-        result.add(self._valid)
-        result.add(self._counter_model)
+        if self._valid is not None:
+            result.add(self._valid)
+        if self._counter_model is not None:
+            result.add(self._counter_model)
         return result
 
     def execute(self):
         kb_smtlib = self._kb.smtlib
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
-        smtlib = kb_smtlib + g_smtlib + " (check-sat)"
+        smtlib = "(set-option :produce-models true)" + kb_smtlib + g_smtlib + " (check-sat) "
         solver = PortfolioSolver(smtlib)
         solver_result = solver.solve()
         if solver_result == SolverResult.SAT:
@@ -211,27 +276,38 @@ class EntailmentNode(Node):
             result = Values.UNKNOWN
         else:
             assert(False)
-        self._valid.boolx = result
-
-
+        old_boolx_edge = self._valid
+        new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
+                                         old_boolx_edge.src,
+                                         old_boolx_edge.dest,
+                                         result)
+        self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
+        if result == Values.FALSE:
+            if self._counter_model != None:
+                get_value_smtlib = self._counter_model.wanted_values
+                solver.get_value(get_value_smtlib)
 
 
 
 class DoneNode(Node):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
         self._input_edges = set([])
+
+    def replace_edge(self, old, new):
+        self._input_edges.remove(old)
+        self._input_edges.add(new)
 
     def get_type(self):
         return NodeType.DONE
 
-    def generate_from_sexp(e):
+    def generate_from_sexp(e, graph):
         node_name = dumps(car(e))
         node_sexp_after_name = cdr(e)
-        return DoneNode(node_name)
+        return DoneNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
-        self._input_edge = edge
+        self._input_edges.add(edge)
 
     def get_incoming_edges(self):
         return self._input_edges
@@ -243,17 +319,21 @@ class DoneNode(Node):
         pass
 
 class StartNode(Node):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
         self._output_edges = set([])
+
+    def replace_edge(self, old, new):
+        self._input_edges.remove(old)
+        self._input_edges.add(new)
 
     def get_type(self):
         return NodeType.START
 
-    def generate_from_sexp(e):
+    def generate_from_sexp(e, graph):
         node_name = dumps(car(e))
         node_sexp_after_name = cdr(e)
-        return StartNode(node_name)
+        return StartNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         self._output_edges.add(edge)
@@ -268,18 +348,27 @@ class StartNode(Node):
         pass
 
 class AndNode(Node):
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
         self._conjuncts = set([]) #set of edges
         self._output = None #edge
+
+    def replace_edge(self, old, new):
+        if old in self._conjuncts:
+            self._conjuncts.remove(old)
+            self._conjuncts.add(new)
+        elif old == self._output:
+            self._output = new
+        else:
+            assert(False)
 
     def get_type(self):
         return NodeType.AND
 
-    def generate_from_sexp(e):
+    def generate_from_sexp(e, graph):
         node_name = dumps(car(e))
         node_sexp_after_name = cdr(e)
-        return AndNode(node_name)
+        return AndNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         if port_name == STRING_CONSTANTS.IN:
@@ -297,7 +386,15 @@ class AndNode(Node):
 
     def execute(self):
         conjuncts_values = [c.boolx for c in self._conjuncts]
-        _output = TriValLogic.kleene_and(conjuncts_values)
+        result = TriValLogic.kleene_and(conjuncts_values)
+        old_boolx_edge = self._output
+        new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
+                                         old_boolx_edge.src,
+                                         old_boolx_edge.dest,
+                                         result)
+        self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
+
+
 
 
 class ReasoningGraph:
@@ -311,12 +408,19 @@ class ReasoningGraph:
         self._generate_reasoning_graph_from_sexp()
 
     def __str__(self):
-        nodes = self._nodes_dict_by_name.keys()
+        nodes = self._nodes_dict_by_name.values()
         edges = self._edges
-        result = "nodes:\n" + " ".join(nodes) + "\nedges:" + \
-        " ".join(e.str() for e in edges)
+        result = "nodes: " + "\n".join(node.str() for node in nodes) + "\nedges:\n" + \
+        "\n".join(e.str() for e in edges)
         return result
 
+    def replace_edge(self, old, new):
+        self._edges.remove(old)
+        self._edges.add(new)
+        src = old.src
+        dest = old.dest
+        src.replace_edge(old, new)
+        dest.replace_edge(old, new)
 
     def execute(self):
         raise NotImplementedError("currently we only executre reasoning dags")
@@ -329,7 +433,7 @@ class ReasoningGraph:
         for e in graph_def:
             if is_node_sexp(e):
                 node_sexp_body = cdr(e)
-                node = generate_node_from_sexp(node_sexp_body)
+                node = self._generate_node_from_sexp(node_sexp_body)
                 self._nodes_dict_by_name[node.name] = node
             elif is_edge_sexp(e):
                 edge_sexp_body = cdr(e)
@@ -347,8 +451,10 @@ class ReasoningGraph:
             label = label.replace("\\", "")
             edge = SmtLibEdge(edge_name, src_node, dest_node, label)
         elif edge_type is EdgeType.BOOLX:
-            edge = BoolXEdge(edge_name, src_node, dest_node, label)
+            edge = UnsolvedBoolXEdge(edge_name, src_node, dest_node, label)
         elif edge_type is EdgeType.EVALUATE:
+            label = label[1:-1] #remove wrapping ( and )
+            label = label.replace("\\", "")
             edge = EvaluateEdge(edge_name, src_node, dest_node, label)
         else:
             assert(False)
@@ -369,14 +475,14 @@ class ReasoningGraph:
         label = dumps(car(cdr(fourth)))
         if src_node_name == "__":
             start_node_name = "start" + str(len(self._start_nodes))
-            src = StartNode(start_node_name)
+            src = StartNode(start_node_name, self)
             self._nodes_dict_by_name[start_node_name] = src
             dest = self._nodes_dict_by_name[dest_node_name]
             self._start_nodes.add(src)
         elif dest_node_name == "__":
             done_node_name = "done" + str(len(self._done_nodes))
             src = self._nodes_dict_by_name[src_node_name]
-            dest = DoneNode(done_node_name)
+            dest = DoneNode(done_node_name, self)
             self._nodes_dict_by_name[done_node_name] = dest
             self._done_nodes.add(dest)
         else:
@@ -413,6 +519,20 @@ class ReasoningDag(ReasoningGraph):
 
         return result
 
+    def _generate_node_from_sexp(self, e):
+        node_type_str = dumps(car(e))
+        sexp_after_type = cdr(e)
+        node_type = NodeType.from_string(node_type_str)
+        if node_type is NodeType.ENTAILMENT:
+            result = EntailmentNode.generate_from_sexp(sexp_after_type, self)
+        elif node_type is NodeType.AND:
+            result = AndNode.generate_from_sexp(sexp_after_type, self)
+        elif node_type is NodeType.DONE:
+            result = DoneNode.generate_from_sexp(sexp_after_type, self)
+        else:
+            assert(False)
+        return result
+
 
 #if there is at least one seperator inside original_str,
 #act like original_str.split().
@@ -435,20 +555,6 @@ def is_edge_sexp(e):
     car_str = dumps(car(e))
     return car_str == STRING_CONSTANTS.EDGE
 
-def generate_node_from_sexp(e):
-    node_type_str = dumps(car(e))
-    sexp_after_type = cdr(e)
-    node_type = NodeType.from_string(node_type_str)
-    if node_type is NodeType.ENTAILMENT:
-        result = EntailmentNode.generate_from_sexp(sexp_after_type)
-    elif node_type is NodeType.AND:
-        result = AndNode.generate_from_sexp(sexp_after_type)
-    elif node_type is NodeType.DONE:
-        result = DoneNode.generate_from_sexp(sexp_after_type)
-    else:
-        assert(False)
-    return result
-
 def main(path):
     lines = []
     with open(path) as inputfile:
@@ -459,6 +565,7 @@ def main(path):
     rg = ReasoningDag(sexp_str)
     print(rg)
     rg.execute()
+    print(rg)
 
 if __name__ == "__main__":
     main(sys.argv[1])
