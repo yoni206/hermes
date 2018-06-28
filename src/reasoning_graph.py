@@ -1,5 +1,8 @@
 import sys
 import pprint
+from transcendental import SIN, COS, ExtendedFormulaManager
+from transcendental import ExtendedHRPrinter, ExtendedHRSerializer
+from transcendental import ExtendedEnvironment
 from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
@@ -59,6 +62,16 @@ class Edge:
     def get_type(self):
         raise NotImplementedError("get_type() must be overriden by sub-classes")
 
+    #def __repr__(self):
+    #    return str(self.__dict__)
+
+    def __str__(self):
+        return " ".join(["(edge ", self.name, self.src.name,
+                    self.dest.name, ")"])
+
+    def str(self):
+        return self.__str__()
+
 class SimpleEdge(Edge):
     def __init__(self, name, src, dest):
         super().__init__(name, src, dest)
@@ -81,6 +94,10 @@ class BoolXEdge(Edge):
 
     def get_type(self):
         return EdgeType.BOOLX
+
+    def __str__(self):
+        return " ".join(["(edge ", self.name, self.src.name,
+                     self.dest.name, self.boolx,  ")"])
 
 class EvaluateEdge(Edge):
     def __init__(self, name, src, dest, get_value_cmds):
@@ -134,6 +151,12 @@ class Node:
     def execute(self):
         raise NotImplementedError("must be overriden")
 
+    def __repr__(self):
+        return "( node " + self.name + " incoming: " + \
+            " ".join(e.name for e in self.get_incoming_edges()) \
+            + " outgoing: " + " ".join(e.name for e in self.get_outgoing_edges()) + " )"
+
+
 class EntailmentNode(Node):
     def __init__(self, name):
         super().__init__(name)
@@ -177,9 +200,7 @@ class EntailmentNode(Node):
     def execute(self):
         kb_smtlib = self._kb.smtlib
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
-        print('panda kb = ', kb_smtlib)
-        print('panda g = ', g_smtlib)
-        smtlib = kb_smtlib + g_smtlib + "(check-sat)"
+        smtlib = kb_smtlib + g_smtlib + " (check-sat)"
         solver = PortfolioSolver(smtlib)
         solver_result = solver.solve()
         if solver_result == SolverResult.SAT:
@@ -190,7 +211,8 @@ class EntailmentNode(Node):
             result = Values.UNKNOWN
         else:
             assert(False)
-        self._valid.value = boolX
+        self._valid.boolx = result
+
 
 
 
@@ -274,7 +296,9 @@ class AndNode(Node):
         return [self._output]
 
     def execute(self):
-        _output = TriValLogic.kleene_and(_conjuncts)
+        conjuncts_values = [c.boolx for c in self._conjuncts]
+        _output = TriValLogic.kleene_and(conjuncts_values)
+
 
 class ReasoningGraph:
 
@@ -283,7 +307,16 @@ class ReasoningGraph:
         self._nodes_dict_by_name = {}
         self._start_nodes = set([])
         self._done_nodes = set([])
+        self._edges = set([])
         self._generate_reasoning_graph_from_sexp()
+
+    def __str__(self):
+        nodes = self._nodes_dict_by_name.keys()
+        edges = self._edges
+        result = "nodes:\n" + " ".join(nodes) + "\nedges:" + \
+        " ".join(e.str() for e in edges)
+        return result
+
 
     def execute(self):
         raise NotImplementedError("currently we only executre reasoning dags")
@@ -321,6 +354,7 @@ class ReasoningGraph:
             assert(False)
         src_node.connect_edge_to_port(edge, src_port)
         dest_node.connect_edge_to_port(edge, dest_port)
+        self._edges.add(edge)
 
     def _get_type_name_src_dest_label_of_edge_from_sexp(self, e):
         first = car(e)
@@ -353,10 +387,12 @@ class ReasoningGraph:
 
 
 class ReasoningDag(ReasoningGraph):
+    def __init__(self, sexp_str):
+        super().__init__(sexp_str)
+
     def execute(self):
         topo = self._topo_sort()
         for node in topo:
-            print('panda executing: ', node)
             node.execute()
 
 
@@ -376,7 +412,6 @@ class ReasoningDag(ReasoningGraph):
                         nodes_to_process.add(m)
 
         return result
-
 
 
 #if there is at least one seperator inside original_str,
@@ -422,6 +457,7 @@ def main(path):
                 lines.append(line)
     sexp_str = "".join(lines)
     rg = ReasoningDag(sexp_str)
+    print(rg)
     rg.execute()
 
 if __name__ == "__main__":

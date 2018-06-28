@@ -3,13 +3,16 @@ from pysmt.shortcuts import Solver, get_env
 from pysmt.exceptions import SolverReturnedUnknownResultError
 from enum import Enum
 from six.moves import cStringIO
-from pysmt.smtlib.parser import SmtLibParser
-
+from transcendental import ExtendedEnvironment, reset_env
+from transcendental import ExtendedSmtLibParser
+from pysmt.printers import HRPrinter
+import pprint
 DREAL_NAME = "dreal"
 DREAL_PATH = "/home/yoniz/git/dreal/bin/dReal"
 DREAL_ARGS = "--in"
 DREAL_LOGICS = [QF_NRA, QF_NIRA]
 
+pp = pprint.PrettyPrinter(indent=4)
 
 class SolverResult(Enum):
     SAT = 1
@@ -93,10 +96,11 @@ class InnerType:
 class PortfolioSolver:
     def __init__(self, smtlib_str):
         stream = cStringIO(smtlib_str)
-        parser = SmtLibParser()
+        env = reset_env()
+        parser = ExtendedSmtLibParser(environment=env)
         script = parser.get_script(stream)
         formula = script.get_last_formula()
-        formulas = formula.args
+        formulas = formula.args()
         self._all_inner_types = InnerType.get_all_inner_types()
         self._map_inner_types_to_solvers()
         self._map_solvers_to_formulas(formulas)

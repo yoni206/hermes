@@ -39,7 +39,7 @@
 									))
 									(or 
 										(= (utrc.test1.S1.i2 x!1) (to_real (/ y (utrc.test1.S1.n x!1))))
-										(= (utrc.test1.S1.i2 x!1) (to_real (* -1 (/ y (utrc.test1.S1.n x!1)))))
+										(= (utrc.test1.S1.i2 x!1) (* -1 (to_real (/ y (utrc.test1.S1.n x!1)))))
 									)
 								)
 							)
@@ -74,16 +74,16 @@
 
 				(define-fun utrc.test1.S2.g1 ((x!1 utrc.test1.S2)) Bool
 					(= (utrc.test1.S2.o1 x!1) 
-						(+`
+						(+
 							(* 
 								(utrc.test1.S2.i1 x!1)
-								(pow 2 0.5)
-								(sin (utrc.test1.S2.alpha x!1))
+								(pow (to_real 2) 0.5)
+								;(sin (utrc.test1.S2.alpha x!1))
 							)
 							(*
 								(utrc.test1.S2.i2 x!1)
-								(pow 2 0.5)
-								(cos (utrc.test1.S2.alpha x!1))
+								(pow (to_real 2) 0.5)
+								;(cos (utrc.test1.S2.alpha x!1))
 							)
 						)	
 					) 
@@ -169,7 +169,7 @@
 
 	(edge e3 __ n2.kb 
 		(smt25 
-			(declare-sort hermes.iml.aadl.Connection_Real 0)
+			((declare-sort hermes.iml.aadl.Connection_Real 0)
 				(declare-fun hermes.iml.aadl.Connection_Real.source (hermes.iml.aadl.Connection_Real) Real) 
 				(declare-fun hermes.iml.aadl.Connection_Real.target (hermes.iml.aadl.Connection_Real) Real) 
 				(define-fun hermes.iml.aadl.Connection_Real.a1 ((x!1 hermes.iml.aadl.Connection_Real)) Bool
@@ -195,12 +195,12 @@
 								)
 								(and   
 									(or 
-										(= (utrc.test1.S1.i1 x!1) (/ x (utrc.test1.S1.n x!1)))
-										(= (utrc.test1.S1.i1 x!1) (* -1 (/ x (utrc.test1.S1.n x!1))))
+										(= (utrc.test1.S1.i1 x!1) (to_real (/ x (utrc.test1.S1.n x!1))))
+										(= (utrc.test1.S1.i1 x!1) (* -1 (to_real (/ x (utrc.test1.S1.n x!1)))))
 									)
 									(or 
-										(= (utrc.test1.S1.i2 x!1) (/ y (utrc.test1.S1.n x!1)))
-										(= (utrc.test1.S1.i2 x!1) (* -1 (/ y (utrc.test1.S1.n x!1))))
+										(= (utrc.test1.S1.i2 x!1) (to_real (/ y (utrc.test1.S1.n x!1))))
+										(= (utrc.test1.S1.i2 x!1) (* -1 (to_real (/ y (utrc.test1.S1.n x!1)))))
 									)
 								)
 							)
@@ -214,7 +214,7 @@
 					)
 				)
 
-				(declare-sort utrc.test1.S2)
+				(declare-sort utrc.test1.S2 0)
 				(declare-fun utrc.test1.S2.i1 (utrc.test1.S2) Real)
 				(declare-fun utrc.test1.S2.i2 (utrc.test1.S2) Real)
 				(declare-fun utrc.test1.S2.o1 (utrc.test1.S2) Real)
@@ -238,19 +238,19 @@
 						(+
 							(* 
 								(utrc.test1.S2.i1 x!1)
-								(^ 2 0.5)
-								(sin (utrc.test1.S2.alpha x!1))
+								(pow (to_real 2) 0.5)
+								;(sin (utrc.test1.S2.alpha x!1))
 							)
 							(*
 								(utrc.test1.S2.i2 x!1)
-								(^ 2 0.5)
-								(cos (utrc.test1.S2.alpha x!1))
+								(pow (to_real 2) 0.5)
+								;(cos (utrc.test1.S2.alpha x!1))
 							)
 						)	
 					) 
 				)
 
-				(declare-sort utrc.test1.S1__impl)
+				(declare-sort utrc.test1.S1__impl 0)
 				(declare-fun utrc.test1.S1__impl.S2_sub (utrc.test1.S1__impl) utrc.test1.S2)
 				(declare-fun utrc.test1.S1__impl.base_0 (utrc.test1.S1__impl) utrc.test1.S1)
 
@@ -312,7 +312,7 @@
 				)
 				
 				(assert (utrc.test1.S1.a1 (utrc.test1.S1__impl.base_0 inst)))
-		)
+		))
 	)
 
 	(edge e4 __ n2.g
