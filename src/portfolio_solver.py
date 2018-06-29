@@ -156,9 +156,11 @@ class PortfolioSolver:
         exprs = []
         for get_val_cmd in script.filter_by_command_name("get-value"):
             exprs.extend(get_val_cmd.args)
-        print(exprs)
-        print('panda')
-        values = solver.get_values(exprs)
+        #values = solver.get_values(exprs)
+        values = []
+        for expr in exprs:
+            value = solver.get_value(expr)
+            values.append(value)
         return values
 
     def _map_solvers_to_formulas(self, formulas):

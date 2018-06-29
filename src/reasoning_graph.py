@@ -149,7 +149,7 @@ class SolvedEvaluateEdge(EvaluateEdge):
 
     def get_values_in_output_format(self):
         result = "("
-        for key, value in self.solution.items():
+        for value in self.solution:
             result =  "".join([result, "(", str(value), ") "])
         result += ")"
         return result
