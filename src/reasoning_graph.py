@@ -25,6 +25,7 @@ class STRING_CONSTANTS:
     START = "start"
     SIMPLE = "simple"
     GRAPH = "graph"
+    BASE = "base"
     KB = "kb"
     G = "g"
     VALID = "valid"
@@ -115,7 +116,6 @@ class BoolXEdge(Edge):
     def __str__(self):
         raise NotImplementedError("must be overriden")
 
-
 class UnsolvedBoolXEdge(BoolXEdge):
     def __str__(self):
         return " ".join(["(edge ", EdgeType.to_string(self.get_type()), self.name, self.src.name,
@@ -133,6 +133,30 @@ class EvaluateEdge(Edge):
 
     def get_type(self):
         return EdgeType.EVALUATE
+
+    def __str__(self):
+        raise NotImplementedError("must be overriden")
+
+class UnsolvedEvaluateEdge(EvaluateEdge):
+    def __str__(self):
+        return " ".join(["(edge ", self.name, self.src.name,
+                     self.dest.name,  ")"])
+
+class SolvedEvaluateEdge(EvaluateEdge):
+    def __init__(self, name, src, dest, wanted_values, solution):
+        super().__init__(name, src, dest, wanted_values)
+        self.solution = solution
+
+    def get_values_in_output_format(self):
+        result = "("
+        for key, value in self.solution.items():
+            result =  "".join([result, "(", str(value), ") "])
+        result += ")"
+        return result
+
+    def __str__(self):
+        return " ".join(["(edge ", self.name, self.src.name,
+                     self.dest.name , ")"])
 
 class NodeType(Enum):
     ENTAILMENT = 1
@@ -210,6 +234,7 @@ class Node:
 class EntailmentNode(Node):
     def __init__(self, name, graph):
         super().__init__(name, graph)
+        self._base = None
         self._kb = None #edge
         self._g = None #edge
         self._valid = None #edge
@@ -237,7 +262,9 @@ class EntailmentNode(Node):
         return EntailmentNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
-        if (port_name == STRING_CONSTANTS.KB):
+        if (port_name == STRING_CONSTANTS.BASE):
+            self._base = edge
+        elif (port_name == STRING_CONSTANTS.KB):
             self._kb = edge
         elif (port_name == STRING_CONSTANTS.G):
             self._g = edge
@@ -263,11 +290,19 @@ class EntailmentNode(Node):
         return result
 
     def execute(self):
-        kb_smtlib = self._kb.smtlib
+        base_smtlib = self._base.smtlib
+        kb_smtlib = "(assert " + self._kb.smtlib + ")"
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
-        smtlib = "(set-option :produce-models true)" + kb_smtlib + g_smtlib + " (check-sat) "
+        if self._counter_model is not None:
+            get_val_smtlib = self._counter_model.wanted_values
+        else:
+            get_val_smtlib = ""
+        smtlib = "(set-option :produce-models true) " + \
+                base_smtlib + " " + " " + kb_smtlib +" " + g_smtlib + \
+                " (check-sat) " + \
+                get_val_smtlib
         solver = PortfolioSolver(smtlib)
-        solver_result = solver.solve()
+        solver_result, values = solver.solve()
         if solver_result == SolverResult.SAT:
             result = Values.FALSE
         elif solver_result == SolverResult.UNSAT:
@@ -282,11 +317,14 @@ class EntailmentNode(Node):
                                          old_boolx_edge.dest,
                                          result)
         self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
-        if result == Values.FALSE:
-            if self._counter_model != None:
-                get_value_smtlib = self._counter_model.wanted_values
-                solver.get_value(get_value_smtlib)
 
+        old_evaluate_edge = self._counter_model
+        new_evaluate_edge = SolvedEvaluateEdge(old_evaluate_edge.name,
+                                               old_evaluate_edge.src,
+                                               old_evaluate_edge.dest,
+                                               old_evaluate_edge.wanted_values,
+                                               values)
+        self.graph.replace_edge(old_evaluate_edge, new_evaluate_edge)
 
 
 class DoneNode(Node):
@@ -455,7 +493,7 @@ class ReasoningGraph:
         elif edge_type is EdgeType.EVALUATE:
             label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
-            edge = EvaluateEdge(edge_name, src_node, dest_node, label)
+            edge = UnsolvedEvaluateEdge(edge_name, src_node, dest_node, label)
         else:
             assert(False)
         src_node.connect_edge_to_port(edge, src_port)
@@ -555,9 +593,9 @@ def is_edge_sexp(e):
     car_str = dumps(car(e))
     return car_str == STRING_CONSTANTS.EDGE
 
-def main(path):
+def main(in_path, out_path):
     lines = []
-    with open(path) as inputfile:
+    with open(in_path) as inputfile:
         for line in inputfile:
             if not line.startswith(SExp.COMMENT):
                 lines.append(line)
@@ -566,6 +604,22 @@ def main(path):
     print(rg)
     rg.execute()
     print(rg)
+    output_lines = []
+    for edge in rg._edges:
+        if edge.get_type() == EdgeType.BOOLX:
+            output_lines.append(" ".join(["(", edge.name,
+                                         Values.to_string(edge.boolx),
+                                         ")"]))
+
+    for edge in rg._edges:
+        if edge.get_type() == EdgeType.EVALUATE:
+            output_lines.append(" ".join(["(", edge.name,
+                                        edge.get_values_in_output_format(),
+                                        ")"]))
+
+    with open(out_path, 'w') as outputfile:
+        for line in output_lines:
+            outputfile.write("%s\n" % line)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])

@@ -143,23 +143,23 @@ class PortfolioSolver:
                 print(solver_name, ': unknown')
                 result = SolverResult.UNKNOWN
                 break
-        return result
+            values = self.get_values(solver)
+        return result, values
 
     def solve(self):
         return self._solve_partitioned_problem()
 
-    def get_value(self, smtlib_get_value):
-        smtlib = self._smtlib + " " + smtlib_get_value
-        stream = cStringIO(smtlib)
+    def get_values(self, solver):
+        stream = cStringIO(self._smtlib)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
+        exprs = []
         for get_val_cmd in script.filter_by_command_name("get-value"):
-            print('panda ', get_val_cmd)
-            exprs = get_val_cmd.args
-            print('panda ', exprs)
-        solver = Solver('z3')
-        solver.get_value(exprs.pop())
-
+            exprs.extend(get_val_cmd.args)
+        print(exprs)
+        print('panda')
+        values = solver.get_values(exprs)
+        return values
 
     def _map_solvers_to_formulas(self, formulas):
         variables = PortfolioSolver._get_free_variables_of_formulas(formulas)
@@ -171,8 +171,8 @@ class PortfolioSolver:
         for variable in variables_to_formulas.keys():
             formulas_of_variable = variables_to_formulas[variable]
             inner_type_of_formulas = InnerType.get_inner_type_of_formulas(formulas_of_variable, formulas_to_inner_types)
-            solver = self._inner_type_to_solver[inner_type_of_formulas]
-            #solver = 'z3'
+            #solver = self._inner_type_to_solver[inner_type_of_formulas]
+            solver = 'z3'
             self._add_formulas_to_solver(solver, formulas_of_variable)
 
     def _get_free_variables_of_formulas(formulas):

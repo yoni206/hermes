@@ -18,6 +18,7 @@
                 (declare-const r1 Real)
                 (assert (= r1 0))
 				(declare-sort utrc.test1.S1 0)
+                (declare-const s1 utrc.test1.S1)
 				(declare-fun utrc.test1.S1.i1 (utrc.test1.S1) Real)
 				(declare-fun utrc.test1.S1.i2 (utrc.test1.S1) Real)
 				(declare-fun utrc.test1.S1.o1 (utrc.test1.S1) Real)
@@ -324,5 +325,5 @@
 	(edge e6 n2.valid n3.in (boolX (__)))
 	(edge e7 n3.out n4.in (boolX (__)))
 	
-	(edge e8 n1.cmodel __ (evaluate ((get-value (r1)))))
+	(edge e8 n1.cmodel __ (evaluate ((utrc.test1.S1.i1 s1))))
 )
