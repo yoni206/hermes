@@ -6,6 +6,10 @@ from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
 from transcendental import ExtendedSmtLibParser
 from pysmt.printers import HRPrinter
+from pysmt.rewritings import PrenexNormalizer
+from pysmt.smtlib.script import SmtLibScript
+import transcendental
+import z3
 import pprint
 DREAL_NAME = "dreal"
 DREAL_PATH = "/home/yoniz/git/dreal/bin/dReal"
@@ -92,45 +96,164 @@ class InnerType:
         return result
 
 
+class PartitionStrategy:
+    def __init__(self, formulas):
+        self._formulas = formulas
+        self._solvers_to_sets_of_formulas = {}
+        self._generate_internal_map()
 
-class PortfolioSolver:
-    def __init__(self, smtlib_str):
-        stream = cStringIO(smtlib_str)
-        self._env = reset_env()
-        parser = ExtendedSmtLibParser(environment=self._env)
-        script = parser.get_script(stream)
-        formula = script.get_last_formula()
-        formulas = formula.args()
-        self._smtlib = smtlib_str
+
+    def _add_formulas_to_solver(self, solver, formulas):
+        if solver in self._solvers_to_sets_of_formulas.keys():
+            self._solvers_to_sets_of_formulas[solver].update(formulas)
+        else:
+           self._solvers_to_sets_of_formulas[solver] = formulas
+
+    def formulas_for_solver(self, solver_name):
+        return self._solvers_to_sets_of_formulas[solver_name]
+
+    def get_solvers(self):
+        return self._solvers_to_sets_of_formulas.keys()
+
+    def _generate_internal_map(self):
+        raise NotImplementedError("This is an interface!")
+
+
+class SimpleTheoryStrategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        super().__init__(formulas)
+
+
+    def _generate_internal_map(self):
+        for formula in self._formulas:
+            solver = self._solve_formula_with(formula)
+            self._add_formulas_to_solver(solver, set([formula]))
+
+    def _solve_formula_with(self, formula):
+        theory = self._env.theoryo.get_theory(formula)
+        q_oracle = self._env.qfo
+        if theory.linear or (not q_oracle.is_qf(formula)):
+            result = 'z3'
+        else:
+            result = 'z3'
+        return result
+
+
+class TypeStratedy(PartitionStrategy):
+    def __init__(self, formulas):
         self._all_inner_types = InnerType.get_all_inner_types()
         self._map_inner_types_to_solvers()
-        self._map_solvers_to_formulas(formulas)
-        self._add_dreal()
+        super().__init__(formulas)
 
+    def _generate_internal_map(self):
+        formulas = self._formulas
+        variables = PortfolioSolver._get_free_variables_of_formulas(formulas)
+        self._solvers_to_sets_of_formulas = {}
+        formulas_to_inner_types = InnerType.get_inner_typed_formulas_from_formulas(formulas)
+        variables_to_formulas = PortfolioSolver._map_variables_to_formulas(formulas)
+       # inner_types_to_sets_of_formulas = map_inner_types_to_formulas(variables_to_sets_of_formulas, formulas)
+       # pp.pprint(inner_types_to_sets_of_formulas)
+        for variable in variables_to_formulas.keys():
+            formulas_of_variable = variables_to_formulas[variable]
+            inner_type_of_formulas = InnerType.get_inner_type_of_formulas(formulas_of_variable, formulas_to_inner_types)
+            solver = self._inner_type_to_solver[inner_type_of_formulas]
+            #solver = 'z3'
+            self._add_formulas_to_solver(solver, formulas_of_variable)
 
-    def _add_dreal(self):
-        env = get_env()
-        env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
 
     def _map_inner_types_to_solvers(self):
         self._inner_type_to_solver = {}
         for it in self._all_inner_types:
             if it.is_bv:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "cvc4"
+                    self._inner_type_to_solver[it] = "z3"
                 else:
-                    self._inner_type_to_solver[it] = "cvc4"
+                    self._inner_type_to_solver[it] = "z3"
             else:
                 if it.is_int:
-                    self._inner_type_to_solver[it] = "cvc4"
+                    self._inner_type_to_solver[it] = "z3"
                 else:
-                    self._inner_type_to_solver[it] = "cvc4"
+                    self._inner_type_to_solver[it] = "z3"
+
+
+
+
+class PortfolioSolver:
+    def __init__(self, smtlib_str):
+        stream = cStringIO(smtlib_str)
+        self._env = reset_env()
+        self._add_dreal()
+        script = self._get_script(stream, False)
+
+
+
+        formula = script.get_last_formula()
+        formulas = formula.args()
+        self._strategy = SimpleTheoryStrategy(formulas)
+        self._smtlib = smtlib_str
+
+    def _get_script(self, stream, optimize):
+        #get script
+        parser = ExtendedSmtLibParser(environment=self._env)
+        script = parser.get_script(stream)
+        #the internal representation of the formula inlines define-fun
+        formula = script.get_last_formula()
+
+        declarations = []
+        declarations.extend(script.filter_by_command_name("declare-sort"))
+        declarations.extend(script.filter_by_command_name("declare-fun"))
+        declarations.extend(script.filter_by_command_name("declare-const"))
+
+        new_script = SmtLibScript()
+
+        for declaration in declarations:
+            new_script.add_command(declaration)
+        if (optimize):
+            #remove quantifiers
+            prenex_normalizer = PrenexNormalizer()
+            quantifications, matrix = prenex_normalizer.walk(formula)
+            quantifier, variables = quantifications[0]
+            assert (quantifier == self._env.formula_manager.Exists)
+            assert (len(quantifications) == 1)
+            env = get_env()
+            mgr = env.formula_manager
+            subs = dict((x, mgr.FreshSymbol(x.symbol_type())) for x in variables)
+            for key in subs.keys():
+                new = subs[key]
+                new_script.add("declare-fun", [new])
+            substitued_matrix = matrix.substitute(subs)
+            new_script.add("assert", [substitued_matrix])
+
+        else:
+            new_script.add("assert", [formula])
+
+        new_script.add("check-sat", [])
+
+        print('panda after ***********************************')
+        buf2 = cStringIO()
+        new_script.serialize(buf2, False)
+        smtlib_data = buf2.getvalue()
+        print(smtlib_data)
+
+
+
+
+        return new_script
+
+
+
+
+    def _add_dreal(self):
+        env = get_env()
+        env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
 
     def _solve_partitioned_problem(self):
         result = SolverResult.SAT
-        for solver_name in self._solvers_to_sets_of_formulas.keys():
+        values = []
+        for solver_name in self._strategy.get_solvers():
             solver = Solver(solver_name)
-            formulas = self._solvers_to_sets_of_formulas[solver_name]
+            formulas = self._strategy.formulas_for_solver(solver_name)
             for formula in formulas:
                 solver.add_assertion(formula)
             try:
@@ -143,7 +266,7 @@ class PortfolioSolver:
                 print(solver_name, ': unknown')
                 result = SolverResult.UNKNOWN
                 break
-            values = self.get_values(solver)
+            values.extend(self.get_values(solver))
         return result, values
 
     def solve(self):
@@ -159,36 +282,18 @@ class PortfolioSolver:
         #values = solver.get_values(exprs)
         values = []
         for expr in exprs:
-            value = solver.get_value(expr)
+            try:
+                value = solver.get_value(expr)
+            except (z3.Z3Exception) as e: #comma separated list of exceptions
+                value = "__"
             values.append(value)
         return values
-
-    def _map_solvers_to_formulas(self, formulas):
-        variables = PortfolioSolver._get_free_variables_of_formulas(formulas)
-        self._solvers_to_sets_of_formulas = {}
-        formulas_to_inner_types = InnerType.get_inner_typed_formulas_from_formulas(formulas)
-        variables_to_formulas = PortfolioSolver._map_variables_to_formulas(formulas)
-       # inner_types_to_sets_of_formulas = map_inner_types_to_formulas(variables_to_sets_of_formulas, formulas)
-       # pp.pprint(inner_types_to_sets_of_formulas)
-        for variable in variables_to_formulas.keys():
-            formulas_of_variable = variables_to_formulas[variable]
-            inner_type_of_formulas = InnerType.get_inner_type_of_formulas(formulas_of_variable, formulas_to_inner_types)
-            #solver = self._inner_type_to_solver[inner_type_of_formulas]
-            solver = 'z3'
-            self._add_formulas_to_solver(solver, formulas_of_variable)
 
     def _get_free_variables_of_formulas(formulas):
         result = set([])
         for formula in formulas:
             result.add(formula.get_free_variables())
         return result
-
-    def _add_formulas_to_solver(self, solver, formulas):
-        if solver in self._solvers_to_sets_of_formulas.keys():
-            self._solvers_to_sets_of_formulas[solver].update(formulas)
-        else:
-           self._solvers_to_sets_of_formulas[solver] = formulas
-
 
     def _map_variables_to_formulas(formulas):
         variables_to_sets_of_formulas = {}

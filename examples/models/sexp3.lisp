@@ -34,8 +34,8 @@
 								)
 								(and   
 									(or 
-										(= (utrc.test1.S1.i1 x!1) (to_real (/ x (utrc.test1.S1.n x!1))))
-										(= (utrc.test1.S1.i1 x!1) (* -1 (to_real (/ x (utrc.test1.S1.n x!1)))))
+										(= (utrc.test1.S1.i1 x!1) (/ (to_real x) (to_real (utrc.test1.S1.n x!1))))
+										(= (utrc.test1.S1.i1 x!1) (* -1 (/ (to_real x) (to_real (utrc.test1.S1.n x!1)))))
 									)
 									(or 
 										(= (utrc.test1.S1.i2 x!1) (to_real (/ y (utrc.test1.S1.n x!1))))
@@ -334,7 +334,7 @@
 							((get-value ( (utrc.test1.S1.i1 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S1.i2 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S1.n (utrc.test1.S1__impl.base_0 inst))))
-							;(get-value ((utrc.test1.S1.a1 (utrc.test1.S1__impl.base_0 inst))))
+							(get-value ((utrc.test1.S1.a1 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S2.i1 (utrc.test1.S1__impl.S2_sub inst))))
 							(get-value ((utrc.test1.S2.i2 (utrc.test1.S1__impl.S2_sub inst))))
 							(get-value ((utrc.test1.S2.a1 (utrc.test1.S1__impl.S2_sub inst))))
@@ -344,7 +344,7 @@
 							((get-value ( (utrc.test1.S1.i1 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S1.i2 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S1.n (utrc.test1.S1__impl.base_0 inst))))
-							;(get-value ((utrc.test1.S1.a1 (utrc.test1.S1__impl.base_0 inst))))
+							(get-value ((utrc.test1.S1.a1 (utrc.test1.S1__impl.base_0 inst))))
 							(get-value ((utrc.test1.S2.i1 (utrc.test1.S1__impl.S2_sub inst))))
 							(get-value ((utrc.test1.S2.i2 (utrc.test1.S1__impl.S2_sub inst))))
 							(get-value ((utrc.test1.S2.a1 (utrc.test1.S1__impl.S2_sub inst))))
