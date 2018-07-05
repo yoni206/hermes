@@ -1,13 +1,17 @@
+import os
+import subprocess
 from pysmt.logics import QF_NRA, QF_NIRA
-from pysmt.shortcuts import Solver, get_env
+from pysmt.shortcuts import Solver, get_env, And
 from pysmt.exceptions import SolverReturnedUnknownResultError
 from enum import Enum
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
 from transcendental import ExtendedSmtLibParser
 from pysmt.printers import HRPrinter
-from pysmt.rewritings import PrenexNormalizer
+from pysmt.rewritings import PrenexNormalizer, Ackermanization, Skolemization
 from pysmt.smtlib.script import SmtLibScript
+from pysmt.smtlib.printers import SmtPrinter, LimitedSmtPrinter
+from pysmt.smtlib.printers import to_smtlib
 import transcendental
 import z3
 import pprint
@@ -102,7 +106,6 @@ class PartitionStrategy:
         self._solvers_to_sets_of_formulas = {}
         self._generate_internal_map()
 
-
     def _add_formulas_to_solver(self, solver, formulas):
         if solver in self._solvers_to_sets_of_formulas.keys():
             self._solvers_to_sets_of_formulas[solver].update(formulas)
@@ -122,8 +125,33 @@ class PartitionStrategy:
 class SimpleTheoryStrategy(PartitionStrategy):
     def __init__(self, formulas=None):
         self._env = get_env()
+        self._ackermanization = Ackermanization()
         super().__init__(formulas)
 
+    def _generate_internal_map(self):
+        for formula in self._formulas:
+            solver = self._solve_formula_with(formula)
+            if solver == 'dreal':
+                h = Skolemization(self._env)
+                skolemized_formula = h.simple_skolemization(formula)
+                ackermized_formula = self._ackermanization.do_ackermanization(skolemized_formula)
+                self._add_formulas_to_solver(solver, set([ackermized_formula]))
+            else:
+                self._add_formulas_to_solver(solver, set([formula]))
+
+    def _solve_formula_with(self, formula):
+        theory = self._env.theoryo.get_theory(formula)
+        q_oracle = self._env.qfo
+        if theory.linear:
+            result = 'z3'
+        else:
+            result = 'dreal'
+        return result
+
+class TransStrategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        super().__init__(formulas)
 
     def _generate_internal_map(self):
         for formula in self._formulas:
@@ -131,13 +159,11 @@ class SimpleTheoryStrategy(PartitionStrategy):
             self._add_formulas_to_solver(solver, set([formula]))
 
     def _solve_formula_with(self, formula):
-        theory = self._env.theoryo.get_theory(formula)
-        q_oracle = self._env.qfo
-        if theory.linear or (not q_oracle.is_qf(formula)):
-            result = 'z3'
+        if transcendental.includes_trans(formula):
+            return 'dreal'
         else:
-            result = 'z3'
-        return result
+            return 'z3'
+
 
 
 class TypeStratedy(PartitionStrategy):
@@ -184,13 +210,14 @@ class PortfolioSolver:
         stream = cStringIO(smtlib_str)
         self._env = reset_env()
         self._add_dreal()
-        script = self._get_script(stream, False)
-
-
-
+        #script = self._get_script(stream, False)
+        parser = ExtendedSmtLibParser(environment=self._env)
+        script = parser.get_script(stream)
         formula = script.get_last_formula()
-        formulas = formula.args()
-        self._strategy = SimpleTheoryStrategy(formulas)
+        #uncommented line is for splitting a problem.
+        #formulas = formula.args()
+        formulas = [formula]
+        self._strategy = TransStrategy(formulas)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -230,11 +257,9 @@ class PortfolioSolver:
 
         new_script.add("check-sat", [])
 
-        print('panda after ***********************************')
         buf2 = cStringIO()
         new_script.serialize(buf2, False)
         smtlib_data = buf2.getvalue()
-        print(smtlib_data)
 
 
 
@@ -248,25 +273,71 @@ class PortfolioSolver:
         env = get_env()
         env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
 
+
+    def _solve_with_dreal(self, formula):
+        #ackermanization
+        ackermanization = Ackermanization()
+        h = Skolemization(self._env)
+        skolemized_formula = h.simple_skolemization(formula)
+        ackermized_formula = ackermanization.do_ackermanization(skolemized_formula)
+        #include only Real and Int formulas
+        #TODO THIS IS A HACK!!!
+        formulas = ackermized_formula.args()
+        filtered_formulas = []
+        for f in formulas:
+            fvars = f.get_free_variables()
+            f_is_clean = True
+            for v in fvars:
+                vtype = v.symbol_type()
+                if not (vtype.is_real_type() or vtype.is_int_type()):
+                    f_is_clean = False
+                    break
+            if f_is_clean:
+                filtered_formulas.append(f)
+
+        formula = And(filtered_formulas)
+        smt_printer = LimitedSmtPrinter()
+        smtlib_data = "(set-logic QF_NRA)\n" + smt_printer.printer(formula)
+        smtlib_data = smtlib_data.replace('to_real', '* 1 ')
+        try:
+            os.remove('dreal_tmp.smt2')
+        except OSError:
+            pass
+        open('dreal_tmp.smt2', 'w').write(smtlib_data)
+        result_object = subprocess.run([DREAL_PATH, 'dreal_tmp.smt2'], stdout=subprocess.PIPE)
+        result_string = result_object.stdout.decode('utf-8')
+        if "unsat" in result_string:
+            return SolverResult.UNSAT
+        elif "sat" in result_string:
+            return SolverResult.SAT
+        elif "unknown" in result_string:
+            return SolverResult.UNKNOWN
+        else:
+            assert(False)
+
+
     def _solve_partitioned_problem(self):
         result = SolverResult.SAT
         values = []
         for solver_name in self._strategy.get_solvers():
-            solver = Solver(solver_name)
             formulas = self._strategy.formulas_for_solver(solver_name)
-            for formula in formulas:
+            formula = And(formulas)
+            if solver_name == 'dreal':
+                result = self._solve_with_dreal(formula)
+            else:
+                solver = Solver(solver_name)
                 solver.add_assertion(formula)
-            try:
-                solver_result = solver.solve()
-                print(solver_name, ': ', solver_result)
-                if solver.solve() is False:
-                    result = SolverResult.UNSAT
+                try:
+                    solver_result = solver.solve()
+                    if solver.solve() is False:
+                        result = SolverResult.UNSAT
+                        break
+                except SolverReturnedUnknownResultError:
+                    print(solver_name, ': unknown')
+                    result = SolverResult.UNKNOWN
                     break
-            except SolverReturnedUnknownResultError:
-                print(solver_name, ': unknown')
-                result = SolverResult.UNKNOWN
-                break
-            values.extend(self.get_values(solver))
+                values.extend(self.get_values(solver))
+            print(solver_name,': ', result, values)
         return result, values
 
     def solve(self):

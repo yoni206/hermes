@@ -290,6 +290,7 @@ class EntailmentNode(Node):
         return result
 
     def execute(self):
+        print('executing node ', self.name)
         base_smtlib = self._base.smtlib
         kb_smtlib = "(assert " + self._kb.smtlib + ")"
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
@@ -310,6 +311,7 @@ class EntailmentNode(Node):
         elif solver_result == SolverResult.UNKNOWN:
             result = Values.UNKNOWN
         else:
+            print(solver_result)
             assert(False)
         old_boolx_edge = self._valid
         new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,

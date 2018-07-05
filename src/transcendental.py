@@ -25,6 +25,9 @@ SimpleTypeChecker.set_handler(SimpleTypeChecker.walk_real_to_real, *ALL_TRANS)
 from pysmt.oracles import FreeVarsOracle
 FreeVarsOracle.set_handler(FreeVarsOracle.walk_simple_args, *ALL_TRANS)
 
+from pysmt.rewritings import PrenexNormalizer
+PrenexNormalizer.set_handler(PrenexNormalizer.walk_theory_op, *ALL_TRANS)
+
 
 #updating some walkers with second approach
 import pysmt.printers
@@ -49,6 +52,14 @@ class ExtendedHRPrinter(pysmt.printers.HRPrinter):
 class ExtendedHRSerializer(pysmt.printers.HRSerializer):
     PrinterClass = ExtendedHRPrinter
 
+from pysmt.oracles import TheoryOracle
+class ExtendedTheoryOracle(TheoryOracle):
+    def walk_sin(self, formula, args, **kwargs):
+        return args[0].set_linear(False)
+
+    def walk_cos(self, formula, args, **kwargs):
+        return args[0].set_linear(False)
+
 
 #updating some walkers with third approach
 from pysmt.walkers import IdentityDagWalker
@@ -56,6 +67,12 @@ def walk_sin(self, formula, args, **kwargs): return self.mgr.Sin(args[0])
 def walk_cos(self, formula, args, **kwargs): return self.mgr.Cos(args[0])
 IdentityDagWalker.set_handler(walk_sin, SIN)
 IdentityDagWalker.set_handler(walk_cos, COS)
+
+from pysmt.smtlib.printers import SmtPrinter
+def walk_sin(self, formula): return self.walk_nary(formula, "sin")
+def walk_cos(self, formula): return self.walk_nary(formula, "cos")
+SmtPrinter.set_handler(walk_sin, SIN)
+SmtPrinter.set_handler(walk_cos, COS)
 
 
 #smtlib parser
@@ -77,6 +94,7 @@ class ExtendedEnvironment(Environment):
     FormulaManagerClass = ExtendedFormulaManager
     HRSerializerClass = ExtendedHRSerializer
     SmtLibParserClass = ExtendedSmtLibParser
+    TheoryOracleClass = ExtendedTheoryOracle
 
 def push_env(env=None):
     if env is None:
@@ -89,6 +107,20 @@ def reset_env():
     return get_env()
 
 #reset_env()
+
+#returns true if the formula includes a transcendental function
+def includes_trans(formula):
+    if formula.node_type() == SIN or \
+        formula.node_type == COS:
+            return True
+    else:
+        for arg in formula.args():
+            if includes_trans(arg):
+                return True
+        #no trans was found
+        return False
+
+
 
 if __name__ == "__main__":
     env = reset_env()

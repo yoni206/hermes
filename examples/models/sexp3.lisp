@@ -78,12 +78,12 @@
 							(* 
 								(utrc.test1.S2.i1 x!1)
 								(pow (to_real 2) 0.5)
-								;(sin (utrc.test1.S2.alpha x!1))
+								(sin (utrc.test1.S2.alpha x!1))
 							)
 							(*
 								(utrc.test1.S2.i2 x!1)
 								(pow (to_real 2) 0.5)
-								;(cos (utrc.test1.S2.alpha x!1))
+								(cos (utrc.test1.S2.alpha x!1))
 							)
 						)	
 					) 
@@ -241,12 +241,12 @@
 							(* 
 								(utrc.test1.S2.i1 x!1)
 								(pow (to_real 2) 0.5)
-								;(sin (utrc.test1.S2.alpha x!1))
+								(sin (utrc.test1.S2.alpha x!1))
 							)
 							(*
 								(utrc.test1.S2.i2 x!1)
 								(pow (to_real 2) 0.5)
-								;(cos (utrc.test1.S2.alpha x!1))
+								(cos (utrc.test1.S2.alpha x!1))
 							)
 						)	
 					) 
