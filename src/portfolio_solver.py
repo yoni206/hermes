@@ -13,6 +13,7 @@ from pysmt.rewritings import Purifications
 from pysmt.smtlib.script import SmtLibScript
 from pysmt.smtlib.printers import SmtPrinter, LimitedSmtPrinter
 from pysmt.smtlib.printers import to_smtlib
+from trivalogic import TriValLogic, Values
 import transcendental
 import z3
 import pprint
@@ -407,8 +408,16 @@ class PortfolioSolver:
                 value = solver.get_value(expr)
             except (z3.Z3Exception) as e: #comma separated list of exceptions
                 value = "__"
-            values.append(value)
+            values.append(self._regulate(value))
         return values
+
+    def _regulate(self, value):
+        if str(value).lower() == 'true':
+            return Values.to_string(Values.TRUE)
+        elif str(value).lower() == 'false':
+            return Values.to_string(Values.FALSE)
+        else:
+            return value
 
     def _get_free_variables_of_formulas(formulas):
         result = set([])
