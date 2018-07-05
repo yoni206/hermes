@@ -9,6 +9,7 @@ from transcendental import ExtendedEnvironment, reset_env
 from transcendental import ExtendedSmtLibParser
 from pysmt.printers import HRPrinter
 from pysmt.rewritings import PrenexNormalizer, Ackermanization, Skolemization
+from pysmt.rewritings import Purifications
 from pysmt.smtlib.script import SmtLibScript
 from pysmt.smtlib.printers import SmtPrinter, LimitedSmtPrinter
 from pysmt.smtlib.printers import to_smtlib
@@ -274,15 +275,8 @@ class PortfolioSolver:
         env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
 
 
-    def _solve_with_dreal(self, formula):
-        #ackermanization
-        ackermanization = Ackermanization()
-        h = Skolemization(self._env)
-        skolemized_formula = h.simple_skolemization(formula)
-        ackermized_formula = ackermanization.do_ackermanization(skolemized_formula)
-        #include only Real and Int formulas
-        #TODO THIS IS A HACK!!!
-        formulas = ackermized_formula.args()
+    #include only purely real and int formulas
+    def _filter_formulas(self, formulas):
         filtered_formulas = []
         for f in formulas:
             fvars = f.get_free_variables()
@@ -294,10 +288,20 @@ class PortfolioSolver:
                     break
             if f_is_clean:
                 filtered_formulas.append(f)
+        return filtered_formulas
 
-        formula = And(filtered_formulas)
+
+    def _solve_with_dreal(self, formula):
+        #ackermanization
+        ackermanization = Ackermanization()
+        h = Skolemization(self._env)
+        skolemized_formula = h.simple_skolemization(formula)
+        ackermized_formula = ackermanization.do_ackermanization(skolemized_formula)
+        pure_formula = Purifications.real_int_purify(ackermized_formula)
+        #filtered_formulas = self._filter_formulas(formulas)
+        #formula = And(filtered_formulas)
         smt_printer = LimitedSmtPrinter()
-        smtlib_data = "(set-logic QF_NRA)\n" + smt_printer.printer(formula)
+        smtlib_data = "(set-logic QF_NRA)\n" + smt_printer.printer(pure_formula)
         smtlib_data = smtlib_data.replace('to_real', '* 1 ')
         try:
             os.remove('dreal_tmp.smt2')
