@@ -1,0 +1,30 @@
+Syntax:
+an <ID> is any string without whitespace.
+An <smt_script> is a valid smtlib script (see smtlib 2.5 standard)
+An <smt_term> is a valid smtlib term.
+
+<graph> := (graph <ID> <node>* <edge>* )
+<node> := ( node <node_type> <ID>)
+<node_type> := <ID>
+<edge> := (edge <ID> <src> <dest> <attribute>*)
+<src> := __ | <ID>.<port>
+<dest> := __ | <ID>.<port>
+<port> := <ID>
+<attribute> := (<attribute_type> (<sexp>))
+<attribute_type> := <ID>
+
+
+Comments:
+- current supported values for node_type are: entailment, and, done
+- For an edge (ID src dest attributes) such that src (dest) has the form ID.port:
+    - if ID is an identifier of an entailment node, then port is an one of base, kb, g, valid, cmodel
+    - if ID is an identifier of an and node, then port is either in or out.
+    - if ID is an identifier of a done node, then port is in.
+- current supported values for attribute_type are: smt25, boolX, evaluate
+- for an attribute (attribute_type (sexp)):
+    - if attribute_type is smt25, then sexp is a valid smtlib script
+    - if attribute_type is boolX, then sexp is either __, false, true, or unknown
+    - if attribute_type is evaluate, then sexp is a sequence of smtlib (get-value) commands
+- Edges that go from (to) "__" have no source (destination).
+- all nodes definitions appear before all edges definitions
+
