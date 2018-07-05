@@ -1,7 +1,7 @@
 import os
 import subprocess
 from pysmt.logics import QF_NRA, QF_NIRA
-from pysmt.shortcuts import Solver, get_env, And
+from pysmt.shortcuts import Solver, get_env, And, Symbol
 from pysmt.exceptions import SolverReturnedUnknownResultError
 from enum import Enum
 from six.moves import cStringIO
@@ -300,16 +300,46 @@ class PortfolioSolver:
         pure_formula = Purifications.real_int_purify(ackermized_formula)
         #filtered_formulas = self._filter_formulas(formulas)
         #formula = And(filtered_formulas)
-        smt_printer = LimitedSmtPrinter()
-        smtlib_data = "(set-logic QF_NRA)\n" + smt_printer.printer(pure_formula)
+        limited_smt_printer = LimitedSmtPrinter()
+        smtlib_data = "(set-logic QF_NRA)\n" + limited_smt_printer.printer(pure_formula)
+
+        #dreal doesn't like to_real
         smtlib_data = smtlib_data.replace('to_real', '* 1 ')
         try:
             os.remove('dreal_tmp.smt2')
         except OSError:
             pass
         open('dreal_tmp.smt2', 'w').write(smtlib_data)
-        result_object = subprocess.run([DREAL_PATH, 'dreal_tmp.smt2'], stdout=subprocess.PIPE)
+        result_object = subprocess.run([DREAL_PATH, '--model', 'dreal_tmp.smt2'], stdout=subprocess.PIPE)
         result_string = result_object.stdout.decode('utf-8')
+        result = self._parse_result_from_dreal(result_string)
+
+        #take care of (get-value)s
+        values = []
+        if result == SolverResult.SAT:
+            #get dreal solution
+            raw_values = self._parse_values_from_dreal(result_string)
+            #get list of wanted values
+            stream = cStringIO(self._smtlib)
+            parser = ExtendedSmtLibParser(environment=self._env)
+            script = parser.get_script(stream)
+            exprs = []
+            dreal_exprs = set([])
+            for get_val_cmd in script.filter_by_command_name("get-value"):
+                exprs.extend(get_val_cmd.args)
+            for expr in exprs:
+                if expr in ackermanization._terms_to_consts:
+                    dreal_expr = ackermanization._terms_to_consts[expr]
+                    dreal_exprs.add(dreal_expr)
+            #get wanted values from the solution
+            for expr in exprs:
+                try:
+                    values.append(raw_values[ackermanization._terms_to_consts[expr]])
+                except KeyError:
+                    values.append('__')
+        return result, values
+
+    def _parse_result_from_dreal(self, result_string):
         if "unsat" in result_string:
             return SolverResult.UNSAT
         elif "sat" in result_string:
@@ -319,6 +349,22 @@ class PortfolioSolver:
         else:
             assert(False)
 
+    def _parse_values_from_dreal(self, result_string):
+        raw_values = {}
+        for line in result_string.splitlines()[1:-1]:
+            var_part, middle_part, value_part = self._get_parts(line)
+            assert(middle_part == "[ ENTIRE ]")
+            v = self._env.formula_manager.get_symbol(var_part)
+            raw_values[v] = value_part
+        return raw_values
+
+    def _get_parts(self, line):
+        var_part, the_rest = line.split(" : ")
+        middle_part, value_part = the_rest.split(" = ")
+        return var_part, middle_part, value_part
+
+
+
 
     def _solve_partitioned_problem(self):
         result = SolverResult.SAT
@@ -327,7 +373,7 @@ class PortfolioSolver:
             formulas = self._strategy.formulas_for_solver(solver_name)
             formula = And(formulas)
             if solver_name == 'dreal':
-                result = self._solve_with_dreal(formula)
+                result, values = self._solve_with_dreal(formula)
             else:
                 solver = Solver(solver_name)
                 solver.add_assertion(formula)
