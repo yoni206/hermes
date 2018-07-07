@@ -17,10 +17,7 @@ from trivalogic import TriValLogic, Values
 import transcendental
 import z3
 import pprint
-DREAL_NAME = "dreal"
-DREAL_PATH = "/home/yoniz/git/dreal/bin/dReal"
-DREAL_ARGS = "--in"
-DREAL_LOGICS = [QF_NRA, QF_NIRA]
+DREAL_PATH = os.environ['DREAL_DIR'] + "/./dReal"
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -211,7 +208,6 @@ class PortfolioSolver:
     def __init__(self, smtlib_str):
         stream = cStringIO(smtlib_str)
         self._env = reset_env()
-        self._add_dreal()
         #script = self._get_script(stream, False)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
@@ -271,9 +267,9 @@ class PortfolioSolver:
 
 
 
-    def _add_dreal(self):
-        env = get_env()
-        env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
+#    def _add_dreal(self):
+#        env = get_env()
+#        env.factory.add_generic_solver(DREAL_NAME, [DREAL_PATH, DREAL_ARGS], DREAL_LOGICS)
 
 
     #include only purely real and int formulas
