@@ -17,7 +17,9 @@ from trivalogic import TriValLogic, Values
 import transcendental
 import z3
 import pprint
-DREAL_PATH = os.environ['DREAL_DIR'] + "/./dReal"
+DREAL_BINARY = os.environ['DREAL_DIR'] + "/./dReal"
+DREAL_TMP_SMT_PATH = 'dreal_tmp.smt2'
+DREAL_MODEL_PATH = DREAL_TMP_SMT_PATH + '.model'
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -304,11 +306,14 @@ class PortfolioSolver:
         #dreal doesn't like to_real
         smtlib_data = smtlib_data.replace('to_real', '* 1 ')
         try:
-            os.remove('dreal_tmp.smt2')
+            os.remove(DREAL_TMP_SMT_PATH)
         except OSError:
             pass
-        open('dreal_tmp.smt2', 'w').write(smtlib_data)
-        result_object = subprocess.run([DREAL_PATH, '--model', 'dreal_tmp.smt2'], stdout=subprocess.PIPE)
+        try: os.remove(DREAL_MODEL_PATH)
+        except OSError:
+            pass
+        open(DREAL_TMP_SMT_PATH, 'w').write(smtlib_data)
+        result_object = subprocess.run([DREAL_BINARY, '--model', DREAL_TMP_SMT_PATH], stdout=subprocess.PIPE)
         result_string = result_object.stdout.decode('utf-8')
         result = self._parse_result_from_dreal(result_string)
 
@@ -322,19 +327,18 @@ class PortfolioSolver:
             parser = ExtendedSmtLibParser(environment=self._env)
             script = parser.get_script(stream)
             exprs = []
-            dreal_exprs = set([])
+            #dreal_exprs = set([])
             for get_val_cmd in script.filter_by_command_name("get-value"):
                 exprs.extend(get_val_cmd.args)
             for expr in exprs:
                 if expr in ackermanization._terms_to_consts:
                     dreal_expr = ackermanization._terms_to_consts[expr]
-                    dreal_exprs.add(dreal_expr)
-            #get wanted values from the solution
-            for expr in exprs:
-                try:
-                    values.append(raw_values[ackermanization._terms_to_consts[expr]])
-                except KeyError:
-                    values.append('__')
+                    #dreal_exprs.add(dreal_expr)
+                    if dreal_expr in raw_values:
+                        value = raw_values[dreal_expr]
+                    else:
+                        value = '__'
+                    values.append(value)
         return result, values
 
     def _parse_result_from_dreal(self, result_string):
@@ -345,6 +349,14 @@ class PortfolioSolver:
         elif "unknown" in result_string:
             return SolverResult.UNKNOWN
         else:
+            #maybe the result is in *.model file.
+            try:
+                with open(DREAL_MODEL_PATH, 'r') as model_file:
+                    dreal_model_string = model_file.read()
+                if "sat" in dreal_model_string:
+                    return SolverResult.SAT
+            except OSError:
+                pass
             assert(False)
 
     def _parse_values_from_dreal(self, result_string):
