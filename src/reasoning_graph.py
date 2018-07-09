@@ -615,7 +615,11 @@ def main(in_path, out_path):
 
     for edge in rg._edges:
         if edge.get_type() == EdgeType.EVALUATE:
-            output_lines.append(" ".join(["(", edge.name,
+            src = edge.src
+            validity_edge = src._valid
+            validity_value = validity_edge.boolx
+            if validity_value == Values.FALSE:
+                output_lines.append(" ".join(["(", edge.name,
                                         edge.get_values_in_output_format(),
                                         ")"]))
 
