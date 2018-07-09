@@ -208,6 +208,7 @@ class PortfolioSolver:
     def __init__(self, smtlib_str):
         stream = cStringIO(smtlib_str)
         self._env = reset_env()
+        self._env.enable_infix_notation = True
         #script = self._get_script(stream, False)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
@@ -378,12 +379,12 @@ class PortfolioSolver:
                     solver_result = solver.solve()
                     if solver.solve() is False:
                         result = SolverResult.UNSAT
-                        break
+                    else:
+                        values.extend(self.get_values(solver))
                 except SolverReturnedUnknownResultError:
                     print(solver_name, ': unknown')
                     result = SolverResult.UNKNOWN
                     break
-                values.extend(self.get_values(solver))
             print(solver_name,': ', result, values)
         return result, values
 
