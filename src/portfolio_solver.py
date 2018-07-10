@@ -339,7 +339,8 @@ class PortfolioSolver:
                     else:
                         value = '__'
                     values.append(value)
-        return result, values
+        values_no_spaces = [str(x).replace(' ', '') for x in values]
+        return result, values_no_spaces
 
     def _parse_result_from_dreal(self, result_string):
         if "unsat" in result_string:
