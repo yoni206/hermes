@@ -385,11 +385,14 @@ class PortfolioSolver:
             if solver_name == 'dreal':
                 result, values = self._solve_with_dreal(formula)
             else:
+                limited_smt_printer = LimitedSmtPrinter()
+                smtlib_content = limited_smt_printer.printer(formula)
+                open(solver_name + "_tmp.smt2", 'w').write(smtlib_content)
                 solver = Solver(solver_name)
                 solver.add_assertion(formula)
                 try:
                     solver_result = solver.solve()
-                    if solver.solve() is False:
+                    if solver_result == False:
                         result = SolverResult.UNSAT
                     else:
                         values.extend(self.get_values(solver))
