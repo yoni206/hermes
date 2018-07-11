@@ -1,8 +1,13 @@
+import traceback
+import re
 import os
+import sys
 import subprocess
 from pysmt.logics import QF_NRA, QF_NIRA
 from pysmt.shortcuts import Solver, get_env, And, Symbol
-from pysmt.exceptions import SolverReturnedUnknownResultError
+from pysmt.exceptions import SolverReturnedUnknownResultError, \
+                       ConvertExpressionError, \
+                       UnsupportedOperatorError
 from enum import Enum
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
@@ -403,17 +408,27 @@ class PortfolioSolver:
                 smtlib_content = limited_smt_printer.printer(formula)
                 open(solver_name + "_tmp.smt2", 'w').write(smtlib_content)
                 solver = Solver(solver_name)
-                solver.add_assertion(formula)
+                had_expression_error = False
                 try:
-                    solver_result = solver.solve()
-                    if solver_result == False:
-                        result = SolverResult.UNSAT
-                    else:
-                        values.extend(self.get_values(solver))
-                except SolverReturnedUnknownResultError:
-                    print(solver_name, ': unknown')
+                    solver.add_assertion(formula)
+                except ConvertExpressionError as e:
+#                except UnsupportedOperatorError as e:
+                    match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
+                    expr = match_obj.group(1)
                     result = SolverResult.UNKNOWN
-                    break
+                    values = [expr]
+                    had_expression_error = True
+                if not had_expression_error:
+                    try:
+                        solver_result = solver.solve()
+                        if solver_result == False:
+                            result = SolverResult.UNSAT
+                        else:
+                            values.extend(self.get_values(solver))
+                    except SolverReturnedUnknownResultError:
+                        print(solver_name, ': unknown')
+                        result = SolverResult.UNKNOWN
+                        break
             print(solver_name,': ', result, values)
         return result, values
 

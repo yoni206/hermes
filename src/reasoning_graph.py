@@ -558,7 +558,6 @@ class ReasoningDag(ReasoningGraph):
                     processed_edges.add(e)
                     if m.get_incoming_edges().issubset(processed_edges):
                         nodes_to_process.add(m)
-
         return result
 
     def _generate_node_from_sexp(self, e):
@@ -612,9 +611,19 @@ def process_graph(in_path, out_path, disable_solvers):
     output_lines = []
     for edge in rg._edges:
         if edge.get_type() == EdgeType.BOOLX:
-            output_lines.append(" ".join(["(", edge.name,
-                                         Values.to_string(edge.boolx),
-                                         ")"]))
+            if edge.boolx == Values.UNKNOWN and edge.src.get_type() == NodeType.ENTAILMENT:
+                expr = edge.src._counter_model.get_values_in_output_format()
+            else:
+                expr = ""
+            line = " ".join(["(", edge.name,
+                                 Values.to_string(edge.boolx),
+                                 expr,
+                                 ")"
+                                 ])
+            #output_lines.append(" ".join(["(", edge.name,
+             #                            Values.to_string(edge.boolx),
+             #                            ")"]))
+            output_lines.append(line)
 
     for edge in rg._edges:
         if edge.get_type() == EdgeType.EVALUATE:
@@ -650,10 +659,8 @@ def main(args):
         argparser.print_help()
         exit(1)
     if args.disable_solver == None:
-        print('panda 1')
         solvers_to_disable = []
     else:
-        print('panda 2')
         solvers_to_disable = args.disable_solver
     #comment: args.disable_solver is a list of solvers to disable.
     process_graph(args.input_file, args.output_file, solvers_to_disable)

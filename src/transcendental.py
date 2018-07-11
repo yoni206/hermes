@@ -68,6 +68,8 @@ def walk_cos(self, formula, args, **kwargs): return self.mgr.Cos(args[0])
 IdentityDagWalker.set_handler(walk_sin, SIN)
 IdentityDagWalker.set_handler(walk_cos, COS)
 
+
+
 from pysmt.smtlib.printers import SmtPrinter
 def walk_sin(self, formula): return self.walk_nary(formula, "sin")
 def walk_cos(self, formula): return self.walk_nary(formula, "cos")
