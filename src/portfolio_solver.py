@@ -356,7 +356,10 @@ class PortfolioSolver:
                         value = raw_values[dreal_expr]
                     else:
                         value = '__'
-                    values.append(value)
+                else:
+                    value = '__'
+
+                values.append(value)
         values_no_spaces = [str(x).replace(' ', '') for x in values]
         return result, values_no_spaces
 
