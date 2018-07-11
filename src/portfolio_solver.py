@@ -102,10 +102,11 @@ class InnerType:
 
 
 class PartitionStrategy:
-    def __init__(self, formulas):
+    def __init__(self, formulas, disabled_solvers = []):
         self._formulas = formulas
         self._solvers_to_sets_of_formulas = {}
         self._generate_internal_map()
+        self._disabled_solvers = []
 
     def _add_formulas_to_solver(self, solver, formulas):
         if solver in self._solvers_to_sets_of_formulas.keys():
@@ -150,9 +151,11 @@ class SimpleTheoryStrategy(PartitionStrategy):
         return result
 
 class TransStrategy(PartitionStrategy):
-    def __init__(self, formulas=None):
+    def __init__(self, formulas=None, disabled_solvers = []):
         self._env = get_env()
-        super().__init__(formulas)
+        self._disabled_solvers = disabled_solvers
+        super().__init__(formulas, disabled_solvers)
+        assert('z3' not in disabled_solvers)
 
     def _generate_internal_map(self):
         for formula in self._formulas:
@@ -160,11 +163,21 @@ class TransStrategy(PartitionStrategy):
             self._add_formulas_to_solver(solver, set([formula]))
 
     def _solve_formula_with(self, formula):
-        if transcendental.includes_trans(formula):
-            return 'dreal'
-        else:
+        if 'dreal' in self._disabled_solvers:
             return 'z3'
+        else:
+            if transcendental.includes_trans(formula):
+                return 'dreal'
+            else:
+                return 'z3'
 
+
+class AlwaysZ3Strategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        pass
+
+    def _solve_formula_with(self, formula):
+        return 'z3'
 
 
 class TypeStratedy(PartitionStrategy):
@@ -207,7 +220,7 @@ class TypeStratedy(PartitionStrategy):
 
 
 class PortfolioSolver:
-    def __init__(self, smtlib_str):
+    def __init__(self, smtlib_str, disabled_solvers=[]):
         stream = cStringIO(smtlib_str)
         self._env = reset_env()
         self._env.enable_infix_notation = True
@@ -218,7 +231,7 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        self._strategy = TransStrategy(formulas)
+        self._strategy = TransStrategy(formulas, disabled_solvers)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):

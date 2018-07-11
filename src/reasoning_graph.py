@@ -1,4 +1,5 @@
 import sys
+import argparse
 import pprint
 from transcendental import SIN, COS, ExtendedFormulaManager
 from transcendental import ExtendedHRPrinter, ExtendedHRSerializer
@@ -302,7 +303,7 @@ class EntailmentNode(Node):
                 base_smtlib + " " + " " + kb_smtlib +" " + g_smtlib + \
                 " (check-sat) " + \
                 get_val_smtlib
-        solver = PortfolioSolver(smtlib)
+        solver = PortfolioSolver(smtlib, self.graph._disabled_solvers)
         solver_result, values = solver.solve()
         if solver_result == SolverResult.SAT:
             result = Values.FALSE
@@ -439,13 +440,14 @@ class AndNode(Node):
 
 class ReasoningGraph:
 
-    def __init__(self, sexp_str):
+    def __init__(self, sexp_str, disabled_solvers = []):
         self._sexp = loads(sexp_str)
         self._nodes_dict_by_name = {}
         self._start_nodes = set([])
         self._done_nodes = set([])
         self._edges = set([])
         self._generate_reasoning_graph_from_sexp()
+        self._disabled_solvers = disabled_solvers
 
     def __str__(self):
         nodes = self._nodes_dict_by_name.values()
@@ -533,8 +535,8 @@ class ReasoningGraph:
 
 
 class ReasoningDag(ReasoningGraph):
-    def __init__(self, sexp_str):
-        super().__init__(sexp_str)
+    def __init__(self, sexp_str, disabled_solvers = []):
+        super().__init__(sexp_str, disabled_solvers)
 
     def execute(self):
         topo = self._topo_sort()
@@ -595,14 +597,15 @@ def is_edge_sexp(e):
     car_str = dumps(car(e))
     return car_str == STRING_CONSTANTS.EDGE
 
-def main(in_path, out_path):
+
+def process_graph(in_path, out_path, disable_solvers):
     lines = []
     with open(in_path) as inputfile:
         for line in inputfile:
             if not line.startswith(SExp.COMMENT):
                 lines.append(line)
     sexp_str = "".join(lines)
-    rg = ReasoningDag(sexp_str)
+    rg = ReasoningDag(sexp_str, disable_solvers)
     print(rg)
     rg.execute()
     print(rg)
@@ -627,5 +630,33 @@ def main(in_path, out_path):
         for line in output_lines:
             outputfile.write("%s\n" % line)
 
+
+def main(args):
+    argparser = argparse.ArgumentParser(description='Hermes')
+    argparser.add_argument('input_file',
+                           metavar='reasoning_graph',
+                           type=str,
+                           help='path to the input file describing the reasoning \
+                           graph')
+    argparser.add_argument('output_file',
+                           metavar='result',
+                           type=str,
+                           help='path to output file')
+    argparser.add_argument('--disable_solver',
+                           action='append',
+                           help='disable a solver')
+    args = argparser.parse_args(args)
+    if len(sys.argv) < 2:
+        argparser.print_help()
+        exit(1)
+    if args.disable_solver == None:
+        print('panda 1')
+        solvers_to_disable = []
+    else:
+        print('panda 2')
+        solvers_to_disable = args.disable_solver
+    #comment: args.disable_solver is a list of solvers to disable.
+    process_graph(args.input_file, args.output_file, solvers_to_disable)
+
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1:])
