@@ -107,11 +107,11 @@ class InnerType:
 
 
 class PartitionStrategy:
-    def __init__(self, formulas, disabled_solvers = []):
+    def __init__(self, formulas, config):
         self._formulas = formulas
         self._solvers_to_sets_of_formulas = {}
         self._generate_internal_map()
-        self._disabled_solvers = []
+        self.config = config
 
     def _add_formulas_to_solver(self, solver, formulas):
         if solver in self._solvers_to_sets_of_formulas.keys():
@@ -225,10 +225,11 @@ class TypeStratedy(PartitionStrategy):
 
 
 class PortfolioSolver:
-    def __init__(self, smtlib_str, disabled_solvers=[]):
+    def __init__(self, smtlib_str, config):
         stream = cStringIO(smtlib_str)
         self._env = reset_env()
         self._env.enable_infix_notation = True
+        self._config = config
         #script = self._get_script(stream, False)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
@@ -236,7 +237,7 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        self._strategy = TransStrategy(formulas, disabled_solvers)
+        self._strategy = TransStrategy(formulas, config.disabled_solvers)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -331,7 +332,12 @@ class PortfolioSolver:
         except OSError:
             pass
         open(DREAL_TMP_SMT_PATH, 'w').write(smtlib_data)
-        result_object = subprocess.run([DREAL_BINARY, '--model', DREAL_TMP_SMT_PATH], stdout=subprocess.PIPE)
+        dreal_command = [DREAL_BINARY]
+        dreal_command.append("--model")
+        if self._config.dreal_precision:
+            dreal_command.extend(["--precision", self._config.dreal_precision])
+        dreal_command.append(DREAL_TMP_SMT_PATH)
+        result_object = subprocess.run(dreal_command, stdout=subprocess.PIPE)
         result_string = result_object.stdout.decode('utf-8')
         result = self._parse_result_from_dreal(result_string)
 

@@ -304,7 +304,7 @@ class EntailmentNode(Node):
                 base_smtlib + " " + " " + kb_smtlib +" " + g_smtlib + \
                 " (check-sat) " + \
                 get_val_smtlib
-        solver = PortfolioSolver(smtlib, self.graph._disabled_solvers)
+        solver = PortfolioSolver(smtlib, self.graph._config)
         solver_result, values = solver.solve()
         if solver_result == SolverResult.SAT:
             result = Values.FALSE
@@ -441,14 +441,14 @@ class AndNode(Node):
 
 class ReasoningGraph:
 
-    def __init__(self, sexp_str, disabled_solvers = []):
+    def __init__(self, sexp_str, config):
         self._sexp = loads(sexp_str)
         self._nodes_dict_by_name = {}
         self._start_nodes = set([])
         self._done_nodes = set([])
         self._edges = set([])
         self._generate_reasoning_graph_from_sexp()
-        self._disabled_solvers = disabled_solvers
+        self._config = config
 
     def __str__(self):
         nodes = self._nodes_dict_by_name.values()
@@ -536,8 +536,8 @@ class ReasoningGraph:
 
 
 class ReasoningDag(ReasoningGraph):
-    def __init__(self, sexp_str, disabled_solvers = []):
-        super().__init__(sexp_str, disabled_solvers)
+    def __init__(self, sexp_str, config):
+        super().__init__(sexp_str, config)
 
     def execute(self):
         topo = self._topo_sort()
@@ -598,14 +598,14 @@ def is_edge_sexp(e):
     return car_str == STRING_CONSTANTS.EDGE
 
 
-def process_graph(in_path, out_path, disable_solvers):
+def process_graph(in_path, out_path, config):
     lines = []
     with open(in_path) as inputfile:
         for line in inputfile:
             if not line.startswith(SExp.COMMENT):
                 lines.append(line)
     sexp_str = "".join(lines)
-    rg = ReasoningDag(sexp_str, disable_solvers)
+    rg = ReasoningDag(sexp_str, config)
     print(rg)
     rg.execute()
     print(rg)
@@ -641,6 +641,11 @@ def process_graph(in_path, out_path, disable_solvers):
             outputfile.write("%s\n" % line)
 
 
+class Config:
+    def __init__(self):
+        self.disabled_solvers = []
+        self.dreal_precision = None
+
 def main(args):
     argparser = argparse.ArgumentParser(description='Hermes')
     argparser.add_argument('input_file',
@@ -655,6 +660,8 @@ def main(args):
     argparser.add_argument('--disable_solver',
                            action='append',
                            help='disable a solver')
+    argparser.add_argument('--dreal_precision',
+                            help='dreal precision')
     args = argparser.parse_args(args)
     if len(sys.argv) < 2:
         argparser.print_help()
@@ -663,8 +670,12 @@ def main(args):
         solvers_to_disable = []
     else:
         solvers_to_disable = args.disable_solver
+    config = Config()
+    config.disabled_solvers = solvers_to_disable
+    config.dreal_precision = args.dreal_precision
     #comment: args.disable_solver is a list of solvers to disable.
-    process_graph(args.input_file, args.output_file, solvers_to_disable)
+    process_graph(args.input_file,
+                  args.output_file, config)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
