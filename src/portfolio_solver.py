@@ -233,12 +233,16 @@ class PortfolioSolver:
         #script = self._get_script(stream, False)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
-        formula = script.get_last_formula()
+        self._formula = script.get_last_formula()
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
-        formulas = [formula]
+        formulas = [self._formula]
         self._strategy = TransStrategy(formulas, config.disabled_solvers)
         self._smtlib = smtlib_str
+
+    def add_assertion(self, formula):
+        self._formula = And(self._formula, formula)
+        self._strategy = TransStrategy([self._formula], self._config.disabled_solvers)
 
     def _get_script(self, stream, optimize):
         #get script

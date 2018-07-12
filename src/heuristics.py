@@ -9,6 +9,7 @@ from trivalogic import Values
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
 from transcendental import ExtendedSmtLibParser
+from pysmt.rewritings import Skolemization
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -38,6 +39,8 @@ class SegmentsHeuristics:
         stream = cStringIO(smtlib)
         script = parser.get_script(stream)
         self._formula = script.get_last_formula()
+        s = Skolemization(get_env())
+        self._formula = s.simple_skolemization(self._formula)
         self._inequals = set([])
         self._quantified_variables = set([])
         self._generate_quantified_variables(self._formula)
@@ -79,7 +82,7 @@ class SegmentsHeuristics:
         singles = list(singletons(self._inequals))
         for single in singles:
             print('panda ', single)
-            formula = And(self._formula, Equals(single.left, single.right))
+            solver.add_assertion(Equals(single.left, single.right))
             result, values = solver.solve()
             print('panda ', result)
             if result == SolverResult.UNSAT:

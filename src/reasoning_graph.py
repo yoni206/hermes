@@ -9,7 +9,7 @@ from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
 from portfolio_solver import SolverResult, PortfolioSolver
 from heuristics import Inequality, SegmentsHeuristics
-
+from pysmt.smtlib.printers import to_smtlib
 pp = pprint.PrettyPrinter(indent=4)
 
 class SExp:
@@ -651,7 +651,7 @@ def process_graph(in_path, out_path, config):
                     options = h.try_to_unsatisfy()
                     options_string = "("
                     for o in options:
-                        options_string += "((" + o.left + ") " + "( " + o.right + "))"
+                        options_string += "((" + str(o.left) + ") " + "( " + to_smtlib(o.right,False) + "))"
                     options_string += ")"
                     how_to_line = " ".join(["(", edge.name, options_string, ")"])
                     how_to_lines.append(how_to_line)
