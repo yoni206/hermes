@@ -8,6 +8,7 @@ from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
 from portfolio_solver import SolverResult, PortfolioSolver
+from heuristics import Inequality, SegmentsHeuristics
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -291,8 +292,7 @@ class EntailmentNode(Node):
             result.add(self._counter_model)
         return result
 
-    def execute(self):
-        print('executing node ', self.name)
+    def get_smtlib(self):
         base_smtlib = self._base.smtlib
         kb_smtlib = "(assert " + self._kb.smtlib + ")"
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
@@ -304,6 +304,11 @@ class EntailmentNode(Node):
                 base_smtlib + " " + " " + kb_smtlib +" " + g_smtlib + \
                 " (check-sat) " + \
                 get_val_smtlib
+        return smtlib
+
+    def execute(self):
+        print('executing node ', self.name)
+        smtlib = self.get_smtlib()
         solver = PortfolioSolver(smtlib, self.graph._config)
         solver_result, values = solver.solve()
         if solver_result == SolverResult.SAT:
@@ -626,6 +631,9 @@ def process_graph(in_path, out_path, config):
              #                            ")"]))
             output_lines.append(line)
 
+    if (config.how_to_unsat_file):
+        how_to_lines = []
+
     for edge in rg._edges:
         if edge.get_type() == EdgeType.EVALUATE:
             src = edge.src
@@ -636,10 +644,26 @@ def process_graph(in_path, out_path, config):
                                         edge.get_values_in_output_format(),
                                         ")"]))
 
+                if (config.how_to_unsat_file):
+                    #check what will make this unsat
+                    smtlib = src.get_smtlib()
+                    h = SegmentsHeuristics(smtlib, config)
+                    options = h.try_to_unsatisfy()
+                    options_string = "("
+                    for o in options:
+                        options_string += "((" + o.left + ") " + "( " + o.right + "))"
+                    options_string += ")"
+                    how_to_line = " ".join(["(", edge.name, options_string, ")"])
+                    how_to_lines.append(how_to_line)
+
     with open(out_path, 'w') as outputfile:
         for line in output_lines:
             outputfile.write("%s\n" % line)
 
+    if config.how_to_unsat_file:
+        with open(config.how_to_unsat_file, 'w') as how_to_file:
+            for line in how_to_lines:
+                how_to_file.write("%s\n" % line)
 
 class Config:
     def __init__(self):
@@ -662,6 +686,9 @@ def main(args):
                            help='disable a solver')
     argparser.add_argument('--dreal_precision',
                             help='dreal precision')
+    argparser.add_argument('--how_to_unsat_file',
+                           type=str,
+                           help='if an edge is sat, we try to make it unsat and report in this file')
     args = argparser.parse_args(args)
     if len(sys.argv) < 2:
         argparser.print_help()
@@ -673,6 +700,7 @@ def main(args):
     config = Config()
     config.disabled_solvers = solvers_to_disable
     config.dreal_precision = args.dreal_precision
+    config.how_to_unsat_file = args.how_to_unsat_file
     #comment: args.disable_solver is a list of solvers to disable.
     process_graph(args.input_file,
                   args.output_file, config)
