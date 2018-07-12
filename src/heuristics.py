@@ -40,7 +40,7 @@ class SegmentsHeuristics:
         script = parser.get_script(stream)
         self._formula = script.get_last_formula()
         s = Skolemization(get_env())
-        self._formula = s.simple_skolemization(self._formula)
+        #self._formula = s.simple_skolemization(self._formula)
         self._inequals = set([])
         self._quantified_variables = set([])
         self._generate_quantified_variables(self._formula)
