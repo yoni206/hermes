@@ -280,6 +280,7 @@ class EntailmentNode(Node):
         result = set([])
         result.add(self._kb)
         result.add(self._g)
+        result.add(self._base)
         return result
 
     def get_outgoing_edges(self):
