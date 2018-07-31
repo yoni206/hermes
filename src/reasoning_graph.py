@@ -600,14 +600,8 @@ def is_edge_sexp(e):
     return car_str == STRING_CONSTANTS.EDGE
 
 
-def process_graph(in_path, out_path, config):
-    lines = []
-    with open(in_path) as inputfile:
-        for line in inputfile:
-            if not line.startswith(SExp.COMMENT):
-                lines.append(line)
-    sexp_str = "".join(lines)
-    rg = ReasoningDag(sexp_str, config)
+def process_graph(graph, config):
+    rg = ReasoningDag(graph, config)
     print(rg)
     rg.execute()
     print(rg)
@@ -637,11 +631,25 @@ def process_graph(in_path, out_path, config):
                 output_lines.append(" ".join(["(", edge.name,
                                         edge.get_values_in_output_format(),
                                         ")"]))
+    return output_lines
 
+
+
+def process_graph_with_files(in_path, out_path, config):
+    lines = []
+    with open(in_path) as inputfile:
+        for line in inputfile:
+            if not line.startswith(SExp.COMMENT):
+                lines.append(line)
+    sexp_str = "".join(lines)
+    output_lines = process_graph(sexp_str, config)
     with open(out_path, 'w') as outputfile:
         for line in output_lines:
             outputfile.write("%s\n" % line)
 
+
+def process_graph_with_strings(graph, config):
+    return "\n".join(process_graph(graph, config))
 
 class Config:
     def __init__(self):
@@ -676,7 +684,7 @@ def main(args):
     config.disabled_solvers = solvers_to_disable
     config.dreal_precision = args.dreal_precision
     #comment: args.disable_solver is a list of solvers to disable.
-    process_graph(args.input_file,
+    process_graph_with_files(args.input_file,
                   args.output_file, config)
 
 if __name__ == "__main__":
