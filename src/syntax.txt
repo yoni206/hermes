@@ -1,0 +1,33 @@
+Syntax:
+An <smt_script> is a valid smtlib2.5 script 
+An <smt_term> is a valid smtlib term.
+An <ID> is an smtlib symbol 
+An <attribute> is an smtlib attribute
+
+<graph> := (graph <ID> <node>* <edge>* )
+<node> := (node <node_type>)
+<node_type> := <ID>
+<edge> := (edge <ID> <src> <dest> <edge_data>*)
+<edge_data> := <attribute>
+<src> := __ | (<ID> <port>)
+<dest> := __ | (<ID> <port>)
+<port> := <ID>
+
+
+
+Comments:
+- current supported values for node_type are: entailment, and, done
+
+- For an edge (ID src dest attributes) such that src (dest) has the form (ID port):
+    - if ID is an identifier of an entailment node, then port is an one of base, knowledge_base, goal, valid, countermodel, unsat_core
+    - if ID is an identifier of an and node, then port is either in or out.
+    - if ID is an identifier of a done node, then port is in.
+- Attributes take the form: ":<ID> <value>" where:
+- current supported values for <ID> are: smt25, boolX, evaluate, such that:
+    - if <ID> is smt25, then <value> is a valid smtlib script, wrapped with parenthesis
+    - if <ID> is boolX, then <value> is either __, false, true, or unknown
+    - if <ID> is evaluate, then <value> is a sequence of smtlib (get-value) commands, wrapped in parenthesis.
+- Edges that go from (to) "__" have no source (destination).
+- all nodes definitions appear before all edges definitions
+
+
