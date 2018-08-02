@@ -4,7 +4,7 @@ An <smt_term> is a valid smtlib term.
 An <ID> is an smtlib symbol 
 An <attribute> is an smtlib attribute
 
-<graph> := (graph <ID> <node>* <edge>* )
+<graph> := (graph <ID> (<node>*) (<edge>*) )
 <node> := (node <node_type>)
 <node_type> := <ID>
 <edge> := (edge <ID> <src> <dest> <edge_data>*)
