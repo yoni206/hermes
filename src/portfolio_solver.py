@@ -13,7 +13,7 @@ from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
 from transcendental import ExtendedSmtLibParser
 from pysmt.printers import HRPrinter
-from pysmt.rewritings import PrenexNormalizer, Ackermanization, Skolemization
+from pysmt.rewritings import PrenexNormalizer, Ackermannizer, Skolemization
 from pysmt.rewritings import Purifications
 from pysmt.smtlib.script import SmtLibScript
 from pysmt.smtlib.printers import SmtPrinter, LimitedSmtPrinter
@@ -132,7 +132,7 @@ class PartitionStrategy:
 class SimpleTheoryStrategy(PartitionStrategy):
     def __init__(self, formulas=None):
         self._env = get_env()
-        self._ackermanization = Ackermanization()
+        self._ackermanization = Ackermannizer()
         super().__init__(formulas)
 
     def _generate_internal_map(self):
@@ -141,7 +141,7 @@ class SimpleTheoryStrategy(PartitionStrategy):
             if solver == 'dreal':
                 h = Skolemization(self._env)
                 skolemized_formula = h.simple_skolemization(formula)
-                ackermized_formula = self._ackermanization.do_ackermanization(skolemized_formula)
+                ackermized_formula = self._ackermanization.do_ackermannization(skolemized_formula)
                 self._add_formulas_to_solver(solver, set([ackermized_formula]))
             else:
                 self._add_formulas_to_solver(solver, set([formula]))
@@ -312,10 +312,10 @@ class PortfolioSolver:
 
     def _solve_with_dreal(self, formula):
         #ackermanization
-        ackermanization = Ackermanization()
+        ackermanization = Ackermannizer()
         h = Skolemization(self._env)
         skolemized_formula = h.simple_skolemization(formula)
-        ackermized_formula = ackermanization.do_ackermanization(skolemized_formula)
+        ackermized_formula = ackermanization.do_ackermannization(skolemized_formula)
         pure_formula = Purifications.real_int_purify(ackermized_formula)
         #filtered_formulas = self._filter_formulas(formulas)
         #formula = And(filtered_formulas)
@@ -355,8 +355,8 @@ class PortfolioSolver:
             for get_val_cmd in script.filter_by_command_name("get-value"):
                 exprs.extend(get_val_cmd.args)
             for expr in exprs:
-                if expr in ackermanization._terms_to_consts:
-                    dreal_expr = ackermanization._terms_to_consts[expr]
+                if expr in ackermanization.get_term_to_const_dict():
+                    dreal_expr = ackermanization.get_term_to_const_dict()[expr]
                     #dreal_exprs.add(dreal_expr)
                     if dreal_expr in raw_values:
                         value = raw_values[dreal_expr]

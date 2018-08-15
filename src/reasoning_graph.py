@@ -140,7 +140,7 @@ class EvaluateEdge(Edge):
 
 class UnsolvedEvaluateEdge(EvaluateEdge):
     def __str__(self):
-        return " ".join(["(edge ", self.name, self.src.name,
+        return " ".join(["(edge ", EdgeType.to_string(self.get_type()), self.name, self.src.name,
                      self.dest.name,  ")"])
 
 class SolvedEvaluateEdge(EvaluateEdge):
@@ -199,9 +199,6 @@ class Node:
     def get_type(self):
         raise NotImplementedError("get_type() must be overriden by sub-classes")
 
-    def generate_from_sexp(e):
-        raise NotImplementedError("generate_from_sexp() must be overriden by sub-classes")
-
     def connect_edge_to_port(self, edge, port_name):
         raise NotImplementedError("connect_edge_to_port() must be overriden by sub-classes")
 
@@ -256,11 +253,6 @@ class EntailmentNode(Node):
 
     def get_type(self):
         return NodeType.ENTAILMENT
-
-    def generate_from_sexp(e, graph):
-        node_name = dumps(car(e))
-        node_sexp_after_name = cdr(e)
-        return EntailmentNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         if (port_name == STRING_CONSTANTS.BASE):
@@ -345,11 +337,6 @@ class DoneNode(Node):
     def get_type(self):
         return NodeType.DONE
 
-    def generate_from_sexp(e, graph):
-        node_name = dumps(car(e))
-        node_sexp_after_name = cdr(e)
-        return DoneNode(node_name, graph)
-
     def connect_edge_to_port(self, edge, port_name):
         self._input_edges.add(edge)
 
@@ -373,11 +360,6 @@ class StartNode(Node):
 
     def get_type(self):
         return NodeType.START
-
-    def generate_from_sexp(e, graph):
-        node_name = dumps(car(e))
-        node_sexp_after_name = cdr(e)
-        return StartNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         self._output_edges.add(edge)
@@ -408,11 +390,6 @@ class AndNode(Node):
 
     def get_type(self):
         return NodeType.AND
-
-    def generate_from_sexp(e, graph):
-        node_name = dumps(car(e))
-        node_sexp_after_name = cdr(e)
-        return AndNode(node_name, graph)
 
     def connect_edge_to_port(self, edge, port_name):
         if port_name == STRING_CONSTANTS.IN:
@@ -475,16 +452,17 @@ class ReasoningGraph:
         assert(dumps(car(self._sexp)) == STRING_CONSTANTS.GRAPH)
         graph_name_and_def = cdr(self._sexp)
         graph_def = cdr(graph_name_and_def)
-        for e in graph_def:
-            if is_node_sexp(e):
-                node_sexp_body = cdr(e)
-                node = self._generate_node_from_sexp(node_sexp_body)
-                self._nodes_dict_by_name[node.name] = node
-            elif is_edge_sexp(e):
-                edge_sexp_body = cdr(e)
-                self._generate_and_add_edge_from_sexp(edge_sexp_body)
-            else:
-                assert(false)
+        node_defs = car(graph_def)
+        edge_defs = car(cdr(graph_def))
+        for e in node_defs:
+            assert(is_node_sexp(e))
+            node_sexp_body = cdr(e)
+            node = self._generate_node_from_sexp(node_sexp_body)
+            self._nodes_dict_by_name[node.name] = node
+        for e in edge_defs:
+            assert(is_edge_sexp(e))
+            edge_sexp_body = cdr(e)
+            self._generate_and_add_edge_from_sexp(edge_sexp_body)
 
     def _generate_and_add_edge_from_sexp(self, e):
         edge_type, edge_name, src_node, src_port, dest_node, dest_port, label = \
@@ -507,17 +485,28 @@ class ReasoningGraph:
         dest_node.connect_edge_to_port(edge, dest_port)
         self._edges.add(edge)
 
+    def node_and_port(self, e):
+        if dumps(e) == "__":
+            return ["__", ""]
+        else:
+            node = dumps(car(e))
+            port = dumps(car(cdr(e)))
+            return [node, port]
+
+
     def _get_type_name_src_dest_label_of_edge_from_sexp(self, e):
         first = car(e)
         second = car(cdr(e))
         third = car(cdr(cdr(e)))
         fourth = car(cdr(cdr(cdr(e))))
+        fifth = car(cdr(cdr(cdr(cdr(e)))))
         edge_name = dumps(first)
-        src_node_name, src_port_name = split_or_same(dumps(second),"\\.")
-        dest_node_name, dest_port_name = split_or_same(dumps(third),"\\.")
-        label_type = dumps(car(fourth))
+        src_node_name, src_port_name = self.node_and_port(second)
+        dest_node_name, dest_port_name = self.node_and_port(third)
+        assert(dumps(fourth).strip()[0] == ":")
+        label_type = dumps(fourth).strip()[1:]
         edge_type = EdgeType.from_string(label_type)
-        label = dumps(car(cdr(fourth)))
+        label = dumps(fifth)
         if src_node_name == "__":
             start_node_name = "start" + str(len(self._start_nodes))
             src = StartNode(start_node_name, self)
@@ -564,15 +553,15 @@ class ReasoningDag(ReasoningGraph):
         return result
 
     def _generate_node_from_sexp(self, e):
-        node_type_str = dumps(car(e))
-        sexp_after_type = cdr(e)
+        node_name = dumps(car(e))
+        node_type_str = dumps(car(cdr(e)))
         node_type = NodeType.from_string(node_type_str)
         if node_type is NodeType.ENTAILMENT:
-            result = EntailmentNode.generate_from_sexp(sexp_after_type, self)
+            result = EntailmentNode(node_name, self)
         elif node_type is NodeType.AND:
-            result = AndNode.generate_from_sexp(sexp_after_type, self)
+            result = AndNode(node_name, self)
         elif node_type is NodeType.DONE:
-            result = DoneNode.generate_from_sexp(sexp_after_type, self)
+            result = DoneNode(node_name, self)
         else:
             assert(False)
         return result
