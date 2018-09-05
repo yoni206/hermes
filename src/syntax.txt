@@ -16,18 +16,46 @@ An <attribute> is an smtlib attribute
 
 
 Comments:
-- current supported values for node_type are: entailment, and, done
+- current supported values for node_type are: entailment, and, done, lustre
 
 - For an edge (ID src dest attributes) such that src (dest) has the form (ID port):
-    - if ID is an identifier of an entailment node, then port is an one of base, knowledge_base, goal, valid, countermodel, unsat_core
+    - if ID is an identifier of an entailment node, then port is any one of base, knowledge_base, goal, valid, countermodel, unsat_core
     - if ID is an identifier of an and node, then port is either in or out.
     - if ID is an identifier of a done node, then port is in.
+    - if ID is an identifier of a lustre node, then port is either model, property, holds
 - Attributes take the form: ":<ID> <value>" where:
-- current supported values for <ID> are: smt25, boolX, evaluate, such that:
+- current supported values for <ID> are: smt25, boolX, evaluate, lustre, such that:
     - if <ID> is smt25, then <value> is a valid smtlib script, wrapped with parenthesis
     - if <ID> is boolX, then <value> is either __, false, true, or unknown
     - if <ID> is evaluate, then <value> is a sequence of smtlib (get-value) commands, wrapped in parenthesis.
+    - if <ID> is lustre, then <value> is a mime representation of a lustre file
+
 - Edges that go from (to) "__" have no source (destination).
 - all nodes definitions appear before all edges definitions
 
 
+
+
+Discussion:
+First option:
+(edge e1 (v1 p1) (v2 p2) :lang lustre :encoding mime :content fdsafhu4nfsdanfuasd5h) 
+
+Second option:
+(edge e1 (v1 p1) (v2 p2) :lustre fdsafhu4nfsdanfuasd5h) 
+
+Third option:
+(edge e1 (v1 p1) (v2 p2) :ref 5)
+
+and also include a section like this:
+
+|||attachments|||
+||||
+5
+fdasfasdfsad
+dfsafdas
+fdsa
+||||
+6
+dfsasad
+sdfsafdsa
+fdsafdsafds
