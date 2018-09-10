@@ -126,7 +126,9 @@ class PartitionStrategy:
         return self._solvers_to_sets_of_formulas.keys()
 
     def _generate_internal_map(self):
-        raise NotImplementedError("This is an interface!")
+        for formula in self._formulas:
+            solver = self._solve_formula_with(formula)
+            self._add_formulas_to_solver(solver, set([formula]))
 
 
 class SimpleTheoryStrategy(PartitionStrategy):
@@ -162,10 +164,6 @@ class TransStrategy(PartitionStrategy):
         super().__init__(formulas, disabled_solvers)
         assert('z3' not in disabled_solvers)
 
-    def _generate_internal_map(self):
-        for formula in self._formulas:
-            solver = self._solve_formula_with(formula)
-            self._add_formulas_to_solver(solver, set([formula]))
 
     def _solve_formula_with(self, formula):
         if 'dreal' in self._disabled_solvers:
@@ -179,10 +177,31 @@ class TransStrategy(PartitionStrategy):
 
 class AlwaysZ3Strategy(PartitionStrategy):
     def __init__(self, formulas=None):
-        pass
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
 
     def _solve_formula_with(self, formula):
         return 'z3'
+
+class AlwaysCVC4Strategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
+
+    def _solve_formula_with(self, formula):
+        return 'cvc4'
+
+
+class AlwaysYicesStrategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
+
+    def _solve_formula_with(self, formula):
+        return 'yices'
 
 
 class TypeStratedy(PartitionStrategy):
@@ -237,7 +256,8 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        self._strategy = TransStrategy(formulas, config.disabled_solvers)
+        #self._strategy = TransStrategy(formulas, config.disabled_solvers)
+        self._strategy = AlwaysCVC4Strategy(formulas)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -422,6 +442,7 @@ class PortfolioSolver:
                     solver.add_assertion(formula)
                 except ConvertExpressionError as e:
 #                except UnsupportedOperatorError as e:
+                    print('panda ', e)
                     match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
                     expr = match_obj.group(1)
                     result = SolverResult.UNKNOWN
