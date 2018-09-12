@@ -35,7 +35,9 @@ class STRING_CONSTANTS:
     EVALUATE = "evaluate"
     IN = "in"
     OUT = "out"
-
+    ATTRIBUTE_TYPE = ":type"
+    ATTRIBUTE_ENCODING = ":encoding"
+    ATTRIBUTE_CONTENT = ":content"
 
 
 class EdgeType(Enum):
@@ -96,9 +98,10 @@ class SimpleEdge(Edge):
         return EdgeType.SIMPLE
 
 class SmtLibEdge(Edge):
-    def __init__(self, name, src, dest, smtlib):
+    def __init__(self, name, src, dest, smtlib, encoding):
         super().__init__(name, src, dest)
         self.smtlib = smtlib
+        self.encoding = encoding
 
     def get_type(self):
         return EdgeType.SMTLIB
@@ -284,7 +287,6 @@ class EntailmentNode(Node):
         return result
 
     def execute(self):
-        print('executing node ', self.name)
         base_smtlib = self._base.smtlib
         kb_smtlib = "(assert " + self._kb.smtlib + ")"
         g_smtlib = "(assert (not " + self._g.smtlib  + "))"
@@ -465,14 +467,14 @@ class ReasoningGraph:
             self._generate_and_add_edge_from_sexp(edge_sexp_body)
 
     def _generate_and_add_edge_from_sexp(self, e):
-        edge_type, edge_name, src_node, src_port, dest_node, dest_port, label = \
-            self._get_type_name_src_dest_label_of_edge_from_sexp(e)
+        edge_type, edge_name, src_node, src_port, dest_node, dest_port, label, encoding = \
+            self._get_type_name_src_dest_label_encoding_of_edge_from_sexp(e)
         if edge_type is EdgeType.SIMPLE:
             edge = SimpleEdge(edge_name, src_node, dest_node)
         elif edge_type is EdgeType.SMTLIB:
             label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
-            edge = SmtLibEdge(edge_name, src_node, dest_node, label)
+            edge = SmtLibEdge(edge_name, src_node, dest_node, label, encoding)
         elif edge_type is EdgeType.BOOLX:
             edge = UnsolvedBoolXEdge(edge_name, src_node, dest_node, label)
         elif edge_type is EdgeType.EVALUATE:
@@ -493,20 +495,18 @@ class ReasoningGraph:
             port = dumps(car(cdr(e)))
             return [node, port]
 
-
-    def _get_type_name_src_dest_label_of_edge_from_sexp(self, e):
+    def _get_type_name_src_dest_label_encoding_of_edge_from_sexp(self, e):
         first = car(e)
         second = car(cdr(e))
         third = car(cdr(cdr(e)))
-        fourth = car(cdr(cdr(cdr(e))))
-        fifth = car(cdr(cdr(cdr(cdr(e)))))
+        rest = cdr(cdr(cdr(e)))
         edge_name = dumps(first)
         src_node_name, src_port_name = self.node_and_port(second)
         dest_node_name, dest_port_name = self.node_and_port(third)
-        assert(dumps(fourth).strip()[0] == ":")
-        label_type = dumps(fourth).strip()[1:]
-        edge_type = EdgeType.from_string(label_type)
-        label = dumps(fifth)
+        attributes = get_attributes(rest)
+        edge_type = EdgeType.from_string(attributes[STRING_CONSTANTS.ATTRIBUTE_TYPE])
+        label = attributes[STRING_CONSTANTS.ATTRIBUTE_CONTENT]
+        encoding = attributes[STRING_CONSTANTS.ATTRIBUTE_ENCODING]
         if src_node_name == "__":
             start_node_name = "start" + str(len(self._start_nodes))
             src = StartNode(start_node_name, self)
@@ -522,8 +522,8 @@ class ReasoningGraph:
         else:
             src = self._nodes_dict_by_name[src_node_name]
             dest = self._nodes_dict_by_name[dest_node_name]
+        return edge_type, edge_name, src, src_port_name, dest, dest_port_name, label, encoding
 
-        return edge_type, edge_name, src, src_port_name, dest, dest_port_name, label
 
 
 class ReasoningDag(ReasoningGraph):
@@ -675,6 +675,19 @@ def main(args):
     #comment: args.disable_solver is a list of solvers to disable.
     process_graph_with_files(args.input_file,
                   args.output_file, config)
+
+
+def get_attributes(e):
+    result = {}
+    i = e
+    while (i):
+        key = dumps(car(i))
+        value = dumps(car(cdr(i)))
+        result[key] = value
+        i = cdr(cdr(i))
+    return result
+
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
