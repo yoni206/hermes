@@ -1,3 +1,4 @@
+import base64
 import sys
 import argparse
 import pprint
@@ -103,11 +104,11 @@ class SmtLibEdge(Edge):
         self.smtlib = smtlib
         self.encoding = encoding
 
+    def decode_smtlib(self):
+        return decode(self.smtlib, self.encoding)[1:-1]
+
     def get_type(self):
         return EdgeType.SMTLIB
-
-
-
 
 class BoolXEdge(Edge):
     def __init__(self, name, src, dest, boolx):
@@ -287,9 +288,9 @@ class EntailmentNode(Node):
         return result
 
     def execute(self):
-        base_smtlib = self._base.smtlib
-        kb_smtlib = "(assert " + self._kb.smtlib + ")"
-        g_smtlib = "(assert (not " + self._g.smtlib  + "))"
+        base_smtlib = self._base.decode_smtlib()
+        kb_smtlib = "(assert " + self._kb.decode_smtlib() + ")"
+        g_smtlib = "(assert (not " + self._g.decode_smtlib()  + "))"
         if self._counter_model is not None:
             get_val_smtlib = self._counter_model.wanted_values
         else:
@@ -472,7 +473,6 @@ class ReasoningGraph:
         if edge_type is EdgeType.SIMPLE:
             edge = SimpleEdge(edge_name, src_node, dest_node)
         elif edge_type is EdgeType.SMTLIB:
-            label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
             edge = SmtLibEdge(edge_name, src_node, dest_node, label, encoding)
         elif edge_type is EdgeType.BOOLX:
@@ -675,6 +675,15 @@ def main(args):
     #comment: args.disable_solver is a list of solvers to disable.
     process_graph_with_files(args.input_file,
                   args.output_file, config)
+
+
+def decode(s, encoding):
+    #for now, we only support base64 encoding
+    s = s + "="
+    assert(encoding == "base64")
+    result = base64.b64decode(s).decode('utf-8')
+    return result
+
 
 
 def get_attributes(e):

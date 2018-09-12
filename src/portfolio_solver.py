@@ -256,8 +256,7 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        #self._strategy = TransStrategy(formulas, config.disabled_solvers)
-        self._strategy = AlwaysCVC4Strategy(formulas)
+        self._strategy = TransStrategy(formulas, config.disabled_solvers)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
