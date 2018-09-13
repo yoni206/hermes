@@ -152,7 +152,7 @@ class SimpleTheoryStrategy(PartitionStrategy):
         theory = self._env.theoryo.get_theory(formula)
         q_oracle = self._env.qfo
         if theory.linear:
-            result = 'z3'
+            result = 'yices'
         else:
             result = 'dreal'
         return result

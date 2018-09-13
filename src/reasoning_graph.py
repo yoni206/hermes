@@ -39,7 +39,8 @@ class STRING_CONSTANTS:
     ATTRIBUTE_TYPE = ":type"
     ATTRIBUTE_ENCODING = ":encoding"
     ATTRIBUTE_CONTENT = ":content"
-
+    BASE64 = "base64"
+    PLAIN = "plain"
 
 class EdgeType(Enum):
     SIMPLE = 1
@@ -678,10 +679,15 @@ def main(args):
 
 
 def decode(s, encoding):
-    #for now, we only support base64 encoding
-    s = s + "="
-    assert(encoding == "base64")
-    result = base64.b64decode(s).decode('utf-8')
+    assert(encoding == STRING_CONSTANTS.BASE64 or encoding == STRING_CONSTANTS.PLAIN)
+    if (encoding == STRING_CONSTANTS.BASE64):
+        s = s + "="
+        result = base64.b64decode(s).decode('utf-8')
+    elif (encoding == STRING_CONSTANTS.PLAIN):
+        result = s
+    else:
+        #for now, we only support base64 encoding
+        Assert(False)
     return result
 
 
