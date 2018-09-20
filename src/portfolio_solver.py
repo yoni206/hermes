@@ -18,6 +18,7 @@ from pysmt.rewritings import Purifications
 from pysmt.smtlib.script import SmtLibScript
 from pysmt.smtlib.printers import SmtPrinter, LimitedSmtPrinter
 from pysmt.smtlib.printers import to_smtlib
+from pysmt.oracles import get_raw_logic
 from trivalogic import TriValLogic, Values
 import transcendental
 import z3
@@ -172,7 +173,7 @@ class TransStrategy(PartitionStrategy):
             if transcendental.includes_trans(formula):
                 return 'dreal'
             else:
-                return 'z3'
+                return 'yices'
 
 
 class AlwaysZ3Strategy(PartitionStrategy):
@@ -256,7 +257,8 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        self._strategy = TransStrategy(formulas, config.disabled_solvers)
+        #self._strategy = TransStrategy(formulas, config.disabled_solvers)
+        self._strategy = AlwaysCVC4Strategy(formulas)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -435,13 +437,13 @@ class PortfolioSolver:
                 limited_smt_printer = LimitedSmtPrinter()
                 smtlib_content = limited_smt_printer.printer(formula)
                 open(solver_name + "_tmp.smt2", 'w').write(smtlib_content)
-                solver = Solver(solver_name)
+                logic = get_raw_logic(formula)
+                solver = Solver(solver_name, logic)
                 had_expression_error = False
                 try:
                     solver.add_assertion(formula)
                 except ConvertExpressionError as e:
 #                except UnsupportedOperatorError as e:
-                    print('panda ', e)
                     match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
                     expr = match_obj.group(1)
                     result = SolverResult.UNKNOWN
