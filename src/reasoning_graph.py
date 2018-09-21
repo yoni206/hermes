@@ -301,7 +301,7 @@ class EntailmentNode(Node):
                 " (check-sat) " + \
                 get_val_smtlib
         solver = PortfolioSolver(smtlib, self.graph._config, self.name)
-        with open('full_smt.smt2', 'w') as the_file:
+        with open(self.name + '.smt2', 'w') as the_file:
             the_file.write(smtlib)
         solver_result, values = solver.solve()
         if solver_result == SolverResult.SAT:

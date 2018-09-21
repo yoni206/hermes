@@ -274,7 +274,6 @@ class TypeStratedy(PartitionStrategy):
 class PortfolioSolver:
     def __init__(self, smtlib_str, config, name):
         stream = cStringIO(smtlib_str)
-        
         #count number of calls to solving, for file names
         self._env = reset_env()
         self._env.enable_infix_notation = True
@@ -284,7 +283,7 @@ class PortfolioSolver:
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
         formula = script.get_last_formula()
-        #uncommented line is for splitting a problem.
+        #commented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
         if config.strategy is not None:
@@ -496,12 +495,22 @@ class PortfolioSolver:
              values = [expr]
         return result, values
 
+    def get_value_lines(self):
+        stream = cStringIO(self._smtlib)
+        parser = ExtendedSmtLibParser(environment = self._env)
+        script = parser.get_script(stream)
+        exprs = []
+        for get_val_cmd in script.filter_by_command_name("get-value"):
+            exprs.extend(to_smtlib(a) for a in get_val_cmd.args)
+        return "(get-value (" + " ".join(exprs)  +"))"
+
     def _solve_formula_with_solver(self, formula, solver_name):
         formula = self.massage_formula(formula, solver_name)
         logic = get_raw_logic(formula, self._env)
         solver = Solver(solver_name, logic)
         limited_smt_printer = LimitedSmtPrinter()
         smtlib_content = limited_smt_printer.printer(formula)
+        smtlib_content = smtlib_content + self.get_value_lines()
         if 'cvc4' in solver_name: 
             smtlib_content = "(set-logic ALL)\n" + smtlib_content
         elif 'yices' in solver_name:
@@ -546,7 +555,6 @@ class PortfolioSolver:
         exprs = []
         for get_val_cmd in script.filter_by_command_name("get-value"):
             exprs.extend(get_val_cmd.args)
-        #values = solver.get_values(exprs)
         values = []
         for expr in exprs:
             try:
