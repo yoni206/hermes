@@ -1,3 +1,4 @@
+from transcendental import ExtendedSmtLibParser
 import traceback
 import re
 import os
@@ -11,7 +12,6 @@ from pysmt.exceptions import SolverReturnedUnknownResultError, \
 from enum import Enum
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
-from transcendental import ExtendedSmtLibParser
 from pysmt.printers import HRPrinter
 from pysmt.rewritings import PrenexNormalizer, Ackermannizer, Skolemization
 from pysmt.rewritings import Purifications
@@ -547,3 +547,8 @@ class PortfolioSolver:
         return variables_to_sets_of_formulas
 
 
+#ignore PendingDeprecationWarning. 
+#This is a pysmt issue, that is expected to be fixed
+#see https://github.com/pysmt/pysmt/issues/488
+import warnings
+warnings.filterwarnings("ignore", category=PendingDeprecationWarning) 
