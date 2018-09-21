@@ -245,11 +245,14 @@ class TypeStratedy(PartitionStrategy):
 
 
 class PortfolioSolver:
-    def __init__(self, smtlib_str, config):
+    def __init__(self, smtlib_str, config, name):
         stream = cStringIO(smtlib_str)
+        
+        #count number of calls to solving, for file names
         self._env = reset_env()
         self._env.enable_infix_notation = True
         self._config = config
+        self._name = name
         #script = self._get_script(stream, False)
         parser = ExtendedSmtLibParser(environment=self._env)
         script = parser.get_script(stream)
@@ -257,8 +260,8 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        #self._strategy = TransStrategy(formulas, config.disabled_solvers)
-        self._strategy = AlwaysCVC4Strategy(formulas)
+        self._strategy = TransStrategy(formulas, config.disabled_solvers)
+        #self._strategy = AlwaysCVC4Strategy(formulas)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -423,7 +426,68 @@ class PortfolioSolver:
         return var_part, middle_part, value_part
 
 
+    def _solve_with_api(self, formula, solver):
+        had_expression_error = False
+        values = []
+        try:
+            solver.add_assertion(formula)
+        except ConvertExpressionError as e:
+            match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
+            expr = match_obj.group(1)
+            result = SolverResult.UNKNOWN
+            values = [expr]
+            had_expression_error = True
+        if not had_expression_error:
+            try:
+              solver_result = solver.solve()
+              if solver_result == False:
+                  result = SolverResult.UNSAT
+              else:
+                  result = SolverResult.SAT
+                  values.extend(self.get_values(solver))
+            except SolverReturnedUnknownResultError:
+              result = SolverResult.UNKNOWN
+        return result, values
 
+
+    def _solve_generic(self, smtlib_path, solver):
+        try:
+            values = []
+            solver_result, values = solver.solve_smtlib_file(smtlib_path)
+            if solver_result == False:
+                result = SolverResult.UNSAT
+            else:
+                result = SolverResult.SAT
+        except SolverReturnedUnknownResultError:
+             result = SolverResult.UNKNOWN
+        return result, values
+
+    def _solve_formula_with_solver(self, formula, solver_name):
+        formula = self.massage_formula(formula, solver_name)
+        logic = get_raw_logic(formula, self._env)
+        solver = Solver(solver_name, logic)
+        limited_smt_printer = LimitedSmtPrinter()
+        smtlib_content = limited_smt_printer.printer(formula)
+        if 'cvc4' in solver_name: 
+            smtlib_content = "(set-logic ALL)\n" + smtlib_content
+        elif 'yices' in solver_name:
+            smtlib_content = "(set-logic QF_UFNIRA)\n" + smtlib_content
+        smtlib_path = solver_name + "_" + self._name +  "_tmp.smt2"
+        open(smtlib_path, 'w').write(smtlib_content)
+        smtlib_path = os.path.realpath(smtlib_path)
+        if solver.is_generic():
+            result, values = self._solve_generic(smtlib_path, solver)
+        else:
+            result, values = self._solve_with_api(formula, solver)
+        return result, values
+    
+    def massage_formula(self, formula, solver_name):
+        result = formula
+        if solver_name == "yices":
+            h = Skolemization(self._env)
+            skolemized_formula = h.simple_skolemization(formula)
+            result = skolemized_formula
+        return result
 
     def _solve_partitioned_problem(self):
         result = SolverResult.SAT
@@ -434,34 +498,9 @@ class PortfolioSolver:
             if solver_name == 'dreal':
                 result, values = self._solve_with_dreal(formula)
             else:
-                limited_smt_printer = LimitedSmtPrinter()
-                smtlib_content = limited_smt_printer.printer(formula)
-                open(solver_name + "_tmp.smt2", 'w').write(smtlib_content)
-                logic = get_raw_logic(formula)
-                solver = Solver(solver_name, logic)
                 had_expression_error = False
-                try:
-                    solver.add_assertion(formula)
-                except ConvertExpressionError as e:
-#                except UnsupportedOperatorError as e:
-                    match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
-                    expr = match_obj.group(1)
-                    result = SolverResult.UNKNOWN
-                    values = [expr]
-                    had_expression_error = True
-                if not had_expression_error:
-                    try:
-                        solver_result = solver.solve()
-                        if solver_result == False:
-                            result = SolverResult.UNSAT
-                        else:
-                            values.extend(self.get_values(solver))
-                    except SolverReturnedUnknownResultError:
-                        print(solver_name, ': unknown')
-                        result = SolverResult.UNKNOWN
-                        break
-            print(solver_name,': ', result, values)
-        return result, values
+                result, values = self._solve_formula_with_solver(formula, solver_name)
+            return result, values
 
     def solve(self):
         return self._solve_partitioned_problem()

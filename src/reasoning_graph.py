@@ -300,7 +300,7 @@ class EntailmentNode(Node):
                 base_smtlib + " " + " " + kb_smtlib +" " + g_smtlib + \
                 " (check-sat) " + \
                 get_val_smtlib
-        solver = PortfolioSolver(smtlib, self.graph._config)
+        solver = PortfolioSolver(smtlib, self.graph._config, self.name)
         with open('full_smt.smt2', 'w') as the_file:
             the_file.write(smtlib)
         solver_result, values = solver.solve()
@@ -311,7 +311,6 @@ class EntailmentNode(Node):
         elif solver_result == SolverResult.UNKNOWN:
             result = Values.UNKNOWN
         else:
-            print(solver_result)
             assert(False)
         old_boolx_edge = self._valid
         new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
@@ -592,9 +591,7 @@ def is_edge_sexp(e):
 
 def process_graph(graph, config):
     rg = ReasoningDag(graph, config)
-    print(rg)
     rg.execute()
-    print(rg)
     output_lines = []
     for edge in rg._edges:
         if edge.get_type() == EdgeType.BOOLX:

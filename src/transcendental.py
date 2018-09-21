@@ -22,8 +22,9 @@ class ExtendedFormulaManager(pysmt.formula.FormulaManager):
 from pysmt.type_checker import SimpleTypeChecker
 SimpleTypeChecker.set_handler(SimpleTypeChecker.walk_real_to_real, *ALL_TRANS)
 
-from pysmt.oracles import FreeVarsOracle
+from pysmt.oracles import FreeVarsOracle, QuantifierOracle
 FreeVarsOracle.set_handler(FreeVarsOracle.walk_simple_args, *ALL_TRANS)
+QuantifierOracle.set_handler(QuantifierOracle.walk_all, *ALL_TRANS)
 
 from pysmt.rewritings import PrenexNormalizer
 PrenexNormalizer.set_handler(PrenexNormalizer.walk_theory_op, *ALL_TRANS)

@@ -1,7 +1,6 @@
-(set-logic QF_UFLIRA)
 (declare-sort test.S1 0)
-(declare-sort test.S1_Impl 0)
 (declare-sort test.S2 0)
+(declare-sort test.S1_Impl 0)
 (declare-sort hermes.iml.aadl.Connection<Float> 0)
 (declare-fun test.S1_Impl.base_0( test.S1_Impl) test.S1)
 (declare-fun test.S1_Impl.S2_sub( test.S1_Impl) test.S2)
