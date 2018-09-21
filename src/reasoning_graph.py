@@ -8,7 +8,7 @@ from transcendental import ExtendedEnvironment
 from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
-from portfolio_solver import SolverResult, PortfolioSolver
+from portfolio_solver import SolverResult, PortfolioSolver, StrategyFactory
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -659,6 +659,8 @@ def main(args):
                            help='disable a solver')
     argparser.add_argument('--dreal_precision',
                             help='dreal precision')
+    argparser.add_argument('--strategy',
+                            help='strategy to pick solvers')
     args = argparser.parse_args(args)
     if len(sys.argv) < 2:
         argparser.print_help()
@@ -667,10 +669,14 @@ def main(args):
         solvers_to_disable = []
     else:
         solvers_to_disable = args.disable_solver
+    if args.strategy != None and args.strategy not in StrategyFactory.STRATEGY_NAMES:
+        print("strategy must be either empty or one of: " + StrategyFactory.STRATEGY_NAMES)
+        exit(1)
+
     config = Config()
     config.disabled_solvers = solvers_to_disable
     config.dreal_precision = args.dreal_precision
-    #comment: args.disable_solver is a list of solvers to disable.
+    config.strategy = args.strategy
     process_graph_with_files(args.input_file,
                   args.output_file, config)
 

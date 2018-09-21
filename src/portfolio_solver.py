@@ -8,7 +8,8 @@ from pysmt.logics import QF_NRA, QF_NIRA
 from pysmt.shortcuts import Solver, get_env, And, Symbol
 from pysmt.exceptions import SolverReturnedUnknownResultError, \
                        ConvertExpressionError, \
-                       UnsupportedOperatorError
+                       UnsupportedOperatorError, \
+                       UnknownSolverAnswerError
 from enum import Enum
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
@@ -130,7 +131,22 @@ class PartitionStrategy:
         for formula in self._formulas:
             solver = self._solve_formula_with(formula)
             self._add_formulas_to_solver(solver, set([formula]))
-
+    
+class StrategyFactory:
+    STRATEGY_NAMES = ["transcendental", "always-z3", "always-yices", "always-cvc4", "always-dreal"]
+    def get_strategy_by_name(name, formulas=None, disabled_solvers = []):
+        if name == "transcendental":
+            return TransStrategy(formulas, disabled_solvers)
+        elif name == "always-z3":
+            return AlwaysZ3Strategy(formulas)
+        elif name == "always-yices":
+            return AlwaysYicesStrategy(formulas)
+        elif name == "always-cvc4":
+            return AlwaysCVC4Strategy(formulas)
+        elif name == "always-dreal":
+            return AlwaysDrealStrategy(formulas)
+        else:
+            Assert(False)
 
 class SimpleTheoryStrategy(PartitionStrategy):
     def __init__(self, formulas=None):
@@ -184,6 +200,17 @@ class AlwaysZ3Strategy(PartitionStrategy):
 
     def _solve_formula_with(self, formula):
         return 'z3'
+
+
+
+class AlwaysDrealStrategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
+
+    def _solve_formula_with(self, formula):
+        return 'dreal'
 
 class AlwaysCVC4Strategy(PartitionStrategy):
     def __init__(self, formulas=None):
@@ -260,8 +287,10 @@ class PortfolioSolver:
         #uncommented line is for splitting a problem.
         #formulas = formula.args()
         formulas = [formula]
-        self._strategy = TransStrategy(formulas, config.disabled_solvers)
-        #self._strategy = AlwaysCVC4Strategy(formulas)
+        if config.strategy is not None:
+            self._strategy = StrategyFactory.get_strategy_by_name(config.strategy, formulas)
+        else:
+            self._strategy = TransStrategy(formulas, config.disabled_solvers)
         self._smtlib = smtlib_str
 
     def _get_script(self, stream, optimize):
@@ -460,6 +489,11 @@ class PortfolioSolver:
                 result = SolverResult.SAT
         except SolverReturnedUnknownResultError:
              result = SolverResult.UNKNOWN
+        except UnknownSolverAnswerError as e:
+             match_obj = re.match(r'.*undefined term: (.*)\"', str(e), re.M)
+             expr = match_obj.group(1)
+             result = SolverResult.UNKNOWN
+             values = [expr]
         return result, values
 
     def _solve_formula_with_solver(self, formula, solver_name):
