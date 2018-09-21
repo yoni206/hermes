@@ -173,7 +173,7 @@ class TransStrategy(PartitionStrategy):
             if transcendental.includes_trans(formula):
                 return 'dreal'
             else:
-                return 'yices'
+                return 'z3'
 
 
 class AlwaysZ3Strategy(PartitionStrategy):
