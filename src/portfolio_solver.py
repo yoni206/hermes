@@ -189,7 +189,7 @@ class TransStrategy(PartitionStrategy):
             if transcendental.includes_trans(formula):
                 return 'dreal'
             else:
-                return 'z3'
+                return 'yices'
 
 
 class AlwaysZ3Strategy(PartitionStrategy):
@@ -501,13 +501,14 @@ class PortfolioSolver:
         script = parser.get_script(stream)
         exprs = []
         for get_val_cmd in script.filter_by_command_name("get-value"):
-            exprs.extend(to_smtlib(a) for a in get_val_cmd.args)
+            exprs.extend(to_smtlib(a, False) for a in get_val_cmd.args)
         return "(get-value (" + " ".join(exprs)  +"))"
 
     def _solve_formula_with_solver(self, formula, solver_name):
         formula = self.massage_formula(formula, solver_name)
         logic = get_raw_logic(formula, self._env)
         solver = Solver(solver_name, logic)
+        print('panda solver = ', solver)
         limited_smt_printer = LimitedSmtPrinter()
         smtlib_content = limited_smt_printer.printer(formula)
         smtlib_content = smtlib_content + self.get_value_lines()
@@ -526,7 +527,7 @@ class PortfolioSolver:
     
     def massage_formula(self, formula, solver_name):
         result = formula
-        if solver_name == "yices":
+        if solver_name == "yices" or solver_name == "cvc4":
             h = Skolemization(self._env)
             skolemized_formula = h.simple_skolemization(formula)
             result = skolemized_formula
@@ -558,8 +559,10 @@ class PortfolioSolver:
         values = []
         for expr in exprs:
             try:
+                print('panda ', str(expr))
                 value = solver.get_value(expr)
             except (z3.Z3Exception) as e: #comma separated list of exceptions
+                print('panda ', exception)
                 value = "__"
             values.append(self._regulate(value))
         return values
