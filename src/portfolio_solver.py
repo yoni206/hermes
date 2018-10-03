@@ -189,7 +189,7 @@ class TransStrategy(PartitionStrategy):
             if transcendental.includes_trans(formula):
                 return 'dreal'
             else:
-                return 'yices'
+                return 'z3'
 
 
 class AlwaysZ3Strategy(PartitionStrategy):
@@ -332,10 +332,6 @@ class PortfolioSolver:
         buf2 = cStringIO()
         new_script.serialize(buf2, False)
         smtlib_data = buf2.getvalue()
-
-
-
-
         return new_script
 
 
@@ -504,14 +500,34 @@ class PortfolioSolver:
             exprs.extend(to_smtlib(a, False) for a in get_val_cmd.args)
         return "(get-value (" + " ".join(exprs)  +"))"
 
+    def get_def_fun_lines(self):
+        stream = cStringIO(self._smtlib)
+        parser = ExtendedSmtLibParser(environment = self._env)
+        script = parser.get_script(stream)
+        lines = []
+        for def_fun_cmd in script.filter_by_command_name("define-fun"):
+            outstream = cStringIO()
+            def_fun_cmd.serialize(daggify=False, outstream=outstream)
+            lines.append(outstream.getvalue())
+            #exprs.extend(to_smtlib(a, False) for a in get_val_cmd.args)
+        return lines
+
+
+    def _get_smtlib_content(self, formula):
+        limited_smt_printer = LimitedSmtPrinter()
+        original_def_func_lines = "\n".join(self.get_def_fun_lines())
+        smtlib_content = ""
+        smtlib_content = smtlib_content + limited_smt_printer.printer(formula)
+        #smtlib_content = smtlib_content + original_def_func_lines
+        smtlib_content = smtlib_content + self.get_value_lines()
+        return smtlib_content
+
+
     def _solve_formula_with_solver(self, formula, solver_name):
         formula = self.massage_formula(formula, solver_name)
         logic = get_raw_logic(formula, self._env)
         solver = Solver(solver_name, logic)
-        print('panda solver = ', solver)
-        limited_smt_printer = LimitedSmtPrinter()
-        smtlib_content = limited_smt_printer.printer(formula)
-        smtlib_content = smtlib_content + self.get_value_lines()
+        smtlib_content = self._get_smtlib_content(formula)
         if 'cvc4' in solver_name: 
             smtlib_content = "(set-logic ALL)\n" + smtlib_content
         elif 'yices' in solver_name:
@@ -559,10 +575,8 @@ class PortfolioSolver:
         values = []
         for expr in exprs:
             try:
-                print('panda ', str(expr))
                 value = solver.get_value(expr)
             except (z3.Z3Exception) as e: #comma separated list of exceptions
-                print('panda ', exception)
                 value = "__"
             values.append(self._regulate(value))
         return values
