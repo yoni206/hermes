@@ -455,7 +455,7 @@ class PortfolioSolver:
         values = []
         try:
             solver.add_assertion(formula)
-        except ConvertExpressionError as e:
+        except (ConvertExpressionError, UnsupportedOperatorError) as e:
             match_obj = re.match(r'.*Unsupported operator \'(.*)\' ', e.message, re.M)
             expr = match_obj.group(1)
             result = SolverResult.UNKNOWN
@@ -535,10 +535,11 @@ class PortfolioSolver:
         smtlib_path = solver_name + "_" + self._name +  "_tmp.smt2"
         open(smtlib_path, 'w').write(smtlib_content)
         smtlib_path = os.path.realpath(smtlib_path)
-        if solver.is_generic():
-            result, values = self._solve_generic(smtlib_path, solver)
-        else:
-            result, values = self._solve_with_api(formula, solver)
+        #if solver.is_generic():
+        #    result, values = self._solve_generic(smtlib_path, solver)
+        #else:
+        #    result, values = self._solve_with_api(formula, solver)
+        result, values = self._solve_with_api(formula, solver)
         return result, values
     
     def massage_formula(self, formula, solver_name):
