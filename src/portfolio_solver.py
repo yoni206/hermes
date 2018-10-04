@@ -9,7 +9,8 @@ from pysmt.shortcuts import Solver, get_env, And, Symbol
 from pysmt.exceptions import SolverReturnedUnknownResultError, \
                        ConvertExpressionError, \
                        UnsupportedOperatorError, \
-                       UnknownSolverAnswerError
+                       UnknownSolverAnswerError, \
+                       PysmtSyntaxError
 from enum import Enum
 from six.moves import cStringIO
 from transcendental import ExtendedEnvironment, reset_env
@@ -577,7 +578,7 @@ class PortfolioSolver:
         for expr in exprs:
             try:
                 value = solver.get_value(expr)
-            except (z3.Z3Exception) as e: #comma separated list of exceptions
+            except (z3.Z3Exception, PysmtSyntaxError) as e: #comma separated list of exceptions
                 value = "__"
             values.append(self._regulate(value))
         return values
