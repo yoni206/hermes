@@ -289,6 +289,7 @@ class EntailmentNode(Node):
         return result
 
     def execute(self):
+        print("Executing node: ", self.name)
         base_smtlib = self._base.decode_smtlib()
         kb_smtlib = "(assert " + self._kb.decode_smtlib() + ")"
         g_smtlib = "(assert (not " + self._g.decode_smtlib()  + "))"
@@ -320,12 +321,13 @@ class EntailmentNode(Node):
         self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
 
         old_evaluate_edge = self._counter_model
-        new_evaluate_edge = SolvedEvaluateEdge(old_evaluate_edge.name,
+        if old_evaluate_edge:
+            new_evaluate_edge = SolvedEvaluateEdge(old_evaluate_edge.name,
                                                old_evaluate_edge.src,
                                                old_evaluate_edge.dest,
                                                old_evaluate_edge.wanted_values,
                                                values)
-        self.graph.replace_edge(old_evaluate_edge, new_evaluate_edge)
+            self.graph.replace_edge(old_evaluate_edge, new_evaluate_edge)
 
 
 class DoneNode(Node):

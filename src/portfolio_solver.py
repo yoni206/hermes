@@ -548,7 +548,12 @@ class PortfolioSolver:
         if solver_name == "yices" or solver_name == "cvc4":
             h = Skolemization(self._env)
             skolemized_formula = h.simple_skolemization(formula)
-            result = skolemized_formula
+            ackermannization = Ackermannizer()
+            ackermized_formula = ackermannization.do_ackermannization(skolemized_formula)
+            print("panda")
+            pp.pprint(ackermannization._funs_to_args)
+            pp.pprint(ackermannization._terms_dict)
+            result = ackermized_formula
         return result
 
     def _solve_partitioned_problem(self):
