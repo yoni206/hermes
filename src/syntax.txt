@@ -24,11 +24,12 @@ Comments:
     - if ID is an identifier of a done node, then port is in.
     - if ID is an identifier of a lustre node, then port is either model, property, holds
 - Attributes take the form: ":<ID> <value>" where:
-- current supported values for <ID> are: smt25, boolX, evaluate, lustre, such that:
-    - if <ID> is smt25, then <value> is a valid smtlib script, wrapped with parenthesis
-    - if <ID> is boolX, then <value> is either __, false, true, or unknown
-    - if <ID> is evaluate, then <value> is a sequence of smtlib (get-value) commands, wrapped in parenthesis.
-    - if <ID> is lustre, then <value> is a mime representation of a lustre file
+- current supported values for <ID> are: type, encoding, content. 
+- for an edge (ID src dest attributes):
+    - if :type smt25 is in attributes, then :content is followed by a valid smtlib script, wrapped with parenthesis
+    - if :type boolX is in attributes, then :content is followed by either __, false, true, or unknown
+    - if :type evaluate is in attributes, then :content is followed by a sequence of smtlib (get-value) commands, wrapped in parenthesis.
+    - if :type lustre is in attributes, then :content is followed by a mime representation of a lustre file
 
 - Edges that go from (to) "__" have no source (destination).
 - all nodes definitions appear before all edges definitions
