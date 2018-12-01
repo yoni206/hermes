@@ -5,8 +5,8 @@
 ( node N_6 and ) 
 ( node N_5 entailment ) 
 ( node N_7 done ) ) 
-( ( edge E_6 __ ( N_2 base ) :type smt25 :encoding plain :content 
-(declare-sort |SWIMLAnnex.Command| 0)
+(( edge E_6 __ ( N_2 base ) :type smt25 :encoding plain :content 
+((declare-sort |SWIMLAnnex.Command| 0)
 
 (declare-sort |SWIMLAnnex.MC_SW| 0)
 
@@ -367,7 +367,7 @@
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
 (= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
- ) 
+ )) 
 ( edge E_7 __ ( N_2 kb ) :type smt25 :encoding plain :content 
 ( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
 (=> (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
@@ -400,7 +400,7 @@
 ( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
 ( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
 ( edge E_1 __ ( N_1 base ) :type smt25 :encoding plain :content 
-(declare-sort |SWIMLAnnex.Command| 0)
+((declare-sort |SWIMLAnnex.Command| 0)
 
 (declare-sort |SWIMLAnnex.MC_SW| 0)
 
@@ -761,7 +761,7 @@
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
 (= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
- ) 
+ ) )
 ( edge E_2 __ ( N_1 kb ) :type smt25 :encoding plain :content 
 ( (and (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
 (=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
@@ -796,7 +796,7 @@
 ( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
 ( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
 ( edge E_16 __ ( N_4 base ) :type smt25 :encoding plain :content 
-(declare-sort |SWIMLAnnex.Command| 0)
+((declare-sort |SWIMLAnnex.Command| 0)
 
 (declare-sort |SWIMLAnnex.MC_SW| 0)
 
@@ -1157,7 +1157,7 @@
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
 (= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
- ) 
+ )) 
 ( edge E_17 __ ( N_4 kb ) :type smt25 :encoding plain :content 
 ( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
 (=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
@@ -1190,7 +1190,7 @@
 ( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
 ( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
 ( edge E_11 __ ( N_3 base ) :type smt25 :encoding plain :content 
-(declare-sort |SWIMLAnnex.Command| 0)
+((declare-sort |SWIMLAnnex.Command| 0)
 
 (declare-sort |SWIMLAnnex.MC_SW| 0)
 
@@ -1551,7 +1551,7 @@
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
 (= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
- ) 
+ )) 
 ( edge E_12 __ ( N_3 kb ) :type smt25 :encoding plain :content 
 ( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
 (=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
@@ -1588,7 +1588,7 @@
 ( edge E_26 ( N_6 out ) 
 ( N_7 in ) :type boolX :encoding plain :content __ ) 
 ( edge E_21 __ ( N_5 base ) :type smt25 :encoding plain :content 
-(declare-sort |SWIMLAnnex.Command| 0)
+((declare-sort |SWIMLAnnex.Command| 0)
 
 (declare-sort |SWIMLAnnex.MC_SW| 0)
 
@@ -1949,7 +1949,7 @@
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
 (= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
 (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
- ) 
+ )) 
 ( edge E_22 __ ( N_5 kb ) :type smt25 :encoding plain :content 
 ( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
 (=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
@@ -1978,5 +1978,5 @@
 ( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
 ( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
 ( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
-( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) ) )
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) )) 
 
