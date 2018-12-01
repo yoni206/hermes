@@ -702,6 +702,7 @@ def get_attributes(e):
     i = e
     while (i):
         key = dumps(car(i))
+        assert(key.startswith(":"))
         value = dumps(car(cdr(i)))
         result[key] = value
         i = cdr(cdr(i))

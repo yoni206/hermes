@@ -550,7 +550,6 @@ class PortfolioSolver:
             skolemized_formula = h.simple_skolemization(formula)
             ackermannization = Ackermannizer()
             ackermized_formula = ackermannization.do_ackermannization(skolemized_formula)
-            print("panda")
             pp.pprint(ackermannization._funs_to_args)
             pp.pprint(ackermannization._terms_dict)
             result = ackermized_formula
