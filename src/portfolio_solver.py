@@ -134,7 +134,7 @@ class PartitionStrategy:
             self._add_formulas_to_solver(solver, set([formula]))
     
 class StrategyFactory:
-    STRATEGY_NAMES = ["transcendental", "always-z3", "always-yices", "always-cvc4", "always-dreal"]
+    STRATEGY_NAMES = ["transcendental", "always-z3", "always-yices", "always-cvc4", "always-dreal", "always-generic-z3", "always-generic-cvc4"]
     def get_strategy_by_name(name, formulas=None, disabled_solvers = []):
         if name == "transcendental":
             return TransStrategy(formulas, disabled_solvers)
@@ -146,6 +146,10 @@ class StrategyFactory:
             return AlwaysCVC4Strategy(formulas)
         elif name == "always-dreal":
             return AlwaysDrealStrategy(formulas)
+        elif name == "always-generic-z3":
+            return AlwaysGenericZ3Strategy(formulas)
+        elif name == "always-generic-cvc4":
+            return AlwaysGenericCVC4Strategy(formulas)
         else:
             Assert(False)
 
@@ -202,6 +206,23 @@ class AlwaysZ3Strategy(PartitionStrategy):
     def _solve_formula_with(self, formula):
         return 'z3'
 
+class AlwaysGenericZ3Strategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
+
+    def _solve_formula_with(self, formula):
+        return 'generic_z3'
+
+class AlwaysGenericCVC4Strategy(PartitionStrategy):
+    def __init__(self, formulas=None):
+        self._env = get_env()
+        self._disabled_solvers = []
+        super().__init__(formulas, [])
+
+    def _solve_formula_with(self, formula):
+        return 'generic_cvc4'
 
 
 class AlwaysDrealStrategy(PartitionStrategy):
