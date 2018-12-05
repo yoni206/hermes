@@ -1,0 +1,1989 @@
+( graph test1 ( ( node N_2 entailment ) 
+( node N_1 entailment ) 
+( node N_4 entailment ) 
+( node N_3 entailment ) 
+( node N_6 and ) 
+( node N_5 entailment ) 
+( node N_7 done ) 
+( node N_100 model_checking )
+) 
+(
+( edge E_100 __ (N_100 model) :type nusmv :encoding base64 :content TU9EVUxFICJpbWwucG9ydHMuRmxvd1BvaW50IgoKVkFSIHVwcGVyQm91bmQgOiAiaW1sLmxhbmcuUmVhbCIgIDsKClZBUiBsb3dlckJvdW5kIDogImltbC5sYW5nLlJlYWwiICA7CgpWQVIgZXZlbnQgOiBib29sZWFuICA7CgogCgpNT0RVTEUgImltbC5sYW5nLlJlYWwiCgpNT0RVTEUgImltbC5wb3J0cy5FdmVudERhdGFQb3J0PCBpbWwubGFuZy5Cb29sID4iCgpWQVIgZGF0YSA6IGJvb2xlYW4gIDsKClZBUiBmbG93cG9pbnQgOiAiaW1sLnBvcnRzLkZsb3dQb2ludCIgIDsKClZBUiBldmVudCA6IGJvb2xlYW4gIDsKCiAKCk1PRFVMRSAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5yZXNwb25kc19vbmNlIiAoIGEsICBiICkKClZBUiBzIDogeyJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiLCJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczEiLCJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczIifSAgOwoKIAoKREVGSU5FIHNfaW5pdCA6PSAoIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiApIDsKCklOSVQgc19pbml0IDsKCiAKCkRFRklORSBzdGF0ZV90cmFucyA6PSAoIG5leHQocyk9ICBjYXNlCgogICAgICAgICAgICAgICBzPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMCIgICYgIGIgICAmICAhYSAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIjsKCiAgICAgICAgICAgICAgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiAgJiAgYSAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMyIjsKCiAgICAgICAgICAgICAgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiAgJiAgYSAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIjsKCiAgICAgICAgICAgICAgIFRSVUUgOiBzOwoKZXNhYwoKKSA7CgpUUkFOUyBzdGF0ZV90cmFucyA7CgogCgpERUZJTkUgaG9sZHMgOj0gKCBzPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMCIgIHwgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiAgKSA7CgogCgpNT0RVTEUgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cub25lX3JlcXVlc3RfYXRfYV90aW1lIiAoIGEsICBiICkKClZBUiBzIDogeyJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiLCJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczEiLCJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczIifSAgOwoKIAoKREVGSU5FIHNfaW5pdCA6PSAoICBzID0gICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiICApIDsKCklOSVQgc19pbml0IDsKCiAKCkRFRklORSBzX3RyYW5zIDo9ICggbmV4dChzKT0gIGNhc2UKCiAgICAgICAgICAgICAgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiAgJiAgYiAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIjsKCiAgICAgICAgICAgICAgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiAgJiAgYiAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMyIjsKCiAgICAgICAgICAgICAgIHM9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiAgJiAgYSAgICYgICFiICA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiOwoKICAgICAgICAgICAgICAgVFJVRSA6IHM7Cgplc2FjCgopIDsKClRSQU5TIHNfdHJhbnMgOwoKIAoKREVGSU5FIGhvbGRzIDo9ICggcz0gICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiICB8ICBzPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMSIgICkgOwoKIAoKTU9EVUxFICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLkdlbmVyaWNTZXJ2aWNlIiAoIENtZFJlcXVlc3RfaW4sICBTdWJSZXNwb25zZV9pbiApCgpWQVIgZzFtb25pdG9yIDogIlV4QVNSZXNwb25kc0V2ZW50c19wa2cucmVzcG9uZHNfb25jZSIgKFN1YlJlcXVlc3Rfb3V0LmV2ZW50LENtZFJlcXVlc3RfaW4uZXZlbnQpIDsKClZBUiBwcm9jZXNzaW5nX3BhdGgxIDogImltbC5wb3J0cy5GbG93UGF0aCIgIDsKClZBUiBDbWRSZXNwb25zZV9vdXQgOiAiaW1sLnBvcnRzLkV2ZW50RGF0YVBvcnQ8IGltbC5sYW5nLkJvb2wgPiIgIDsKClZBUiBTdWJSZXF1ZXN0X291dCA6ICJpbWwucG9ydHMuRXZlbnREYXRhUG9ydDwgaW1sLmxhbmcuQm9vbCA+IiAgOwoKVkFSIHByb2Nlc3NpbmdfcGF0aDAgOiAiaW1sLnBvcnRzLkZsb3dQYXRoIiAgOwoKVkFSIGcybW9uaXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLnJlc3BvbmRzX29uY2UiIChDbWRSZXNwb25zZV9vdXQuZXZlbnQsU3ViUmVzcG9uc2VfaW4uZXZlbnQpIDsKClZBUiBkMSA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLmRlbGF5IiAocHJvY2Vzc2luZ19wYXRoMCwxKSA7CgpWQVIgZDIgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5kZWxheSIgKHByb2Nlc3NpbmdfcGF0aDEsMSkgOwoKIAoKREVGSU5FIGcgOj0gKCBnMW1vbml0b3IuaG9sZHMgICYgIGcybW9uaXRvci5ob2xkcyAgICYgIGQxLmhvbGRzICAgJiAgZDIuaG9sZHMgICkgOwoKIAoKSU5WQVIgKCAoICBwcm9jZXNzaW5nX3BhdGgwLnN0YXJ0LmV2ZW50ID0gIENtZFJlcXVlc3RfaW4uZXZlbnQgICAmICAgcHJvY2Vzc2luZ19wYXRoMC5lbmQuZXZlbnQgPSAgU3ViUmVxdWVzdF9vdXQuZXZlbnQgICApICkgIDsKCklOVkFSICggKCAgcHJvY2Vzc2luZ19wYXRoMS5zdGFydC5ldmVudCA9ICBTdWJSZXNwb25zZV9pbi5ldmVudCAgICYgICBwcm9jZXNzaW5nX3BhdGgxLmVuZC5ldmVudCA9ICBDbWRSZXNwb25zZV9vdXQuZXZlbnQgICApICkgIDsKCiAKCk1PRFVMRSAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5VeEFTX3Jlc3BvbmRzX2RvdF9pIiAoIEF1dG9tYXRpb25SZXF1ZXN0X2luICkKClZBUiBBdXRvbWF0aW9uUmVxdWVzdFZhbGlkYXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLkdlbmVyaWNTZXJ2aWNlIiAoQXV0b21hdGlvblJlcXVlc3RfaW4sUGxhbkJ1aWxkZXIuQ21kUmVzcG9uc2Vfb3V0KSA7CgpWQVIgQXV0b21hdGlvblJlc3BvbnNlX291dCA6ICJpbWwucG9ydHMuRXZlbnREYXRhUG9ydDwgaW1sLmxhbmcuQm9vbCA+IiAgOwoKVkFSIGQgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5kZWxheSIgKHByb2Nlc3NpbmdfcGF0aCw5KSA7CgpWQVIgYWRlbGF5bW9uaXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLm9uZV9yZXF1ZXN0X2F0X2FfdGltZSIgKEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZmxvd3BvaW50LmV2ZW50LEF1dG9tYXRpb25SZXF1ZXN0X2luLmZsb3dwb2ludC5ldmVudCkgOwoKVkFSIFRhc2tTZXJ2aWNlQmFzZSA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLkdlbmVyaWNTZXJ2aWNlIiAoUGxhbkJ1aWxkZXIuU3ViUmVxdWVzdF9vdXQsUm91dGVBZ2dyZWdhdG9yLkNtZFJlc3BvbnNlX291dCkgOwoKVkFSIHByb2Nlc3NpbmdfcGF0aCA6ICJpbWwucG9ydHMuRmxvd1BhdGgiICA7CgpWQVIgZ21vbml0b3IgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5yZXNwb25kc19vbmNlIiAoQXV0b21hdGlvblJlc3BvbnNlX291dC5ldmVudCxBdXRvbWF0aW9uUmVxdWVzdF9pbi5ldmVudCkgOwoKVkFSIFBsYW5uZXIgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5HZW5lcmljTGFzdFNlcnZpY2UiIChSb3V0ZUFnZ3JlZ2F0b3IuU3ViUmVxdWVzdF9vdXQpIDsKClZBUiBhbW9uaXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLm9uZV9yZXF1ZXN0X2F0X2FfdGltZSIgKEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZXZlbnQsQXV0b21hdGlvblJlcXVlc3RfaW4uZXZlbnQpIDsKClZBUiBSb3V0ZUFnZ3JlZ2F0b3IgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5HZW5lcmljU2VydmljZSIgKFRhc2tTZXJ2aWNlQmFzZS5TdWJSZXF1ZXN0X291dCxQbGFubmVyLkNtZFJlc3BvbnNlX291dCkgOwoKVkFSIFBsYW5CdWlsZGVyIDogIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuR2VuZXJpY1NlcnZpY2UiIChBdXRvbWF0aW9uUmVxdWVzdFZhbGlkYXRvci5TdWJSZXF1ZXN0X291dCxUYXNrU2VydmljZUJhc2UuQ21kUmVzcG9uc2Vfb3V0KSA7CgogCgpERUZJTkUgYSA6PSAoIGFtb25pdG9yLmhvbGRzICAmICBhZGVsYXltb25pdG9yLmhvbGRzICApIDsKCkRFRklORSBnIDo9ICggZ21vbml0b3IuaG9sZHMgICYgIGQuaG9sZHMgICkgOwoKIAoKSU5WQVIgKCAoICBwcm9jZXNzaW5nX3BhdGguc3RhcnQuZXZlbnQgPSAgQXV0b21hdGlvblJlcXVlc3RfaW4uZXZlbnQgICAmICAgcHJvY2Vzc2luZ19wYXRoLmVuZC5ldmVudCA9ICBBdXRvbWF0aW9uUmVzcG9uc2Vfb3V0LmV2ZW50ICAgKSApICA7CgpJTlZBUiAgQXV0b21hdGlvblJlcXVlc3RWYWxpZGF0b3IuQ21kUmVzcG9uc2Vfb3V0LmV2ZW50ID0gIEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZXZlbnQgJiAgIEF1dG9tYXRpb25SZXF1ZXN0VmFsaWRhdG9yLkNtZFJlc3BvbnNlX291dC5kYXRhID0gIEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZGF0YSAmICAgQXV0b21hdGlvblJlcXVlc3RWYWxpZGF0b3IuQ21kUmVzcG9uc2Vfb3V0LmZsb3dwb2ludC5ldmVudCA9ICBBdXRvbWF0aW9uUmVzcG9uc2Vfb3V0LmZsb3dwb2ludC5ldmVudCAgIDsKCiAKCk1PRFVMRSAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5HZW5lcmljTGFzdFNlcnZpY2UiICggQ21kUmVxdWVzdF9pbiApCgpWQVIgcHJvY2Vzc2luZ19wYXRoIDogImltbC5wb3J0cy5GbG93UGF0aCIgIDsKClZBUiBDbWRSZXNwb25zZV9vdXQgOiAiaW1sLnBvcnRzLkV2ZW50RGF0YVBvcnQ8IGltbC5sYW5nLkJvb2wgPiIgIDsKClZBUiBnbW9uaXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLnJlc3BvbmRzX29uY2UiIChDbWRSZXNwb25zZV9vdXQuZXZlbnQsQ21kUmVxdWVzdF9pbi5ldmVudCkgOwoKVkFSIGQxIDogIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuZGVsYXkiIChwcm9jZXNzaW5nX3BhdGgsMSkgOwoKIAoKREVGSU5FIGcgOj0gKCBnbW9uaXRvci5ob2xkcyAgJiAgZDEuaG9sZHMgICkgOwoKIAoKSU5WQVIgKCAoICBwcm9jZXNzaW5nX3BhdGguc3RhcnQuZXZlbnQgPSAgQ21kUmVxdWVzdF9pbi5ldmVudCAgICYgICBwcm9jZXNzaW5nX3BhdGguZW5kLmV2ZW50ID0gIENtZFJlc3BvbnNlX291dC5ldmVudCAgICkgKSAgOwoKIAoKTU9EVUxFICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLmRlbGF5IiAoIGYsICBuICkKClZBUiBpIDogMC4uMTAgIDsKClZBUiBzdGF0ZSA6IHsiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiwiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiwiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMyIn0gIDsKCiAKCkRFRklORSBzdGF0ZV9pX2luaXQgOj0gKCAgaSA9ICAxICApICAmICAoICBzdGF0ZSA9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiAgKSAgOwoKSU5JVCBzdGF0ZV9pX2luaXQgOwoKIAoKREVGSU5FIGlfdHJhbnMgOj0gKCBuZXh0KGkpPSAgY2FzZQoKICAgICAgICAgICAgICAgc3RhdGU9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiA6IDE7CgogICAgICAgICAgICAgICBzdGF0ZT0gICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczEiIDogIGkgKyAxOwoKICAgICAgICAgICAgICAgVFJVRSA6IGk7Cgplc2FjCgopIDsKClRSQU5TIGlfdHJhbnMgOwoKREVGSU5FIHNfdHJhbnMgOj0gKCBuZXh0KHN0YXRlKT0gIGNhc2UKCiAgICAgICAgICAgICAgIHN0YXRlPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMCIgICYgIGYuZW5kLmV2ZW50ICA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczIiOwoKICAgICAgICAgICAgICAgc3RhdGU9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMwIiAgJiAgZi5zdGFydC5ldmVudCAgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIjsKCiAgICAgICAgICAgICAgIHN0YXRlPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMSIgICYgIGYuZW5kLmV2ZW50ICA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczAiOwoKICAgICAgICAgICAgICAgc3RhdGU9ICAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5SZXNwb25kc1N0YXRlLnMxIiAgJiAgIGkgPj0gIG4gICA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlJlc3BvbmRzU3RhdGUuczIiOwoKICAgICAgICAgICAgICAgVFJVRSA6IHN0YXRlOwoKZXNhYwoKKSA7CgpUUkFOUyBzX3RyYW5zIDsKCiAKCkRFRklORSBob2xkcyA6PSAoIHN0YXRlPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMCIgIHwgIHN0YXRlPSAgIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuUmVzcG9uZHNTdGF0ZS5zMSIgICkgOwoKIAoKTU9EVUxFICJpbWwucG9ydHMuRmxvd1BhdGgiCgpWQVIgdXBwZXJCb3VuZCA6ICJpbWwubGFuZy5SZWFsIiAgOwoKVkFSIHN0YXJ0IDogImltbC5wb3J0cy5GbG93UG9pbnQiICA7CgpWQVIgZW5kIDogImltbC5wb3J0cy5GbG93UG9pbnQiICA7CgpWQVIgbG93ZXJCb3VuZCA6ICJpbWwubGFuZy5SZWFsIiAgOwoKIAoKTU9EVUxFICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlV4QVNfcmVzcG9uZHMiICggQXV0b21hdGlvblJlcXVlc3RfaW4gKQoKVkFSIEF1dG9tYXRpb25SZXNwb25zZV9vdXQgOiAiaW1sLnBvcnRzLkV2ZW50RGF0YVBvcnQ8IGltbC5sYW5nLkJvb2wgPiIgIDsKClZBUiBkIDogIlV4QVNSZXNwb25kc0V2ZW50c19wa2cuZGVsYXkiIChwcm9jZXNzaW5nX3BhdGgsOCkgOwoKVkFSIGFkZWxheW1vbml0b3IgOiAiVXhBU1Jlc3BvbmRzRXZlbnRzX3BrZy5vbmVfcmVxdWVzdF9hdF9hX3RpbWUiIChBdXRvbWF0aW9uUmVzcG9uc2Vfb3V0LmZsb3dwb2ludC5ldmVudCxBdXRvbWF0aW9uUmVxdWVzdF9pbi5mbG93cG9pbnQuZXZlbnQpIDsKClZBUiBwcm9jZXNzaW5nX3BhdGggOiAiaW1sLnBvcnRzLkZsb3dQYXRoIiAgOwoKVkFSIGdtb25pdG9yIDogIlV4QVNSZXNwb25kc0V2ZW50c19wa2cucmVzcG9uZHNfb25jZSIgKEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZXZlbnQsQXV0b21hdGlvblJlcXVlc3RfaW4uZXZlbnQpIDsKClZBUiBhbW9uaXRvciA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLm9uZV9yZXF1ZXN0X2F0X2FfdGltZSIgKEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZXZlbnQsQXV0b21hdGlvblJlcXVlc3RfaW4uZXZlbnQpIDsKCiAKCkRFRklORSBhIDo9ICggYW1vbml0b3IuaG9sZHMgICYgIGFkZWxheW1vbml0b3IuaG9sZHMgICkgOwoKREVGSU5FIGcgOj0gKCBnbW9uaXRvci5ob2xkcyAgJiAgZC5ob2xkcyAgKSA7CgogCgpJTlZBUiAoICggIHByb2Nlc3NpbmdfcGF0aC5zdGFydC5ldmVudCA9ICBBdXRvbWF0aW9uUmVxdWVzdF9pbi5ldmVudCAgICYgICBwcm9jZXNzaW5nX3BhdGguZW5kLmV2ZW50ID0gIEF1dG9tYXRpb25SZXNwb25zZV9vdXQuZXZlbnQgICApICkgIDs=)
+( edge E_101 __ (N_100 property) :type nusmv :encoding base64 :content TU9EVUxFIG1haW4KClZBUiBpbjEgOiAiaW1sLnBvcnRzLkV2ZW50RGF0YVBvcnQ8IGltbC5sYW5nLkJvb2wgPiI7CgpWQVIgaW5zdCA6ICJVeEFTUmVzcG9uZHNFdmVudHNfcGtnLlV4QVNfcmVzcG9uZHNfZG90X2kiKGluMSk7CgogCgpMVExTUEVDCgogICAgICAgICAgICAgICAoRyhpbnN0LmEpICYKCiAgICAgICAgICAgICAgICBHKGluc3QuQXV0b21hdGlvblJlcXVlc3RWYWxpZGF0b3IuZykgJgoKICAgICAgICAgICAgICAgRyhpbnN0LlBsYW5CdWlsZGVyLmcpICYKCiAgICAgICAgICAgICAgIEcoaW5zdC5UYXNrU2VydmljZUJhc2UuZykgJgoKICAgICAgICAgICAgICAgRyhpbnN0LlJvdXRlQWdncmVnYXRvci5nKSAmCgogICAgICAgICAgICAgICBHKGluc3QuUGxhbm5lci5nKSkgLT4gRyhpbnN0LmcpIDs=)
+(edge E_102 (N_100 holds) (N_7 in) :type boolX :content __ :encoding plain)
+(edge E_103 (N_100 cexample) __ :type nusmv :encoding base64 :content __ )
+( edge E_6 __ ( N_2 base ) :type smt25 :encoding plain :content
+((declare-sort |SWIMLAnnex.Command| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW| 0)
+
+(declare-sort |SWIMLAnnex.WaypointManager| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>| 0)
+
+(declare-sort |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.FlightPattern| 0)
+
+(declare-sort |SWIMLAnnex.RadioDriver| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>| 0)
+
+(declare-sort |iml.ports.FlowPoint| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate| 0)
+
+(declare-sort |SWIMLAnnex.UARTDriver| 0)
+
+(declare-sort |SWIMLAnnex.Mission| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.FlightPlanner| 0)
+
+(declare-sort |SWIMLAnnex.Map| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.Mission_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Command_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Map_dot_Impl| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow| 0)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp4| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp2| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp3| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.__base_SWIMLAnnex.MissionWindow| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.MissionWindow|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.crc| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp1| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |SWIMLAnnex.Mission_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |SWIMLAnnex.good_HMAC| (|Bool|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_gs_command| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_mission| (|SWIMLAnnex.Mission_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_map| (|SWIMLAnnex.Map_dot_Impl|) |Bool|)
+
+(declare-const |SWIMLAnnex.inst|  |SWIMLAnnex.MC_SW_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.good_mission_window| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_pattern| (|SWIMLAnnex.FlightPattern|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |SWIMLAnnex.MissionWindow_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp10| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp1| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp2| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp3| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.__base_SWIMLAnnex.Mission| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Mission|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp4| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp5| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp6| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp7| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp8| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp9| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Map| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Map_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Pattern| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.FlightPattern|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.__base_SWIMLAnnex.Command| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Command|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.HMAC| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |iml.ports.FlowPoint.upperBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |iml.ports.FlowPoint.lowerBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.__base_SWIMLAnnex.Coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |SWIMLAnnex.Coordinate|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |SWIMLAnnex.Command_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.WPM| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.WaypointManager|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c6| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c5| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c3| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c9| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c8| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.MC_SW|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c7| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.FPLN| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.FlightPlanner|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c2| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c1| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.UART| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.UARTDriver|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c10| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c11| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.RADIO| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.RadioDriver|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.__base_SWIMLAnnex.Map| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Map|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp2| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp3| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp4| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.MC_SW.waypoint| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.MC_SW.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.g1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.g1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.waypoint| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.a1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.a1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_in| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a2| __inst__) 
+(|SWIMLAnnex.good_gs_command| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.g1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
+ )) 
+( edge E_7 __ ( N_2 kb ) :type smt25 :encoding plain :content 
+( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
+(=> (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|))) 
+(|SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)))) ) ) 
+( edge E_8 __ ( N_2 g ) :type smt25 :encoding plain :content 
+( (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( edge E_9 ( N_2 valid ) 
+( N_6 in ) :type boolX :encoding plain :content __ ) 
+( edge E_10 ( N_2 cmodel ) __ :type evaluate :encoding plain :content 
+( ( get-value ( (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
+( edge E_1 __ ( N_1 base ) :type smt25 :encoding plain :content 
+((declare-sort |SWIMLAnnex.Command| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW| 0)
+
+(declare-sort |SWIMLAnnex.WaypointManager| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>| 0)
+
+(declare-sort |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.FlightPattern| 0)
+
+(declare-sort |SWIMLAnnex.RadioDriver| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>| 0)
+
+(declare-sort |iml.ports.FlowPoint| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate| 0)
+
+(declare-sort |SWIMLAnnex.UARTDriver| 0)
+
+(declare-sort |SWIMLAnnex.Mission| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.FlightPlanner| 0)
+
+(declare-sort |SWIMLAnnex.Map| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.Mission_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Command_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Map_dot_Impl| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow| 0)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp4| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp2| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp3| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.__base_SWIMLAnnex.MissionWindow| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.MissionWindow|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.crc| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp1| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |SWIMLAnnex.Mission_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |SWIMLAnnex.good_HMAC| (|Bool|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_gs_command| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_mission| (|SWIMLAnnex.Mission_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_map| (|SWIMLAnnex.Map_dot_Impl|) |Bool|)
+
+(declare-const |SWIMLAnnex.inst|  |SWIMLAnnex.MC_SW_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.good_mission_window| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_pattern| (|SWIMLAnnex.FlightPattern|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |SWIMLAnnex.MissionWindow_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp10| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp1| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp2| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp3| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.__base_SWIMLAnnex.Mission| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Mission|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp4| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp5| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp6| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp7| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp8| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp9| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Map| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Map_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Pattern| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.FlightPattern|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.__base_SWIMLAnnex.Command| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Command|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.HMAC| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |iml.ports.FlowPoint.upperBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |iml.ports.FlowPoint.lowerBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.__base_SWIMLAnnex.Coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |SWIMLAnnex.Coordinate|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |SWIMLAnnex.Command_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.WPM| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.WaypointManager|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c6| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c5| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c3| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c9| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c8| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.MC_SW|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c7| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.FPLN| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.FlightPlanner|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c2| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c1| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.UART| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.UARTDriver|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c10| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c11| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.RADIO| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.RadioDriver|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.__base_SWIMLAnnex.Map| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Map|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp2| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp3| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp4| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.MC_SW.waypoint| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.MC_SW.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.g1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.g1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.waypoint| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.a1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.a1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_in| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a2| __inst__) 
+(|SWIMLAnnex.good_gs_command| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.g1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
+ ) )
+( edge E_2 __ ( N_1 kb ) :type smt25 :encoding plain :content 
+( (and (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
+(=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))) 
+(=> (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|))) 
+(|SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)))) ) ) 
+( edge E_3 __ ( N_1 g ) :type smt25 :encoding plain :content 
+( (|SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( edge E_4 ( N_1 valid ) 
+( N_6 in ) :type boolX :encoding plain :content __ ) 
+( edge E_5 ( N_1 cmodel ) __ :type evaluate :encoding plain :content 
+( ( get-value ( (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
+( edge E_16 __ ( N_4 base ) :type smt25 :encoding plain :content 
+((declare-sort |SWIMLAnnex.Command| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW| 0)
+
+(declare-sort |SWIMLAnnex.WaypointManager| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>| 0)
+
+(declare-sort |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.FlightPattern| 0)
+
+(declare-sort |SWIMLAnnex.RadioDriver| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>| 0)
+
+(declare-sort |iml.ports.FlowPoint| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate| 0)
+
+(declare-sort |SWIMLAnnex.UARTDriver| 0)
+
+(declare-sort |SWIMLAnnex.Mission| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.FlightPlanner| 0)
+
+(declare-sort |SWIMLAnnex.Map| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.Mission_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Command_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Map_dot_Impl| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow| 0)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp4| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp2| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp3| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.__base_SWIMLAnnex.MissionWindow| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.MissionWindow|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.crc| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp1| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |SWIMLAnnex.Mission_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |SWIMLAnnex.good_HMAC| (|Bool|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_gs_command| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_mission| (|SWIMLAnnex.Mission_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_map| (|SWIMLAnnex.Map_dot_Impl|) |Bool|)
+
+(declare-const |SWIMLAnnex.inst|  |SWIMLAnnex.MC_SW_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.good_mission_window| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_pattern| (|SWIMLAnnex.FlightPattern|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |SWIMLAnnex.MissionWindow_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp10| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp1| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp2| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp3| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.__base_SWIMLAnnex.Mission| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Mission|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp4| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp5| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp6| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp7| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp8| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp9| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Map| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Map_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Pattern| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.FlightPattern|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.__base_SWIMLAnnex.Command| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Command|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.HMAC| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |iml.ports.FlowPoint.upperBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |iml.ports.FlowPoint.lowerBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.__base_SWIMLAnnex.Coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |SWIMLAnnex.Coordinate|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |SWIMLAnnex.Command_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.WPM| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.WaypointManager|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c6| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c5| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c3| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c9| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c8| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.MC_SW|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c7| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.FPLN| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.FlightPlanner|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c2| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c1| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.UART| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.UARTDriver|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c10| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c11| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.RADIO| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.RadioDriver|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.__base_SWIMLAnnex.Map| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Map|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp2| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp3| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp4| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.MC_SW.waypoint| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.MC_SW.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.g1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.g1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.waypoint| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.a1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.a1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_in| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a2| __inst__) 
+(|SWIMLAnnex.good_gs_command| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.g1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
+ )) 
+( edge E_17 __ ( N_4 kb ) :type smt25 :encoding plain :content 
+( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
+(=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))) 
+(=> (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|))) 
+(|SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)))) ) ) 
+( edge E_18 __ ( N_4 g ) :type smt25 :encoding plain :content 
+( (|SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( edge E_19 ( N_4 valid ) 
+( N_6 in ) :type boolX :encoding plain :content __ ) 
+( edge E_20 ( N_4 cmodel ) __ :type evaluate :encoding plain :content 
+( ( get-value ( (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
+( edge E_11 __ ( N_3 base ) :type smt25 :encoding plain :content 
+((declare-sort |SWIMLAnnex.Command| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW| 0)
+
+(declare-sort |SWIMLAnnex.WaypointManager| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>| 0)
+
+(declare-sort |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.FlightPattern| 0)
+
+(declare-sort |SWIMLAnnex.RadioDriver| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>| 0)
+
+(declare-sort |iml.ports.FlowPoint| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate| 0)
+
+(declare-sort |SWIMLAnnex.UARTDriver| 0)
+
+(declare-sort |SWIMLAnnex.Mission| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.FlightPlanner| 0)
+
+(declare-sort |SWIMLAnnex.Map| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.Mission_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Command_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Map_dot_Impl| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow| 0)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp4| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp2| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp3| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.__base_SWIMLAnnex.MissionWindow| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.MissionWindow|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.crc| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp1| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |SWIMLAnnex.Mission_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |SWIMLAnnex.good_HMAC| (|Bool|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_gs_command| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_mission| (|SWIMLAnnex.Mission_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_map| (|SWIMLAnnex.Map_dot_Impl|) |Bool|)
+
+(declare-const |SWIMLAnnex.inst|  |SWIMLAnnex.MC_SW_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.good_mission_window| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_pattern| (|SWIMLAnnex.FlightPattern|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |SWIMLAnnex.MissionWindow_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp10| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp1| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp2| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp3| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.__base_SWIMLAnnex.Mission| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Mission|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp4| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp5| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp6| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp7| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp8| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp9| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Map| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Map_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Pattern| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.FlightPattern|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.__base_SWIMLAnnex.Command| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Command|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.HMAC| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |iml.ports.FlowPoint.upperBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |iml.ports.FlowPoint.lowerBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.__base_SWIMLAnnex.Coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |SWIMLAnnex.Coordinate|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |SWIMLAnnex.Command_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.WPM| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.WaypointManager|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c6| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c5| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c3| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c9| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c8| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.MC_SW|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c7| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.FPLN| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.FlightPlanner|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c2| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c1| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.UART| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.UARTDriver|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c10| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c11| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.RADIO| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.RadioDriver|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.__base_SWIMLAnnex.Map| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Map|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp2| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp3| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp4| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.MC_SW.waypoint| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.MC_SW.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.g1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.g1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.waypoint| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.a1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.a1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_in| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a2| __inst__) 
+(|SWIMLAnnex.good_gs_command| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.g1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
+ )) 
+( edge E_12 __ ( N_3 kb ) :type smt25 :encoding plain :content 
+( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
+(=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)))) ) ) 
+( edge E_13 __ ( N_3 g ) :type smt25 :encoding plain :content 
+( (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|))) ) ) 
+( edge E_14 ( N_3 valid ) 
+( N_6 in ) :type boolX :encoding plain :content __ ) 
+( edge E_15 ( N_3 cmodel ) __ :type evaluate :encoding plain :content 
+( ( get-value ( (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) 
+( edge E_24 ( N_5 valid ) 
+( N_6 in ) :type boolX :encoding plain :content __ ) 
+( edge E_26 ( N_6 out ) 
+( N_7 in ) :type boolX :encoding plain :content __ ) 
+( edge E_21 __ ( N_5 base ) :type smt25 :encoding plain :content 
+((declare-sort |SWIMLAnnex.Command| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW| 0)
+
+(declare-sort |SWIMLAnnex.WaypointManager| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>| 0)
+
+(declare-sort |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.FlightPattern| 0)
+
+(declare-sort |SWIMLAnnex.RadioDriver| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>| 0)
+
+(declare-sort |iml.ports.FlowPoint| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate| 0)
+
+(declare-sort |SWIMLAnnex.UARTDriver| 0)
+
+(declare-sort |SWIMLAnnex.Mission| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.FlightPlanner| 0)
+
+(declare-sort |SWIMLAnnex.Map| 0)
+
+(declare-sort |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>| 0)
+
+(declare-sort |SWIMLAnnex.Mission_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Command_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Coordinate_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.MC_SW_dot_Impl| 0)
+
+(declare-sort |SWIMLAnnex.Map_dot_Impl| 0)
+
+(declare-sort |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>| 0)
+
+(declare-sort |SWIMLAnnex.MissionWindow| 0)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.g1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.WaypointManager|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.WaypointManager|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.g1| (|SWIMLAnnex.UARTDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.UARTDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp4| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp2| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp3| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.__base_SWIMLAnnex.MissionWindow| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.MissionWindow|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.crc| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.MissionWindow_dot_Impl.wp1| (|SWIMLAnnex.MissionWindow_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.FlightPlanner|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.FlightPlanner|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |SWIMLAnnex.Mission_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |SWIMLAnnex.good_HMAC| (|Bool|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_gs_command| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_mission| (|SWIMLAnnex.Mission_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_map| (|SWIMLAnnex.Map_dot_Impl|) |Bool|)
+
+(declare-const |SWIMLAnnex.inst|  |SWIMLAnnex.MC_SW_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.good_mission_window| (|SWIMLAnnex.MissionWindow_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |Bool|)
+
+(declare-fun |SWIMLAnnex.good_pattern| (|SWIMLAnnex.FlightPattern|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>|) |SWIMLAnnex.MissionWindow_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp10| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp1| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp2| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp3| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.__base_SWIMLAnnex.Mission| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Mission|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp4| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp5| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp6| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp7| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp8| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Mission_dot_Impl.wp9| (|SWIMLAnnex.Mission_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.RadioDriver|) |Bool|)
+
+(declare-fun |SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.RadioDriver|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Map| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Map_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.Pattern| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.FlightPattern|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.__base_SWIMLAnnex.Command| (|SWIMLAnnex.Command_dot_Impl|) |SWIMLAnnex.Command|)
+
+(declare-fun |SWIMLAnnex.Command_dot_Impl.HMAC| (|SWIMLAnnex.Command_dot_Impl|) |Bool|)
+
+(declare-fun |iml.ports.FlowPoint.upperBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |iml.ports.FlowPoint.lowerBound| (|iml.ports.FlowPoint|) |Real|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.__base_SWIMLAnnex.Coordinate| (|SWIMLAnnex.Coordinate_dot_Impl|) |SWIMLAnnex.Coordinate|)
+
+(declare-fun |SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Coordinate_dot_Impl|) |Int|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |Bool|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |iml.ports.FlowPoint|)
+
+(declare-fun |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>|) |SWIMLAnnex.Command_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.WPM| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.WaypointManager|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c6| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c5| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c3| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c9| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c8| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.MC_SW|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c7| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.FPLN| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.FlightPlanner|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c2| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c1| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.UART| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.UARTDriver|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c10| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.c11| (|SWIMLAnnex.MC_SW_dot_Impl|) |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|)
+
+(declare-fun |SWIMLAnnex.MC_SW_dot_Impl.RADIO| (|SWIMLAnnex.MC_SW_dot_Impl|) |SWIMLAnnex.RadioDriver|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.__base_SWIMLAnnex.Map| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Map|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp2| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp3| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |SWIMLAnnex.Map_dot_Impl.wp4| (|SWIMLAnnex.Map_dot_Impl|) |SWIMLAnnex.Coordinate_dot_Impl|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(declare-fun |__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>|) |__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>|)
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.MC_SW.waypoint| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW|)) 
+(= (|SWIMLAnnex.MC_SW.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.MC_SW.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.RadioDriver|)) 
+(= (|SWIMLAnnex.RadioDriver.g1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.g1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.waypoint| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.WaypointManager|)) 
+(= (|SWIMLAnnex.WaypointManager.a1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.WaypointManager.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.a1| __inst__) 
+(|SWIMLAnnex.good_mission_window| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_in| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.UARTDriver|)) 
+(= (|SWIMLAnnex.UARTDriver.g1| __inst__) 
+(= (|SWIMLAnnex.MissionWindow_dot_Impl.crc| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data| (|SWIMLAnnex.UARTDriver.waypoint_out| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a2| __inst__) 
+(|SWIMLAnnex.good_gs_command| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.a1| __inst__) 
+(= (|SWIMLAnnex.Command_dot_Impl.HMAC| (|__unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.recv_map| __inst__))) true))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.FlightPlanner|)) 
+(= (|SWIMLAnnex.FlightPlanner.g1| __inst__) 
+(|SWIMLAnnex.good_mission| (|__unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data| (|SWIMLAnnex.FlightPlanner.flight_plan| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c6| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c3| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))) 
+(= (|SWIMLAnnex.UARTDriver.position_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c11| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c5| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c10| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c1| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))) 
+(= (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c2| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))) 
+(= (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c9| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))) 
+(= (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c8| __inst__))))))
+
+(assert (forall ((__inst__ |SWIMLAnnex.MC_SW_dot_Impl|)) 
+(and (= (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))) 
+(= (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| __inst__)) 
+(|__unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target| (|SWIMLAnnex.MC_SW_dot_Impl.c7| __inst__))))))
+ )) 
+( edge E_22 __ ( N_5 kb ) :type smt25 :encoding plain :content 
+( (and (and (and (|SWIMLAnnex.MC_SW.a1| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) 
+(=> (|SWIMLAnnex.RadioDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.RadioDriver.g1| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))) 
+(=> (and (|SWIMLAnnex.FlightPlanner.a1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.FlightPlanner.a2| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|))) 
+(|SWIMLAnnex.FlightPlanner.g1| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)))) 
+(=> (|SWIMLAnnex.WaypointManager.a1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) 
+(|SWIMLAnnex.WaypointManager.g1| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)))) ) ) 
+( edge E_23 __ ( N_5 g ) :type smt25 :encoding plain :content 
+( (|SWIMLAnnex.UARTDriver.a1| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( edge E_25 ( N_5 cmodel ) __ :type evaluate :encoding plain :content 
+( ( get-value ( (|SWIMLAnnex.MC_SW.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.send_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.MC_SW.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.__base_SWIMLAnnex.MC_SW| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.send_status_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.RadioDriver.recv_map_out| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.recv_map| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.FlightPlanner.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.FPLN| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.flight_plan| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.waypoint| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.WaypointManager.position_status| (|SWIMLAnnex.MC_SW_dot_Impl.WPM| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.position_status_out| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) 
+( get-value ( (|SWIMLAnnex.UARTDriver.waypoint_in| (|SWIMLAnnex.MC_SW_dot_Impl.UART| |SWIMLAnnex.inst|)) ) ) ) ) )) 
+

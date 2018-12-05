@@ -9,6 +9,7 @@ from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
 from portfolio_solver import SolverResult, PortfolioSolver, StrategyFactory
+from model_checking_solver import NuSmvSolver, ModelCheckingSolver
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -41,12 +42,20 @@ class STRING_CONSTANTS:
     ATTRIBUTE_CONTENT = ":content"
     BASE64 = "base64"
     PLAIN = "plain"
+    MODEL_CHECKING = "model_checking"
+    NUSMV = "nusmv"
+    MODEL = "model"
+    PROPERTY = "property"
+    HOLDS = "holds"
+    COUNTER_EXAMPLE = "cexample" 
+
 
 class EdgeType(Enum):
     SIMPLE = 1
     SMTLIB = 2
     BOOLX = 3
     EVALUATE = 4
+    NUSMV = 6
 
     def from_string(str):
         if str == STRING_CONSTANTS.SIMPLE:
@@ -57,7 +66,10 @@ class EdgeType(Enum):
             return EdgeType.BOOLX
         elif str == STRING_CONSTANTS.EVALUATE:
             return EdgeType.EVALUATE
+        elif str == STRING_CONSTANTS.NUSMV:
+            return EdgeType.NUSMV
         else:
+            print("no such edge type:", str)
             assert(False)
 
     def to_string(e):
@@ -98,6 +110,15 @@ class SimpleEdge(Edge):
 
     def get_type(self):
         return EdgeType.SIMPLE
+
+class NuSmvEdge(Edge):
+    def __init__(self, name, src, dest, blob, encoding):
+        super().__init__(name, src, dest)
+        self.blob = blob
+        self.encoding = encoding
+
+    def get_type(self):
+        return EdgeType.NUSMV
 
 class SmtLibEdge(Edge):
     def __init__(self, name, src, dest, smtlib, encoding):
@@ -169,6 +190,7 @@ class NodeType(Enum):
     AND = 2
     DONE = 3
     START = 4
+    MODEL_CHECKING = 5
 
     def from_string(str):
         result = ""
@@ -180,6 +202,8 @@ class NodeType(Enum):
             result = NodeType.DONE
         elif str == STRING_CONSTANTS.START:
             result = NodeType.START
+        elif str == STRING_CONSTANTS.MODEL_CHECKING:
+            result = NodeType.MODEL_CHECKING
         else:
             assert(False)
         return result
@@ -193,6 +217,8 @@ class NodeType(Enum):
             return STRING_CONSTANTS.DONE
         elif node_type == NodeType.START:
             return STRING_CONSTANTS.START
+        elif node_type == NodeType.MODEL_CHECKING:
+            return STRING_CONSTANTS.MODEL_CHECKING
         else:
             assert(False)
 
@@ -217,7 +243,7 @@ class Node:
         raise NotImplementedError("must be overriden")
 
     def replace_edge(self, old, new):
-        raise NotImplementedError("most be overriden")
+        raise NotImplementedError("must be overriden")
 
     #def __repr__(self):
     #    return "( node " + self.name + " incoming: " + \
@@ -233,6 +259,83 @@ class Node:
     def str(self):
         return self.__str__()
 
+class ModelCheckingNode(Node):
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
+        self._model = None
+        self._property = None
+        self._holds = None
+        self._counter_example = None
+
+    def get_incoming_edges(self):
+        result = set([])
+        result.add(self._model)
+        result.add(self._property)
+        return result
+
+    def get_outgoing_edges(self):
+        result = set([])
+        if self._holds is not None:
+            result.add(self._holds)
+        if self._counter_example is not None:
+            result.add(self._counter_example)
+        return result
+    
+    def connect_edge_to_port(self, edge, port_name):
+        if (port_name == STRING_CONSTANTS.MODEL):
+            self._model = edge
+        elif (port_name == STRING_CONSTANTS.PROPERTY):
+            self._property = edge
+        elif (port_name == STRING_CONSTANTS.HOLDS):
+            self._holds = edge
+        elif (port_name == STRING_CONSTANTS.COUNTER_EXAMPLE):
+            self._counter_example = edge
+        else:
+            Assert(False)
+    
+    def get_nusmv_content(self):
+        model = decode(self._model.blob, self._model.encoding)
+        prop = decode(self._property.blob, self._property.encoding)
+        return model + "\n" + prop
+
+    def replace_edge(self, old, new):
+        if old == self._model:
+            self._model = new
+        elif old == self._property:
+            self._property = new
+        elif old == self._holds:
+            self._holds = new
+        elif old == self._counter_example:
+            self._counter_example = new
+        else:
+            assert(False)
+
+    def get_type(self):
+        return NodeType.MODEL_CHECKING
+
+    def execute(self):
+        print("Executing node: ", self.name)
+        nusmv_content = self.get_nusmv_content()
+        nusmv_solver = NuSmvSolver()
+        nusmv_solver.set_content(nusmv_content)
+        with open(self.name + '.nusmv', 'w') as the_file:
+            the_file.write(nusmv_content)
+        solver_result, solver_trace = nusmv_solver.solve()
+        result = model_checking_solver_result_to_result(solver_result)
+        old_boolx_edge = self._holds
+        new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
+                                        old_boolx_edge.src,
+                                        old_boolx_edge.dest,
+                                        result)
+        self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
+        old_nusmv_edge = self._counter_example
+        if old_nusmv_edge is not None:
+            new_nusmv_edge = NuSmvEdge(old_nusmv_edge.name,
+                                            old_nusmv_edge.src,
+                                            old_nusmv_edge.dest,
+                                            solver_trace,
+                                            old_nusmv_edge.encoding)
+        self.graph.replace_edge(old_nusmv_edge, new_nusmv_edge)
 
 class EntailmentNode(Node):
     def __init__(self, name, graph):
@@ -305,14 +408,7 @@ class EntailmentNode(Node):
         with open(self.name + '.smt2', 'w') as the_file:
             the_file.write(smtlib)
         solver_result, values = solver.solve()
-        if solver_result == SolverResult.SAT:
-            result = Values.FALSE
-        elif solver_result == SolverResult.UNSAT:
-            result = Values.TRUE
-        elif solver_result == SolverResult.UNKNOWN:
-            result = Values.UNKNOWN
-        else:
-            assert(False)
+        result = smt_solver_result_to_result(solver_result)
         old_boolx_edge = self._valid
         new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
                                          old_boolx_edge.src,
@@ -411,6 +507,7 @@ class AndNode(Node):
         return [self._output]
 
     def execute(self):
+        print("Executing node: ", self.name)
         conjuncts_values = [c.boolx for c in self._conjuncts]
         result = TriValLogic.kleene_and(conjuncts_values)
         old_boolx_edge = self._output
@@ -483,6 +580,8 @@ class ReasoningGraph:
             label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
             edge = UnsolvedEvaluateEdge(edge_name, src_node, dest_node, label)
+        elif edge_type is EdgeType.NUSMV:
+            edge = NuSmvEdge(edge_name, src_node, dest_node, label, encoding)
         else:
             assert(False)
         src_node.connect_edge_to_port(edge, src_port)
@@ -564,6 +663,8 @@ class ReasoningDag(ReasoningGraph):
             result = AndNode(node_name, self)
         elif node_type is NodeType.DONE:
             result = DoneNode(node_name, self)
+        elif node_type is NodeType.MODEL_CHECKING:
+            result = ModelCheckingNode(node_name, self)            
         else:
             assert(False)
         return result
@@ -620,6 +721,17 @@ def process_graph(graph, config):
                 output_lines.append(" ".join(["(", edge.name,
                                         edge.get_values_in_output_format(),
                                         ")"]))
+
+    for edge in rg._edges:
+        if edge.get_type() == EdgeType.NUSMV:
+            src = edge.src
+            if src.get_type() == NodeType.MODEL_CHECKING:
+                holds_edge = src._holds
+                holds_value = holds_edge.boolx
+                if holds_value == Values.FALSE:
+                    output_lines.append(" ".join(["(", edge.name, 
+                        edge.blob, ")"]))
+
     return output_lines
 
 
@@ -696,6 +808,28 @@ def decode(s, encoding):
     return result
 
 
+def smt_solver_result_to_result(solver_result):
+        if solver_result == SolverResult.SAT:
+            result = Values.FALSE
+        elif solver_result == SolverResult.UNSAT:
+            result = Values.TRUE
+        elif solver_result == SolverResult.UNKNOWN:
+            result = Values.UNKNOWN
+        else:
+            assert(False)
+        return result
+
+
+def model_checking_solver_result_to_result(solver_result):
+        if solver_result == ModelCheckingSolver.HOLDS:
+            result = Values.TRUE
+        elif solver_result == ModelCheckingSolver.DOES_NOT_HOLD:
+            result = Values.FALSE
+        elif solver_result == ModelCheckingSolver.UNKNOWN:
+            result = Values.UNKNOWN
+        else:
+            assert(False)
+        return result
 
 def get_attributes(e):
     result = {}
