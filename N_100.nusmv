@@ -283,4 +283,4 @@ LTLSPEC
 
                G(inst.RouteAggregator.g) &
 
-               G(inst.Planner.g)) -> G(inst.g) ;
+               G(inst.Planner.g)) -> (G(inst.g) & !G(inst.g)) ;
