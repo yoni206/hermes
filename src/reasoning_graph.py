@@ -729,8 +729,9 @@ def process_graph(graph, config):
                 holds_edge = src._holds
                 holds_value = holds_edge.boolx
                 if holds_value == Values.FALSE:
+                    encoded_blob = encode(edge.blob, STRING_CONSTANTS.BASE64)
                     output_lines.append(" ".join(["(", edge.name, 
-                        encode(edge.blob, STRING_CONSTANTS.BASE64), ")"]))
+                        encoded_blob, ")"]))
 
     return output_lines
 
