@@ -140,4 +140,4 @@ VAR inst : "UxASRespondsEvents_pkg.UxAS_responds" (AutomationRequest_in) ;
 VAR AutomationRequest_in : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
 
 
-( LTLSPEC !G(inst.a  &  ( TRUE  ->  inst.AutomationRequestValidator.g  )   &  ( TRUE  ->  inst.PlanBuilder.g  )   &  ( TRUE  ->  inst.TaskServiceBase.g  )   &  ( TRUE  ->  inst.RouteAggregator.g  )   &  ( TRUE  ->  inst.Planner.g  ) ) | G(inst.g) ;  )
+ LTLSPEC !G(inst.a  &  ( TRUE  ->  inst.AutomationRequestValidator.g  )   &  ( TRUE  ->  inst.PlanBuilder.g  )   &  ( TRUE  ->  inst.TaskServiceBase.g  )   &  ( TRUE  ->  inst.RouteAggregator.g  )   &  ( TRUE  ->  inst.Planner.g  ) ) | G(inst.g) ;  
