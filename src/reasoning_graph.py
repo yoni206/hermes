@@ -798,7 +798,7 @@ def main(args):
 
 def encode(s, encoding):
     assert(encoding == STRING_CONSTANTS.BASE64 or encoding == STRING_CONSTANTS.PLAIN)
-    data = base64.b64encode(s.encode())
+    data = s.encode()
     if (encoding == STRING_CONSTANTS.BASE64):
         result = base64.b64encode(data).decode('utf-8')
     elif (encoding == STRING_CONSTANTS.PLAIN):
