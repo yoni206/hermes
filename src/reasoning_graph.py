@@ -48,6 +48,9 @@ class STRING_CONSTANTS:
     PROPERTY = "property"
     HOLDS = "holds"
     COUNTER_EXAMPLE = "cexample" 
+    TRUE = "true"
+    FALSE = "false"
+    UNKNOWN = "unknown"
 
 
 class EdgeType(Enum):
@@ -575,7 +578,11 @@ class ReasoningGraph:
             label = label.replace("\\", "")
             edge = SmtLibEdge(edge_name, src_node, dest_node, label, encoding)
         elif edge_type is EdgeType.BOOLX:
-            edge = UnsolvedBoolXEdge(edge_name, src_node, dest_node, label)
+            if label == "__":
+                edge = UnsolvedBoolXEdge(edge_name, src_node, dest_node, label)
+            else:
+                value = constant_boolx_to_result(label)
+                edge = SolvedBoolXEdge(edge_name, src_node, dest_node, value)
         elif edge_type is EdgeType.EVALUATE:
             label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
@@ -831,6 +838,17 @@ def smt_solver_result_to_result(solver_result):
         else:
             assert(False)
         return result
+
+def constant_boolx_to_result(boolx):
+    if boolx == STRING_CONSTANTS.TRUE:
+        result = Values.TRUE
+    elif boolx == STRING_CONSTANTS.FALSE:
+        result = Values.FALSE
+    elif boolx == STRING_CONSTANTS.UNKNOWN:
+        result = Values.UNKNOWN
+    else:
+        assert(False)
+    return result
 
 
 def model_checking_solver_result_to_result(solver_result):
