@@ -3,31 +3,8 @@ VAR upperBound : "iml.lang.Real"  ;
 VAR lowerBound : "iml.lang.Real"  ;
 VAR event : boolean  ;
 
-MODULE "iml.ports.delay" ( f,  n )
-VAR i : 0..256  ;
-VAR state : {"iml.ports.DelayState.s0","iml.ports.DelayState.s1","iml.ports.DelayState.s2"}  ;
-
-DEFINE state_i_init := (  i =  1  )  &  (  state =  "iml.ports.DelayState.s0"  )  ;
-INIT state_i_init ;
-
-DEFINE i_trans := ( next(i)=  case 
-	state=  "iml.ports.DelayState.s0" : 1;
-	state=  "iml.ports.DelayState.s1" :  i + 1;
-	TRUE : i;
-esac
- ) ;
-TRANS i_trans ;
-DEFINE s_trans := ( next(state)=  case 
-	state=  "iml.ports.DelayState.s0"  &  f.end.event  : "iml.ports.DelayState.s2";
-	state=  "iml.ports.DelayState.s0"  &  f.start.event  : "iml.ports.DelayState.s1";
-	state=  "iml.ports.DelayState.s1"  &  f.end.event  : "iml.ports.DelayState.s0";
-	state=  "iml.ports.DelayState.s1"  &   i >=  n   : "iml.ports.DelayState.s2";
-	TRUE : state;
-esac
- ) ;
-TRANS s_trans ;
-
-DEFINE holds := ( state=  "iml.ports.DelayState.s0"  |  state=  "iml.ports.DelayState.s1"  ) ;
+MODULE "iml.ports.delay" 
+DEFINE holds := TRUE ;
 
 MODULE "iml.lang.Real" 
 MODULE "iml.ports.EventDataPort< iml.lang.Bool >" 
@@ -76,8 +53,8 @@ VAR CmdResponse_out : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
 VAR SubRequest_out : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
 VAR processing_path0 : "iml.ports.FlowPath"  ;
 VAR g2monitor : "UxASRespondsEvents_pkg.responds_once" (CmdResponse_out.event,SubResponse_in.event) ;
-VAR d1 : "iml.ports.delay" (processing_path0,1) ;
-VAR d2 : "iml.ports.delay" (processing_path1,1) ;
+VAR d1 : "iml.ports.delay"  ;
+VAR d2 : "iml.ports.delay"  ;
 
 DEFINE g := ( g1monitor.holds  &  g2monitor.holds   &  d1.holds   &  d2.holds  ) ;
 
@@ -87,7 +64,7 @@ INVAR ( (  processing_path1.start.event =  SubResponse_in.event   &   processing
 MODULE "UxASRespondsEvents_pkg.UxAS_responds_dot_i" ( AutomationRequest_in )
 VAR AutomationRequestValidator : "UxASRespondsEvents_pkg.GenericService" (AutomationRequest_in,PlanBuilder.CmdResponse_out) ;
 VAR AutomationResponse_out : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
-VAR d : "iml.ports.delay" (processing_path,8) ;
+VAR d : "iml.ports.delay"  ;
 VAR adelaymonitor : "UxASRespondsEvents_pkg.one_request_at_a_time" (AutomationResponse_out.flowpoint.event,AutomationRequest_in.flowpoint.event) ;
 VAR TaskServiceBase : "UxASRespondsEvents_pkg.GenericService" (PlanBuilder.SubRequest_out,RouteAggregator.CmdResponse_out) ;
 VAR processing_path : "iml.ports.FlowPath"  ;
@@ -107,7 +84,7 @@ MODULE "UxASRespondsEvents_pkg.GenericLastService" ( CmdRequest_in )
 VAR processing_path : "iml.ports.FlowPath"  ;
 VAR CmdResponse_out : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
 VAR gmonitor : "UxASRespondsEvents_pkg.responds_once" (CmdResponse_out.event,CmdRequest_in.event) ;
-VAR d1 : "iml.ports.delay" (processing_path,1) ;
+VAR d1 : "iml.ports.delay"  ;
 
 DEFINE g := ( gmonitor.holds  &  d1.holds  ) ;
 
@@ -121,7 +98,7 @@ VAR lowerBound : "iml.lang.Real"  ;
 
 MODULE "UxASRespondsEvents_pkg.UxAS_responds" ( AutomationRequest_in )
 VAR AutomationResponse_out : "iml.ports.EventDataPort< iml.lang.Bool >"  ;
-VAR d : "iml.ports.delay" (processing_path,8) ;
+VAR d : "iml.ports.delay"  ;
 VAR adelaymonitor : "UxASRespondsEvents_pkg.one_request_at_a_time" (AutomationResponse_out.flowpoint.event,AutomationRequest_in.flowpoint.event) ;
 VAR processing_path : "iml.ports.FlowPath"  ;
 VAR gmonitor : "UxASRespondsEvents_pkg.responds_once" (AutomationResponse_out.event,AutomationRequest_in.event) ;

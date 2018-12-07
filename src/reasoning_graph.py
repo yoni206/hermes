@@ -9,7 +9,7 @@ from enum import Enum
 from sexpdata import loads, dumps, car, cdr
 from trivalogic import TriValLogic, Values
 from portfolio_solver import SolverResult, PortfolioSolver, StrategyFactory
-from model_checking_solver import NuSmvSolver, ModelCheckingSolver
+from model_checking_solver import NuSmvSolver, ModelCheckingSolver, DelaySolver
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -48,6 +48,11 @@ class STRING_CONSTANTS:
     PROPERTY = "property"
     HOLDS = "holds"
     COUNTER_EXAMPLE = "cexample" 
+    DELAY_ANALYSIS = "delay_analysis"
+    DELAY_SPEC = "delayspec"
+    DELAY_PATH = "delaypath"
+    DELAY = "delay"
+    EXPLANATION = "explanation"
     TRUE = "true"
     FALSE = "false"
     UNKNOWN = "unknown"
@@ -58,7 +63,7 @@ class EdgeType(Enum):
     SMTLIB = 2
     BOOLX = 3
     EVALUATE = 4
-    NUSMV = 6
+    BLOB = 6
 
     def from_string(str):
         if str == STRING_CONSTANTS.SIMPLE:
@@ -70,7 +75,9 @@ class EdgeType(Enum):
         elif str == STRING_CONSTANTS.EVALUATE:
             return EdgeType.EVALUATE
         elif str == STRING_CONSTANTS.NUSMV:
-            return EdgeType.NUSMV
+            return EdgeType.BLOB
+        elif str == STRING_CONSTANTS.DELAY:
+            return EdgeType.BLOB
         else:
             print("no such edge type:", str)
             assert(False)
@@ -114,14 +121,14 @@ class SimpleEdge(Edge):
     def get_type(self):
         return EdgeType.SIMPLE
 
-class NuSmvEdge(Edge):
+class BlobEdge(Edge):
     def __init__(self, name, src, dest, blob, encoding):
         super().__init__(name, src, dest)
         self.blob = blob
         self.encoding = encoding
 
     def get_type(self):
-        return EdgeType.NUSMV
+        return EdgeType.BLOB
 
 class SmtLibEdge(Edge):
     def __init__(self, name, src, dest, smtlib, encoding):
@@ -194,6 +201,7 @@ class NodeType(Enum):
     DONE = 3
     START = 4
     MODEL_CHECKING = 5
+    DELAY_ANALYSIS = 6
 
     def from_string(str):
         result = ""
@@ -207,6 +215,8 @@ class NodeType(Enum):
             result = NodeType.START
         elif str == STRING_CONSTANTS.MODEL_CHECKING:
             result = NodeType.MODEL_CHECKING
+        elif str == STRING_CONSTANTS.DELAY_ANALYSIS:
+            result = NodeType.DELAY_ANALYSIS
         else:
             assert(False)
         return result
@@ -261,6 +271,7 @@ class Node:
 
     def str(self):
         return self.__str__()
+
 
 class ModelCheckingNode(Node):
     def __init__(self, name, graph):
@@ -333,12 +344,13 @@ class ModelCheckingNode(Node):
         self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
         old_nusmv_edge = self._counter_example
         if old_nusmv_edge is not None:
-            new_nusmv_edge = NuSmvEdge(old_nusmv_edge.name,
+            new_nusmv_edge = BlobEdge(old_nusmv_edge.name,
                                             old_nusmv_edge.src,
                                             old_nusmv_edge.dest,
                                             solver_trace,
                                             old_nusmv_edge.encoding)
         self.graph.replace_edge(old_nusmv_edge, new_nusmv_edge)
+
 
 class EntailmentNode(Node):
     def __init__(self, name, graph):
@@ -427,6 +439,86 @@ class EntailmentNode(Node):
                                                old_evaluate_edge.wanted_values,
                                                values)
             self.graph.replace_edge(old_evaluate_edge, new_evaluate_edge)
+
+class DelayAnalysisNode(Node):
+    def __init__(self, name, graph):
+        super().__init__(name, graph)
+        self._delayspec = None
+        self._delaypath = None
+        self._holds = None
+        self._explanation = None
+
+    def connect_edge_to_port(self, edge, port_name):
+        if port_name == STRING_CONSTANTS.DELAY_SPEC:
+             self._delayspec = edge
+        elif port_name == STRING_CONSTANTS.DELAY_PATH:
+            self._delaypath = edge
+        elif port_name == STRING_CONSTANTS.HOLDS:
+            self._holds = edge
+        elif port_name == STRING_CONSTANTS.EXPLANATION:
+            self._explanation = edge
+        else:
+            assert(False)
+
+    def get_incoming_edges(self):
+        result = set([])
+        result.add(self._delayspec)
+        result.add(self._delaypath)
+        return result
+
+    def get_outgoing_edges(self):
+        result = set([])
+        if self._holds is not None:
+            result.add(self._holds)
+        if self._explanation is not None:
+            result.add(self._explanation)
+        return result
+    
+    def get_content(self):
+        delayspec = decode(self._delayspec.blob, self._delayspec.encoding)
+        delaypath = decode(self._delaypath.blob, self._delaypath.encoding)
+        return delayspec + "\n" + delaypath
+
+    def replace_edge(self, old, new):
+        if old == self._delayspec:
+            self._delayspec = new
+        elif old == self._delaypath:
+            self._delaypath = new
+        elif old == self._holds:
+            self._holds = new
+        elif old == self._explanation:
+            self._explanation = new
+        else:
+            assert(False)
+
+    def get_type(self):
+        return NodeType.DELAY_ANALYSIS
+
+    def execute(self):
+        print("Executing node: ", self.name)
+        content = self.get_content()
+        delay_solver = DelaySolver()
+        delay_solver.set_content(content)
+        with open(self.name + '.txt', 'w') as the_file:
+            the_file.write(content)
+        solver_result, solver_explanation = delay_solver.solve()
+        result = model_checking_solver_result_to_result(solver_result)
+        old_boolx_edge = self._holds
+        new_boolx_edge = SolvedBoolXEdge(old_boolx_edge.name,
+                                        old_boolx_edge.src,
+                                        old_boolx_edge.dest,
+                                        result)
+        self.graph.replace_edge(old_boolx_edge, new_boolx_edge)
+        old_explanation_edge = self._explanation
+        if old_explanation_edge is not None:
+            new_explanation_edge = BlobEdge(old_explanation_edge.name,
+                                            old_explanation_edge.src,
+                                            old_explanation_edge.dest,
+                                            solver_explanation,
+                                            old_explanation_edge.encoding)
+        self.graph.replace_edge(old_explanation_edge, new_explanation_edge)
+
+    
 
 
 class DoneNode(Node):
@@ -587,8 +679,8 @@ class ReasoningGraph:
             label = label[1:-1] #remove wrapping ( and )
             label = label.replace("\\", "")
             edge = UnsolvedEvaluateEdge(edge_name, src_node, dest_node, label)
-        elif edge_type is EdgeType.NUSMV:
-            edge = NuSmvEdge(edge_name, src_node, dest_node, label, encoding)
+        elif edge_type is EdgeType.BLOB:
+            edge = BlobEdge(edge_name, src_node, dest_node, label, encoding)
         else:
             assert(False)
         src_node.connect_edge_to_port(edge, src_port)
@@ -672,6 +764,8 @@ class ReasoningDag(ReasoningGraph):
             result = DoneNode(node_name, self)
         elif node_type is NodeType.MODEL_CHECKING:
             result = ModelCheckingNode(node_name, self)            
+        elif node_type is NodeType.DELAY_ANALYSIS:
+            result = DelayAnalysisNode(node_name, self)
         else:
             assert(False)
         return result
@@ -730,9 +824,9 @@ def process_graph(graph, config):
                                         ")"]))
 
     for edge in rg._edges:
-        if edge.get_type() == EdgeType.NUSMV:
+        if edge.get_type() == EdgeType.BLOB:
             src = edge.src
-            if src.get_type() == NodeType.MODEL_CHECKING:
+            if src.get_type() in [NodeType.DELAY_ANALYSIS,  NodeType.MODEL_CHECKING]:
                 holds_edge = src._holds
                 holds_value = holds_edge.boolx
                 if holds_value == Values.FALSE:
@@ -845,6 +939,18 @@ def constant_boolx_to_result(boolx):
     elif boolx == STRING_CONSTANTS.FALSE:
         result = Values.FALSE
     elif boolx == STRING_CONSTANTS.UNKNOWN:
+        result = Values.UNKNOWN
+    else:
+        assert(False)
+    return result
+
+
+def delay_solver_result_to_result(res):
+    if res == STRING_CONSTANTS.TRUE:
+        result = Values.TRUE
+    elif res == STRING_CONSTANTS.FALSE:
+        result = Values.FALSE
+    elif res == STRING_CONSTANTS.UNKNOWN:
         result = Values.UNKNOWN
     else:
         assert(False)

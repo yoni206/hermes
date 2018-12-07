@@ -19,6 +19,38 @@ class ModelCheckingSolver:
     def _parse_result_from_solver(self, result_str):
         raise NotImplementedError("must be overriden")
 
+class DelaySolver(ModelCheckingSolver):
+    def __init__(self):
+        super().__init__()
+        this_dir = os.path.dirname(os.path.realpath(__file__))
+        self._exec_path = this_dir + "/./delay_solver.sh"
+    
+    def solve(self):
+        with open('delay_input.txt', 'w') as the_file:
+            the_file.write(self._raw_content)
+        command = [self._exec_path ]
+        command.append("delay_input.txt")
+        result_object = subprocess.run(command, stdout=subprocess.PIPE)
+        result_string = result_object.stdout.decode('utf-8')
+        result, explanation = self._parse_result_from_solver(result_string)
+        return result, explanation
+
+    def _parse_result_from_solver(self, result_str):
+        lines = result_str.splitlines()
+        result_line = lines[0]
+        if result_line.strip().endswith("true"):
+            result = ModelCheckingSolver.HOLDS
+        elif result_line.strip().endswith("false"):
+            result = ModelCheckingSolver.DOES_NOT_HOLD
+        else:
+            assert(False)
+        if len(lines) == 1:
+            explanation = None
+        else:
+            explanation_lines = lines[1:]
+            explanation = "\n".join(explanation_lines)
+        return result, explanation
+
 class NuSmvSolver(ModelCheckingSolver):
     def __init__(self):
         super().__init__()

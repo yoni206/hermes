@@ -1,0 +1,10 @@
+AutomationRequest_in : AutomationResponse_out : 8
+AutomationRequestValidator : CmdRequest_in : SubRequest_out : 1
+PlanBuilder : CmdRequest_in : SubRequest_out : 1
+TaskServiceBase : CmdRequest_in : SubRequest_out : 1
+RouteAggregator : CmdRequest_in : SubRequest_out : 1
+Planner : CmdRequest_in : CmdResponse_out : 1
+RouteAggregator : SubResponse_in : CmdResponse_out : 1
+TaskServiceBase : SubResponse_in : CmdResponse_out : 1
+PlanBuilder : SubResponse_in : CmdResponse_out : 1
+AutomationRequestValidator : SubResponse_in : CmdResponse_out : 1

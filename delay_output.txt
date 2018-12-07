@@ -1,0 +1,14 @@
+false 
+flow specification : AutomationRequest_in  ->  AutomationResponse_out  
+delay specification : 8
+total path delay : 9
+path : 
+AutomationRequestValidator . CmdRequest_in  -> AutomationRequestValidator . SubRequest_out  : 1
+PlanBuilder . CmdRequest_in  -> PlanBuilder . SubRequest_out  : 2
+TaskServiceBase . CmdRequest_in  -> TaskServiceBase . SubRequest_out  : 3
+RouteAggregator . CmdRequest_in  -> RouteAggregator . SubRequest_out  : 4
+Planner . CmdRequest_in  -> Planner . CmdResponse_out  : 5
+RouteAggregator . SubResponse_in  -> RouteAggregator . CmdResponse_out  : 6
+TaskServiceBase . SubResponse_in  -> TaskServiceBase . CmdResponse_out  : 7
+PlanBuilder . SubResponse_in  -> PlanBuilder . CmdResponse_out  : 8
+AutomationRequestValidator . SubResponse_in  -> AutomationRequestValidator . CmdResponse_out  : 9 ( > 8 )
