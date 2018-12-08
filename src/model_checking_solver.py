@@ -42,6 +42,8 @@ class DelaySolver(ModelCheckingSolver):
             result = ModelCheckingSolver.HOLDS
         elif result_line.strip().endswith("false"):
             result = ModelCheckingSolver.DOES_NOT_HOLD
+        elif result_line.strip().endswith("unknown"):
+            result = ModelCheckingSolver.UNKNOWN
         else:
             assert(False)
         if len(lines) == 1:

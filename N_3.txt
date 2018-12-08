@@ -1,0 +1,20 @@
+AutomationRequest_in : AutomationResponse_out : 9
+connection : AutomationRequest_in : AutomationRequestValidator.CmdRequest_in : 0
+flow : AutomationRequestValidator : CmdRequest_in : SubRequest_out : 1
+connection : AutomationRequestValidator.SubRequest_out : PlanBuilder.CmdRequest_in : 0
+flow : PlanBuilder : CmdRequest_in : SubRequest_out : 1
+connection : PlanBuilder.SubRequest_out : TaskServiceBase.CmdRequest_in : 0
+flow : TaskServiceBase : CmdRequest_in : SubRequest_out : 1
+connection : TaskServiceBase.SubRequest_out : RouteAggregator.CmdRequest_in : 0
+flow : RouteAggregator : CmdRequest_in : SubRequest_out : 1
+connection : RouteAggregator.SubRequest_out : Planner.CmdRequest_in : 0
+flow : Planner : CmdRequest_in : CmdResponse_out : 1
+connection : Planner.CmdResponse_out : RouteAggregator.SubResponse_in : 0
+flow : RouteAggregator : SubResponse_in : CmdResponse_out : 1
+connection : RouteAggregator.CmdResponse_out : TaskServiceBase.SubResponse_in : 0
+flow : TaskServiceBase : SubResponse_in : CmdResponse_out : 1
+connection : TaskServiceBase.CmdResponse_out : PlanBuilder.SubResponse_in : 0
+flow : PlanBuilder : SubResponse_in : CmdResponse_out : 1
+connection : PlanBuilder.CmdResponse_out : AutomationRequestValidator.SubResponse_in : 0
+flow : AutomationRequestValidator : SubResponse_in : CmdResponse_out : 1
+connection : AutomationRequestValidator.CmdResponse_out : AutomationResponse_out : 0
