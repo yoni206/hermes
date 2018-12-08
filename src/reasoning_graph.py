@@ -829,7 +829,7 @@ def process_graph(graph, config):
             if src.get_type() in [NodeType.DELAY_ANALYSIS,  NodeType.MODEL_CHECKING]:
                 holds_edge = src._holds
                 holds_value = holds_edge.boolx
-                if holds_value == Values.FALSE:
+                if holds_value == Values.FALSE or (src.get_type() == NodeType.DELAY_ANALYSIS and edge.blob is not None):
                     encoded_blob = encode(edge.blob, STRING_CONSTANTS.BASE64)
                     output_lines.append(" ".join(["(", edge.name, 
                         encoded_blob, ")"]))
