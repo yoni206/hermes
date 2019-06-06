@@ -1,0 +1,13 @@
+(set-logic QF_LIA)
+(declare-fun a () Int)
+(declare-fun b () Int)
+(assert (distinct a b))
+(check-sat)
+(get-model)
+(check-sat)
+(get-model)
+(check-sat)
+(get-model)
+(check-sat)
+(get-model)
+
