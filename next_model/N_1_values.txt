@@ -1,0 +1,925 @@
+sat
+(model
+(declare-sort iml.ports.Port 0)
+; cardinality of __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0
+(declare-sort SWIMLAnnex.Command 0)
+; cardinality of SWIMLAnnex.MC_SW is 1
+(declare-sort SWIMLAnnex.MC_SW 0)
+; rep: @uc_SWIMLAnnex.MC_SW_0
+; cardinality of SWIMLAnnex.WaypointManager is 1
+(declare-sort SWIMLAnnex.WaypointManager 0)
+; rep: @uc_SWIMLAnnex.WaypointManager_0
+; cardinality of SWIMLAnnex.RadioDriver is 1
+(declare-sort SWIMLAnnex.RadioDriver 0)
+; rep: @uc_SWIMLAnnex.RadioDriver_0
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0
+(declare-sort SWIMLAnnex.FlightPattern 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0
+(declare-sort SWIMLAnnex.Coordinate 0)
+; cardinality of SWIMLAnnex.MissionWindow_dot_Impl is 1
+(declare-sort SWIMLAnnex.MissionWindow_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MissionWindow_dot_Impl_0
+; cardinality of SWIMLAnnex.UARTDriver is 1
+(declare-sort SWIMLAnnex.UARTDriver 0)
+; rep: @uc_SWIMLAnnex.UARTDriver_0
+(declare-sort SWIMLAnnex.Mission 0)
+(declare-sort SWIMLAnnex.Map 0)
+; cardinality of SWIMLAnnex.FlightPlanner is 1
+(declare-sort SWIMLAnnex.FlightPlanner 0)
+; rep: @uc_SWIMLAnnex.FlightPlanner_0
+; cardinality of SWIMLAnnex.Command_dot_Impl is 1
+(declare-sort SWIMLAnnex.Command_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Command_dot_Impl_0
+(declare-sort iml.ports.FlowPoint 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0
+; cardinality of SWIMLAnnex.Mission_dot_Impl is 1
+(declare-sort SWIMLAnnex.Mission_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Mission_dot_Impl_0
+; cardinality of SWIMLAnnex.Coordinate_dot_Impl is 1
+(declare-sort SWIMLAnnex.Coordinate_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Coordinate_dot_Impl_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0
+(declare-sort SWIMLAnnex.MissionWindow 0)
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0
+; cardinality of SWIMLAnnex.Map_dot_Impl is 1
+(declare-sort SWIMLAnnex.Map_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Map_dot_Impl_0
+; cardinality of SWIMLAnnex.MC_SW_dot_Impl is 1
+(declare-sort SWIMLAnnex.MC_SW_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_0
+(define-fun SWIMLAnnex.MC_SW.position_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c5 ((BOUND_VARIABLE_3583 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_in ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c6 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c7 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c1 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c2 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.inst () SWIMLAnnex.MC_SW_dot_Impl @uc_SWIMLAnnex.MC_SW_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c3 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp1 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp2 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data ((BOUND_VARIABLE_3616 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp3 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp4 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.RADIO ((BOUND_VARIABLE_3626 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.RadioDriver @uc_SWIMLAnnex.RadioDriver_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.extends_SWIMLAnnex.MissionWindow ((BOUND_VARIABLE_3635 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.MissionWindow @uc_SWIMLAnnex.MissionWindow_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c8 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c9 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint ((BOUND_VARIABLE_3649 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.HMAC ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool true)
+(define-fun SWIMLAnnex.good_HMAC ((BOUND_VARIABLE_3671 Bool)) Bool true)
+(define-fun SWIMLAnnex.RadioDriver.send_status_out ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun iml.ports.FlowPoint.lowerBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.WaypointManager.g1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint ((BOUND_VARIABLE_3710 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.FlightPlanner.a1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool true)
+(define-fun SWIMLAnnex.FlightPlanner.a2 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.lat ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.FlightPlanner.recv_map ((BOUND_VARIABLE_3727 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.extends_SWIMLAnnex.Mission ((BOUND_VARIABLE_3736 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Mission @uc_SWIMLAnnex.Mission_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_coordinate ((BOUND_VARIABLE_3746 SWIMLAnnex.Coordinate_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.alt ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 15001)
+(define-fun SWIMLAnnex.MC_SW.recv_map ((BOUND_VARIABLE_3758 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.FlightPlanner.flight_plan ((BOUND_VARIABLE_3763 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun iml.ports.FlowPoint.event ((BOUND_VARIABLE_3771 iml.ports.FlowPoint)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data ((BOUND_VARIABLE_3776 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) SWIMLAnnex.Command_dot_Impl @uc_SWIMLAnnex.Command_dot_Impl_0)
+(define-fun SWIMLAnnex.WaypointManager.flight_plan ((BOUND_VARIABLE_3781 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_in ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data ((BOUND_VARIABLE_3791 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) SWIMLAnnex.Mission_dot_Impl @uc_SWIMLAnnex.Mission_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data ((BOUND_VARIABLE_3796 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) SWIMLAnnex.MissionWindow_dot_Impl @uc_SWIMLAnnex.MissionWindow_dot_Impl_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_out ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_gs_command ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool false)
+(define-fun iml.ports.FlowPoint.upperBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.Map_dot_Impl.extends_SWIMLAnnex.Map ((BOUND_VARIABLE_3815 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Map @uc_SWIMLAnnex.Map_0)
+(define-fun iml.connectivity.connect<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3836 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_out ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_in ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint ((BOUND_VARIABLE_3846 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.FPLN ((BOUND_VARIABLE_3851 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.FlightPlanner @uc_SWIMLAnnex.FlightPlanner_0)
+(define-fun SWIMLAnnex.MC_SW.a1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool true)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp10 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c10 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Map ((BOUND_VARIABLE_3866 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Map_dot_Impl @uc_SWIMLAnnex.Map_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c11 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp8 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp7 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp9 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp4 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp3 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp6 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp5 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.FlightPlanner.position_status ((BOUND_VARIABLE_3871 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.extends_SWIMLAnnex.MC_SW ((BOUND_VARIABLE_3876 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.MC_SW @uc_SWIMLAnnex.MC_SW_0)
+(define-fun SWIMLAnnex.UARTDriver.g1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun SWIMLAnnex.WaypointManager.waypoint ((BOUND_VARIABLE_3886 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.UART ((BOUND_VARIABLE_3891 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.UARTDriver @uc_SWIMLAnnex.UARTDriver_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp2 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp1 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.WPM ((BOUND_VARIABLE_3896 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.WaypointManager @uc_SWIMLAnnex.WaypointManager_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.long ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.Command_dot_Impl.extends_SWIMLAnnex.Command ((BOUND_VARIABLE_3905 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Command @uc_SWIMLAnnex.Command_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp1 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp2 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp3 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.send_status_in ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp4 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.a1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_out ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_mission ((BOUND_VARIABLE_3922 SWIMLAnnex.Mission_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW.send_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint ((BOUND_VARIABLE_3930 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.extends_SWIMLAnnex.Coordinate ((BOUND_VARIABLE_3939 SWIMLAnnex.Coordinate_dot_Impl)) SWIMLAnnex.Coordinate @uc_SWIMLAnnex.Coordinate_0)
+(define-fun SWIMLAnnex.WaypointManager.a1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.WaypointManager.position_status ((BOUND_VARIABLE_3956 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_map ((BOUND_VARIABLE_3961 SWIMLAnnex.Map_dot_Impl)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event ((BOUND_VARIABLE_3971 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.UARTDriver.a1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Pattern ((BOUND_VARIABLE_3982 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.FlightPattern @uc_SWIMLAnnex.FlightPattern_0)
+(define-fun SWIMLAnnex.MC_SW.waypoint ((BOUND_VARIABLE_3987 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3995 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.crc ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun SWIMLAnnex.good_mission_window ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event ((BOUND_VARIABLE_4008 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.MC_SW.g1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool false)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4018 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.FlightPlanner.g1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4026 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.RadioDriver.g1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event ((BOUND_VARIABLE_4034 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) Bool false)
+)
+sat
+(model
+(declare-sort iml.ports.Port 0)
+; cardinality of __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0
+(declare-sort SWIMLAnnex.Command 0)
+; cardinality of SWIMLAnnex.MC_SW is 1
+(declare-sort SWIMLAnnex.MC_SW 0)
+; rep: @uc_SWIMLAnnex.MC_SW_0
+; cardinality of SWIMLAnnex.WaypointManager is 1
+(declare-sort SWIMLAnnex.WaypointManager 0)
+; rep: @uc_SWIMLAnnex.WaypointManager_0
+; cardinality of SWIMLAnnex.RadioDriver is 1
+(declare-sort SWIMLAnnex.RadioDriver 0)
+; rep: @uc_SWIMLAnnex.RadioDriver_0
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0
+(declare-sort SWIMLAnnex.FlightPattern 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0
+(declare-sort SWIMLAnnex.Coordinate 0)
+; cardinality of SWIMLAnnex.MissionWindow_dot_Impl is 1
+(declare-sort SWIMLAnnex.MissionWindow_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MissionWindow_dot_Impl_0
+; cardinality of SWIMLAnnex.UARTDriver is 1
+(declare-sort SWIMLAnnex.UARTDriver 0)
+; rep: @uc_SWIMLAnnex.UARTDriver_0
+(declare-sort SWIMLAnnex.Mission 0)
+(declare-sort SWIMLAnnex.Map 0)
+; cardinality of SWIMLAnnex.FlightPlanner is 1
+(declare-sort SWIMLAnnex.FlightPlanner 0)
+; rep: @uc_SWIMLAnnex.FlightPlanner_0
+; cardinality of SWIMLAnnex.Command_dot_Impl is 1
+(declare-sort SWIMLAnnex.Command_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Command_dot_Impl_0
+(declare-sort iml.ports.FlowPoint 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0
+; cardinality of SWIMLAnnex.Mission_dot_Impl is 1
+(declare-sort SWIMLAnnex.Mission_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Mission_dot_Impl_0
+; cardinality of SWIMLAnnex.Coordinate_dot_Impl is 1
+(declare-sort SWIMLAnnex.Coordinate_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Coordinate_dot_Impl_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0
+(declare-sort SWIMLAnnex.MissionWindow 0)
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0
+; cardinality of SWIMLAnnex.Map_dot_Impl is 1
+(declare-sort SWIMLAnnex.Map_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Map_dot_Impl_0
+; cardinality of SWIMLAnnex.MC_SW_dot_Impl is 2
+(declare-sort SWIMLAnnex.MC_SW_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_1
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_0
+(define-fun SWIMLAnnex.MC_SW.position_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c5 ((BOUND_VARIABLE_3583 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_in ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c6 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c7 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c1 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c2 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.inst () SWIMLAnnex.MC_SW_dot_Impl @uc_SWIMLAnnex.MC_SW_dot_Impl_1)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c3 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp1 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp2 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data ((BOUND_VARIABLE_3616 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp3 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp4 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.RADIO ((BOUND_VARIABLE_3626 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.RadioDriver @uc_SWIMLAnnex.RadioDriver_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.extends_SWIMLAnnex.MissionWindow ((BOUND_VARIABLE_3635 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.MissionWindow @uc_SWIMLAnnex.MissionWindow_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c8 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c9 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint ((BOUND_VARIABLE_3649 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.HMAC ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool true)
+(define-fun SWIMLAnnex.good_HMAC ((BOUND_VARIABLE_3671 Bool)) Bool true)
+(define-fun SWIMLAnnex.RadioDriver.send_status_out ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun iml.ports.FlowPoint.lowerBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.WaypointManager.g1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint ((BOUND_VARIABLE_3710 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.FlightPlanner.a1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool true)
+(define-fun SWIMLAnnex.FlightPlanner.a2 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.lat ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.FlightPlanner.recv_map ((BOUND_VARIABLE_3727 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.extends_SWIMLAnnex.Mission ((BOUND_VARIABLE_3736 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Mission @uc_SWIMLAnnex.Mission_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_coordinate ((BOUND_VARIABLE_3746 SWIMLAnnex.Coordinate_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.alt ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 15001)
+(define-fun SWIMLAnnex.MC_SW.recv_map ((BOUND_VARIABLE_3758 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.FlightPlanner.flight_plan ((BOUND_VARIABLE_3763 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun iml.ports.FlowPoint.event ((BOUND_VARIABLE_3771 iml.ports.FlowPoint)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data ((BOUND_VARIABLE_3776 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) SWIMLAnnex.Command_dot_Impl @uc_SWIMLAnnex.Command_dot_Impl_0)
+(define-fun SWIMLAnnex.WaypointManager.flight_plan ((BOUND_VARIABLE_3781 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_in ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data ((BOUND_VARIABLE_3791 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) SWIMLAnnex.Mission_dot_Impl @uc_SWIMLAnnex.Mission_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data ((BOUND_VARIABLE_3796 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) SWIMLAnnex.MissionWindow_dot_Impl @uc_SWIMLAnnex.MissionWindow_dot_Impl_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_out ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_gs_command ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool false)
+(define-fun iml.ports.FlowPoint.upperBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.Map_dot_Impl.extends_SWIMLAnnex.Map ((BOUND_VARIABLE_3815 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Map @uc_SWIMLAnnex.Map_0)
+(define-fun iml.connectivity.connect<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3836 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_out ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_in ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint ((BOUND_VARIABLE_3846 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.FPLN ((BOUND_VARIABLE_3851 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.FlightPlanner @uc_SWIMLAnnex.FlightPlanner_0)
+(define-fun SWIMLAnnex.MC_SW.a1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool true)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp10 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c10 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Map ((BOUND_VARIABLE_3866 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Map_dot_Impl @uc_SWIMLAnnex.Map_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c11 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp8 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp7 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp9 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp4 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp3 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp6 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp5 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.FlightPlanner.position_status ((BOUND_VARIABLE_3871 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.extends_SWIMLAnnex.MC_SW ((BOUND_VARIABLE_3876 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.MC_SW @uc_SWIMLAnnex.MC_SW_0)
+(define-fun SWIMLAnnex.UARTDriver.g1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun SWIMLAnnex.WaypointManager.waypoint ((BOUND_VARIABLE_3886 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.UART ((BOUND_VARIABLE_3891 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.UARTDriver @uc_SWIMLAnnex.UARTDriver_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp2 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp1 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.WPM ((BOUND_VARIABLE_3896 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.WaypointManager @uc_SWIMLAnnex.WaypointManager_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.long ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.Command_dot_Impl.extends_SWIMLAnnex.Command ((BOUND_VARIABLE_3905 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Command @uc_SWIMLAnnex.Command_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp1 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp2 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp3 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.send_status_in ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp4 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.a1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_out ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_mission ((BOUND_VARIABLE_3922 SWIMLAnnex.Mission_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW.send_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint ((BOUND_VARIABLE_3930 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.extends_SWIMLAnnex.Coordinate ((BOUND_VARIABLE_3939 SWIMLAnnex.Coordinate_dot_Impl)) SWIMLAnnex.Coordinate @uc_SWIMLAnnex.Coordinate_0)
+(define-fun SWIMLAnnex.WaypointManager.a1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.WaypointManager.position_status ((BOUND_VARIABLE_3956 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_map ((BOUND_VARIABLE_3961 SWIMLAnnex.Map_dot_Impl)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event ((BOUND_VARIABLE_3971 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.UARTDriver.a1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Pattern ((BOUND_VARIABLE_3982 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.FlightPattern @uc_SWIMLAnnex.FlightPattern_0)
+(define-fun SWIMLAnnex.MC_SW.waypoint ((BOUND_VARIABLE_3987 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3995 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.crc ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun SWIMLAnnex.good_mission_window ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event ((BOUND_VARIABLE_4008 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.MC_SW.g1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool false)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4018 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.FlightPlanner.g1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4026 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.RadioDriver.g1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event ((BOUND_VARIABLE_4034 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) Bool false)
+)
+sat
+(model
+(declare-sort iml.ports.Port 0)
+; cardinality of __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0
+(declare-sort SWIMLAnnex.Command 0)
+; cardinality of SWIMLAnnex.MC_SW is 1
+(declare-sort SWIMLAnnex.MC_SW 0)
+; rep: @uc_SWIMLAnnex.MC_SW_0
+; cardinality of SWIMLAnnex.WaypointManager is 1
+(declare-sort SWIMLAnnex.WaypointManager 0)
+; rep: @uc_SWIMLAnnex.WaypointManager_0
+; cardinality of SWIMLAnnex.RadioDriver is 1
+(declare-sort SWIMLAnnex.RadioDriver 0)
+; rep: @uc_SWIMLAnnex.RadioDriver_0
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0
+(declare-sort SWIMLAnnex.FlightPattern 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0
+(declare-sort SWIMLAnnex.Coordinate 0)
+; cardinality of SWIMLAnnex.MissionWindow_dot_Impl is 1
+(declare-sort SWIMLAnnex.MissionWindow_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MissionWindow_dot_Impl_0
+; cardinality of SWIMLAnnex.UARTDriver is 1
+(declare-sort SWIMLAnnex.UARTDriver 0)
+; rep: @uc_SWIMLAnnex.UARTDriver_0
+(declare-sort SWIMLAnnex.Mission 0)
+(declare-sort SWIMLAnnex.Map 0)
+; cardinality of SWIMLAnnex.FlightPlanner is 1
+(declare-sort SWIMLAnnex.FlightPlanner 0)
+; rep: @uc_SWIMLAnnex.FlightPlanner_0
+; cardinality of SWIMLAnnex.Command_dot_Impl is 1
+(declare-sort SWIMLAnnex.Command_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Command_dot_Impl_0
+(declare-sort iml.ports.FlowPoint 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0
+; cardinality of SWIMLAnnex.Mission_dot_Impl is 1
+(declare-sort SWIMLAnnex.Mission_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Mission_dot_Impl_0
+; cardinality of SWIMLAnnex.Coordinate_dot_Impl is 1
+(declare-sort SWIMLAnnex.Coordinate_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Coordinate_dot_Impl_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0
+(declare-sort SWIMLAnnex.MissionWindow 0)
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0
+; cardinality of SWIMLAnnex.Map_dot_Impl is 1
+(declare-sort SWIMLAnnex.Map_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Map_dot_Impl_0
+; cardinality of SWIMLAnnex.MC_SW_dot_Impl is 3
+(declare-sort SWIMLAnnex.MC_SW_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_2
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_0
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_1
+(define-fun SWIMLAnnex.MC_SW.position_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c5 ((BOUND_VARIABLE_3583 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_in ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c6 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c7 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c1 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c2 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.inst () SWIMLAnnex.MC_SW_dot_Impl @uc_SWIMLAnnex.MC_SW_dot_Impl_2)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c3 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp1 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp2 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data ((BOUND_VARIABLE_3616 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp3 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp4 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.RADIO ((BOUND_VARIABLE_3626 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.RadioDriver @uc_SWIMLAnnex.RadioDriver_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.extends_SWIMLAnnex.MissionWindow ((BOUND_VARIABLE_3635 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.MissionWindow @uc_SWIMLAnnex.MissionWindow_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c8 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c9 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint ((BOUND_VARIABLE_3649 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.HMAC ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool true)
+(define-fun SWIMLAnnex.good_HMAC ((BOUND_VARIABLE_3671 Bool)) Bool true)
+(define-fun SWIMLAnnex.RadioDriver.send_status_out ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun iml.ports.FlowPoint.lowerBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.WaypointManager.g1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint ((BOUND_VARIABLE_3710 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.FlightPlanner.a1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool true)
+(define-fun SWIMLAnnex.FlightPlanner.a2 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.lat ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.FlightPlanner.recv_map ((BOUND_VARIABLE_3727 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.extends_SWIMLAnnex.Mission ((BOUND_VARIABLE_3736 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Mission @uc_SWIMLAnnex.Mission_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_coordinate ((BOUND_VARIABLE_3746 SWIMLAnnex.Coordinate_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.alt ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 15001)
+(define-fun SWIMLAnnex.MC_SW.recv_map ((BOUND_VARIABLE_3758 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.FlightPlanner.flight_plan ((BOUND_VARIABLE_3763 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun iml.ports.FlowPoint.event ((BOUND_VARIABLE_3771 iml.ports.FlowPoint)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data ((BOUND_VARIABLE_3776 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) SWIMLAnnex.Command_dot_Impl @uc_SWIMLAnnex.Command_dot_Impl_0)
+(define-fun SWIMLAnnex.WaypointManager.flight_plan ((BOUND_VARIABLE_3781 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_in ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data ((BOUND_VARIABLE_3791 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) SWIMLAnnex.Mission_dot_Impl @uc_SWIMLAnnex.Mission_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data ((BOUND_VARIABLE_3796 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) SWIMLAnnex.MissionWindow_dot_Impl @uc_SWIMLAnnex.MissionWindow_dot_Impl_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_out ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_gs_command ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool false)
+(define-fun iml.ports.FlowPoint.upperBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.Map_dot_Impl.extends_SWIMLAnnex.Map ((BOUND_VARIABLE_3815 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Map @uc_SWIMLAnnex.Map_0)
+(define-fun iml.connectivity.connect<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3836 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_out ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_in ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint ((BOUND_VARIABLE_3846 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.FPLN ((BOUND_VARIABLE_3851 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.FlightPlanner @uc_SWIMLAnnex.FlightPlanner_0)
+(define-fun SWIMLAnnex.MC_SW.a1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool true)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp10 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c10 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Map ((BOUND_VARIABLE_3866 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Map_dot_Impl @uc_SWIMLAnnex.Map_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c11 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp8 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp7 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp9 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp4 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp3 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp6 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp5 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.FlightPlanner.position_status ((BOUND_VARIABLE_3871 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.extends_SWIMLAnnex.MC_SW ((BOUND_VARIABLE_3876 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.MC_SW @uc_SWIMLAnnex.MC_SW_0)
+(define-fun SWIMLAnnex.UARTDriver.g1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun SWIMLAnnex.WaypointManager.waypoint ((BOUND_VARIABLE_3886 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.UART ((BOUND_VARIABLE_3891 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.UARTDriver @uc_SWIMLAnnex.UARTDriver_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp2 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp1 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.WPM ((BOUND_VARIABLE_3896 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.WaypointManager @uc_SWIMLAnnex.WaypointManager_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.long ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.Command_dot_Impl.extends_SWIMLAnnex.Command ((BOUND_VARIABLE_3905 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Command @uc_SWIMLAnnex.Command_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp1 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp2 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp3 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.send_status_in ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp4 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.a1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_out ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_mission ((BOUND_VARIABLE_3922 SWIMLAnnex.Mission_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW.send_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint ((BOUND_VARIABLE_3930 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.extends_SWIMLAnnex.Coordinate ((BOUND_VARIABLE_3939 SWIMLAnnex.Coordinate_dot_Impl)) SWIMLAnnex.Coordinate @uc_SWIMLAnnex.Coordinate_0)
+(define-fun SWIMLAnnex.WaypointManager.a1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.WaypointManager.position_status ((BOUND_VARIABLE_3956 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_map ((BOUND_VARIABLE_3961 SWIMLAnnex.Map_dot_Impl)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event ((BOUND_VARIABLE_3971 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.UARTDriver.a1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Pattern ((BOUND_VARIABLE_3982 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.FlightPattern @uc_SWIMLAnnex.FlightPattern_0)
+(define-fun SWIMLAnnex.MC_SW.waypoint ((BOUND_VARIABLE_3987 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3995 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.crc ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun SWIMLAnnex.good_mission_window ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event ((BOUND_VARIABLE_4008 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.MC_SW.g1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool false)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4018 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.FlightPlanner.g1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4026 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.RadioDriver.g1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event ((BOUND_VARIABLE_4034 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) Bool false)
+)
+sat
+(model
+(declare-sort iml.ports.Port 0)
+; cardinality of __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0
+(declare-sort SWIMLAnnex.Command 0)
+; cardinality of SWIMLAnnex.MC_SW is 1
+(declare-sort SWIMLAnnex.MC_SW 0)
+; rep: @uc_SWIMLAnnex.MC_SW_0
+; cardinality of SWIMLAnnex.WaypointManager is 1
+(declare-sort SWIMLAnnex.WaypointManager 0)
+; rep: @uc_SWIMLAnnex.WaypointManager_0
+; cardinality of SWIMLAnnex.RadioDriver is 1
+(declare-sort SWIMLAnnex.RadioDriver 0)
+; rep: @uc_SWIMLAnnex.RadioDriver_0
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0
+(declare-sort SWIMLAnnex.FlightPattern 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0
+(declare-sort SWIMLAnnex.Coordinate 0)
+; cardinality of SWIMLAnnex.MissionWindow_dot_Impl is 1
+(declare-sort SWIMLAnnex.MissionWindow_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MissionWindow_dot_Impl_0
+; cardinality of SWIMLAnnex.UARTDriver is 1
+(declare-sort SWIMLAnnex.UARTDriver 0)
+; rep: @uc_SWIMLAnnex.UARTDriver_0
+(declare-sort SWIMLAnnex.Mission 0)
+(declare-sort SWIMLAnnex.Map 0)
+; cardinality of SWIMLAnnex.FlightPlanner is 1
+(declare-sort SWIMLAnnex.FlightPlanner 0)
+; rep: @uc_SWIMLAnnex.FlightPlanner_0
+; cardinality of SWIMLAnnex.Command_dot_Impl is 1
+(declare-sort SWIMLAnnex.Command_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Command_dot_Impl_0
+(declare-sort iml.ports.FlowPoint 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0
+; cardinality of SWIMLAnnex.Mission_dot_Impl is 1
+(declare-sort SWIMLAnnex.Mission_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Mission_dot_Impl_0
+; cardinality of SWIMLAnnex.Coordinate_dot_Impl is 1
+(declare-sort SWIMLAnnex.Coordinate_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Coordinate_dot_Impl_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0
+(declare-sort SWIMLAnnex.MissionWindow 0)
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0
+; cardinality of SWIMLAnnex.Map_dot_Impl is 1
+(declare-sort SWIMLAnnex.Map_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Map_dot_Impl_0
+; cardinality of SWIMLAnnex.MC_SW_dot_Impl is 4
+(declare-sort SWIMLAnnex.MC_SW_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_3
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_0
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_1
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_2
+(define-fun SWIMLAnnex.MC_SW.position_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c5 ((BOUND_VARIABLE_3583 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_in ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c6 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c7 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c1 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c2 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.inst () SWIMLAnnex.MC_SW_dot_Impl @uc_SWIMLAnnex.MC_SW_dot_Impl_3)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c3 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp1 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp2 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data ((BOUND_VARIABLE_3616 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp3 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp4 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.RADIO ((BOUND_VARIABLE_3626 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.RadioDriver @uc_SWIMLAnnex.RadioDriver_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.extends_SWIMLAnnex.MissionWindow ((BOUND_VARIABLE_3635 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.MissionWindow @uc_SWIMLAnnex.MissionWindow_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c8 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c9 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint ((BOUND_VARIABLE_3649 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.HMAC ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool true)
+(define-fun SWIMLAnnex.good_HMAC ((BOUND_VARIABLE_3671 Bool)) Bool true)
+(define-fun SWIMLAnnex.RadioDriver.send_status_out ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun iml.ports.FlowPoint.lowerBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.WaypointManager.g1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint ((BOUND_VARIABLE_3710 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.FlightPlanner.a1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool true)
+(define-fun SWIMLAnnex.FlightPlanner.a2 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.lat ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.FlightPlanner.recv_map ((BOUND_VARIABLE_3727 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.extends_SWIMLAnnex.Mission ((BOUND_VARIABLE_3736 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Mission @uc_SWIMLAnnex.Mission_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_coordinate ((BOUND_VARIABLE_3746 SWIMLAnnex.Coordinate_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.alt ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 15001)
+(define-fun SWIMLAnnex.MC_SW.recv_map ((BOUND_VARIABLE_3758 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.FlightPlanner.flight_plan ((BOUND_VARIABLE_3763 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun iml.ports.FlowPoint.event ((BOUND_VARIABLE_3771 iml.ports.FlowPoint)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data ((BOUND_VARIABLE_3776 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) SWIMLAnnex.Command_dot_Impl @uc_SWIMLAnnex.Command_dot_Impl_0)
+(define-fun SWIMLAnnex.WaypointManager.flight_plan ((BOUND_VARIABLE_3781 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_in ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data ((BOUND_VARIABLE_3791 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) SWIMLAnnex.Mission_dot_Impl @uc_SWIMLAnnex.Mission_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data ((BOUND_VARIABLE_3796 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) SWIMLAnnex.MissionWindow_dot_Impl @uc_SWIMLAnnex.MissionWindow_dot_Impl_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_out ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_gs_command ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool false)
+(define-fun iml.ports.FlowPoint.upperBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.Map_dot_Impl.extends_SWIMLAnnex.Map ((BOUND_VARIABLE_3815 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Map @uc_SWIMLAnnex.Map_0)
+(define-fun iml.connectivity.connect<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3836 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_out ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_in ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint ((BOUND_VARIABLE_3846 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.FPLN ((BOUND_VARIABLE_3851 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.FlightPlanner @uc_SWIMLAnnex.FlightPlanner_0)
+(define-fun SWIMLAnnex.MC_SW.a1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool true)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp10 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c10 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Map ((BOUND_VARIABLE_3866 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Map_dot_Impl @uc_SWIMLAnnex.Map_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c11 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp8 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp7 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp9 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp4 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp3 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp6 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp5 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.FlightPlanner.position_status ((BOUND_VARIABLE_3871 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.extends_SWIMLAnnex.MC_SW ((BOUND_VARIABLE_3876 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.MC_SW @uc_SWIMLAnnex.MC_SW_0)
+(define-fun SWIMLAnnex.UARTDriver.g1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun SWIMLAnnex.WaypointManager.waypoint ((BOUND_VARIABLE_3886 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.UART ((BOUND_VARIABLE_3891 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.UARTDriver @uc_SWIMLAnnex.UARTDriver_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp2 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp1 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.WPM ((BOUND_VARIABLE_3896 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.WaypointManager @uc_SWIMLAnnex.WaypointManager_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.long ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.Command_dot_Impl.extends_SWIMLAnnex.Command ((BOUND_VARIABLE_3905 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Command @uc_SWIMLAnnex.Command_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp1 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp2 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp3 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.send_status_in ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp4 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.a1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_out ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_mission ((BOUND_VARIABLE_3922 SWIMLAnnex.Mission_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW.send_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint ((BOUND_VARIABLE_3930 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.extends_SWIMLAnnex.Coordinate ((BOUND_VARIABLE_3939 SWIMLAnnex.Coordinate_dot_Impl)) SWIMLAnnex.Coordinate @uc_SWIMLAnnex.Coordinate_0)
+(define-fun SWIMLAnnex.WaypointManager.a1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.WaypointManager.position_status ((BOUND_VARIABLE_3956 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_map ((BOUND_VARIABLE_3961 SWIMLAnnex.Map_dot_Impl)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event ((BOUND_VARIABLE_3971 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.UARTDriver.a1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Pattern ((BOUND_VARIABLE_3982 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.FlightPattern @uc_SWIMLAnnex.FlightPattern_0)
+(define-fun SWIMLAnnex.MC_SW.waypoint ((BOUND_VARIABLE_3987 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3995 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.crc ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun SWIMLAnnex.good_mission_window ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event ((BOUND_VARIABLE_4008 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.MC_SW.g1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool false)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4018 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.FlightPlanner.g1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4026 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.RadioDriver.g1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event ((BOUND_VARIABLE_4034 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) Bool false)
+)
+sat
+(model
+(declare-sort iml.ports.Port 0)
+; cardinality of __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0
+(declare-sort SWIMLAnnex.Command 0)
+; cardinality of SWIMLAnnex.MC_SW is 1
+(declare-sort SWIMLAnnex.MC_SW 0)
+; rep: @uc_SWIMLAnnex.MC_SW_0
+; cardinality of SWIMLAnnex.WaypointManager is 1
+(declare-sort SWIMLAnnex.WaypointManager 0)
+; rep: @uc_SWIMLAnnex.WaypointManager_0
+; cardinality of SWIMLAnnex.RadioDriver is 1
+(declare-sort SWIMLAnnex.RadioDriver 0)
+; rep: @uc_SWIMLAnnex.RadioDriver_0
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0
+(declare-sort SWIMLAnnex.FlightPattern 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0
+(declare-sort SWIMLAnnex.Coordinate 0)
+; cardinality of SWIMLAnnex.MissionWindow_dot_Impl is 1
+(declare-sort SWIMLAnnex.MissionWindow_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MissionWindow_dot_Impl_0
+; cardinality of SWIMLAnnex.UARTDriver is 1
+(declare-sort SWIMLAnnex.UARTDriver 0)
+; rep: @uc_SWIMLAnnex.UARTDriver_0
+(declare-sort SWIMLAnnex.Mission 0)
+(declare-sort SWIMLAnnex.Map 0)
+; cardinality of SWIMLAnnex.FlightPlanner is 1
+(declare-sort SWIMLAnnex.FlightPlanner 0)
+; rep: @uc_SWIMLAnnex.FlightPlanner_0
+; cardinality of SWIMLAnnex.Command_dot_Impl is 1
+(declare-sort SWIMLAnnex.Command_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Command_dot_Impl_0
+(declare-sort iml.ports.FlowPoint 0)
+; cardinality of __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> is 1
+(declare-sort __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> 0)
+; rep: @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0
+; cardinality of SWIMLAnnex.Mission_dot_Impl is 1
+(declare-sort SWIMLAnnex.Mission_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Mission_dot_Impl_0
+; cardinality of SWIMLAnnex.Coordinate_dot_Impl is 1
+(declare-sort SWIMLAnnex.Coordinate_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Coordinate_dot_Impl_0
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0
+(declare-sort SWIMLAnnex.MissionWindow 0)
+; cardinality of __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> is 1
+(declare-sort __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> 0)
+; rep: @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0
+; cardinality of SWIMLAnnex.Map_dot_Impl is 1
+(declare-sort SWIMLAnnex.Map_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.Map_dot_Impl_0
+; cardinality of SWIMLAnnex.MC_SW_dot_Impl is 5
+(declare-sort SWIMLAnnex.MC_SW_dot_Impl 0)
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_4
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_0
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_1
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_2
+; rep: @uc_SWIMLAnnex.MC_SW_dot_Impl_3
+(define-fun SWIMLAnnex.MC_SW.position_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c5 ((BOUND_VARIABLE_3583 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_in ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c6 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c7 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c1 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c2 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.inst () SWIMLAnnex.MC_SW_dot_Impl @uc_SWIMLAnnex.MC_SW_dot_Impl_4)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c3 ((BOUND_VARIABLE_3603 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp1 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp2 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.data ((BOUND_VARIABLE_3616 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.source ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp3 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Map_dot_Impl.wp4 ((BOUND_VARIABLE_3608 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.RADIO ((BOUND_VARIABLE_3626 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.RadioDriver @uc_SWIMLAnnex.RadioDriver_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.extends_SWIMLAnnex.MissionWindow ((BOUND_VARIABLE_3635 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.MissionWindow @uc_SWIMLAnnex.MissionWindow_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.source ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c8 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c9 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.flowpoint ((BOUND_VARIABLE_3649 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.HMAC ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool true)
+(define-fun SWIMLAnnex.good_HMAC ((BOUND_VARIABLE_3671 Bool)) Bool true)
+(define-fun SWIMLAnnex.RadioDriver.send_status_out ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun iml.ports.FlowPoint.lowerBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.WaypointManager.g1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.flowpoint ((BOUND_VARIABLE_3710 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.FlightPlanner.a1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool true)
+(define-fun SWIMLAnnex.FlightPlanner.a2 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.lat ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.FlightPlanner.recv_map ((BOUND_VARIABLE_3727 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.extends_SWIMLAnnex.Mission ((BOUND_VARIABLE_3736 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Mission @uc_SWIMLAnnex.Mission_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.target ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_coordinate ((BOUND_VARIABLE_3746 SWIMLAnnex.Coordinate_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.source ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.alt ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 15001)
+(define-fun SWIMLAnnex.MC_SW.recv_map ((BOUND_VARIABLE_3758 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun SWIMLAnnex.FlightPlanner.flight_plan ((BOUND_VARIABLE_3763 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun iml.ports.FlowPoint.event ((BOUND_VARIABLE_3771 iml.ports.FlowPoint)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data ((BOUND_VARIABLE_3776 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) SWIMLAnnex.Command_dot_Impl @uc_SWIMLAnnex.Command_dot_Impl_0)
+(define-fun SWIMLAnnex.WaypointManager.flight_plan ((BOUND_VARIABLE_3781 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_in ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.data ((BOUND_VARIABLE_3791 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) SWIMLAnnex.Mission_dot_Impl @uc_SWIMLAnnex.Mission_dot_Impl_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.data ((BOUND_VARIABLE_3796 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) SWIMLAnnex.MissionWindow_dot_Impl @uc_SWIMLAnnex.MissionWindow_dot_Impl_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_out ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_gs_command ((BOUND_VARIABLE_3666 SWIMLAnnex.Command_dot_Impl)) Bool false)
+(define-fun iml.ports.FlowPoint.upperBound ((BOUND_VARIABLE_3697 iml.ports.FlowPoint)) Real 0.0)
+(define-fun SWIMLAnnex.Map_dot_Impl.extends_SWIMLAnnex.Map ((BOUND_VARIABLE_3815 SWIMLAnnex.Map_dot_Impl)) SWIMLAnnex.Map @uc_SWIMLAnnex.Map_0)
+(define-fun iml.connectivity.connect<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3836 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.RadioDriver.recv_map_out ((BOUND_VARIABLE_3588 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> ((BOUND_VARIABLE_3658 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>) (BOUND_VARIABLE_3659 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.UARTDriver.position_status_in ((BOUND_VARIABLE_3801 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.flowpoint ((BOUND_VARIABLE_3846 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.FPLN ((BOUND_VARIABLE_3851 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.FlightPlanner @uc_SWIMLAnnex.FlightPlanner_0)
+(define-fun SWIMLAnnex.MC_SW.a1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool true)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp10 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c10 ((BOUND_VARIABLE_3593 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Map ((BOUND_VARIABLE_3866 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Map_dot_Impl @uc_SWIMLAnnex.Map_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.c11 ((BOUND_VARIABLE_3598 SWIMLAnnex.MC_SW_dot_Impl)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp8 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp7 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp9 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>.target ((BOUND_VARIABLE_3621 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp4 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp3 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp6 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp5 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.FlightPlanner.position_status ((BOUND_VARIABLE_3871 SWIMLAnnex.FlightPlanner)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.extends_SWIMLAnnex.MC_SW ((BOUND_VARIABLE_3876 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.MC_SW @uc_SWIMLAnnex.MC_SW_0)
+(define-fun SWIMLAnnex.UARTDriver.g1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun SWIMLAnnex.WaypointManager.waypoint ((BOUND_VARIABLE_3886 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.UART ((BOUND_VARIABLE_3891 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.UARTDriver @uc_SWIMLAnnex.UARTDriver_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp2 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.Mission_dot_Impl.wp1 ((BOUND_VARIABLE_3861 SWIMLAnnex.Mission_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MC_SW_dot_Impl.WPM ((BOUND_VARIABLE_3896 SWIMLAnnex.MC_SW_dot_Impl)) SWIMLAnnex.WaypointManager @uc_SWIMLAnnex.WaypointManager_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.long ((BOUND_VARIABLE_3722 SWIMLAnnex.Coordinate_dot_Impl)) Int 0)
+(define-fun SWIMLAnnex.Command_dot_Impl.extends_SWIMLAnnex.Command ((BOUND_VARIABLE_3905 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.Command @uc_SWIMLAnnex.Command_0)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> ((BOUND_VARIABLE_3685 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>) (BOUND_VARIABLE_3686 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp1 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp2 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp3 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.send_status_in ((BOUND_VARIABLE_3676 SWIMLAnnex.RadioDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.wp4 ((BOUND_VARIABLE_3912 SWIMLAnnex.MissionWindow_dot_Impl)) SWIMLAnnex.Coordinate_dot_Impl @uc_SWIMLAnnex.Coordinate_dot_Impl_0)
+(define-fun SWIMLAnnex.RadioDriver.a1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun SWIMLAnnex.UARTDriver.waypoint_out ((BOUND_VARIABLE_3786 SWIMLAnnex.UARTDriver)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_mission ((BOUND_VARIABLE_3922 SWIMLAnnex.Mission_dot_Impl)) Bool false)
+(define-fun iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>.target ((BOUND_VARIABLE_3751 __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>)) __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl> @uc___unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>_0)
+(define-fun SWIMLAnnex.MC_SW.send_status ((BOUND_VARIABLE_3578 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.flowpoint ((BOUND_VARIABLE_3930 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.FlowPoint @uc_iml.ports.FlowPoint_0)
+(define-fun SWIMLAnnex.Coordinate_dot_Impl.extends_SWIMLAnnex.Coordinate ((BOUND_VARIABLE_3939 SWIMLAnnex.Coordinate_dot_Impl)) SWIMLAnnex.Coordinate @uc_SWIMLAnnex.Coordinate_0)
+(define-fun SWIMLAnnex.WaypointManager.a1 ((BOUND_VARIABLE_3702 SWIMLAnnex.WaypointManager)) Bool false)
+(define-fun iml.connectivity.connect<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.WaypointManager.position_status ((BOUND_VARIABLE_3956 SWIMLAnnex.WaypointManager)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.good_map ((BOUND_VARIABLE_3961 SWIMLAnnex.Map_dot_Impl)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3824 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>) (BOUND_VARIABLE_3825 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>>_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>.source ((BOUND_VARIABLE_3741 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.event ((BOUND_VARIABLE_3971 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.UARTDriver.a1 ((BOUND_VARIABLE_3881 SWIMLAnnex.UARTDriver)) Bool false)
+(define-fun __unnamed__.__some_iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_2033268925 ((BOUND_VARIABLE_3948 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>) (BOUND_VARIABLE_3949 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>> @uc___unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>_0)
+(define-fun SWIMLAnnex.Command_dot_Impl.Pattern ((BOUND_VARIABLE_3982 SWIMLAnnex.Command_dot_Impl)) SWIMLAnnex.FlightPattern @uc_SWIMLAnnex.FlightPattern_0)
+(define-fun SWIMLAnnex.MC_SW.waypoint ((BOUND_VARIABLE_3987 SWIMLAnnex.MC_SW)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>_0)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_3995 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.MissionWindow_dot_Impl.crc ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun SWIMLAnnex.good_mission_window ((BOUND_VARIABLE_4000 SWIMLAnnex.MissionWindow_dot_Impl)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.event ((BOUND_VARIABLE_4008 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>)) Bool false)
+(define-fun SWIMLAnnex.MC_SW.g1 ((BOUND_VARIABLE_3856 SWIMLAnnex.MC_SW)) Bool false)
+(define-fun iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4018 __unnamed__.iml.ports.DataPort<SWIMLAnnex.Mission_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun SWIMLAnnex.FlightPlanner.g1 ((BOUND_VARIABLE_3715 SWIMLAnnex.FlightPlanner)) Bool false)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.extends_iml.ports.Port ((BOUND_VARIABLE_4026 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) iml.ports.Port @uc_iml.ports.Port_0)
+(define-fun iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>.target ((BOUND_VARIABLE_3640 __unnamed__.iml.connectivity.Connector<iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>>)) __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl> @uc___unnamed__.iml.ports.EventDataPort<SWIMLAnnex.Coordinate_dot_Impl>_0)
+(define-fun SWIMLAnnex.RadioDriver.g1 ((BOUND_VARIABLE_3917 SWIMLAnnex.RadioDriver)) Bool true)
+(define-fun iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>.event ((BOUND_VARIABLE_4034 __unnamed__.iml.ports.EventDataPort<SWIMLAnnex.MissionWindow_dot_Impl>)) Bool false)
+)

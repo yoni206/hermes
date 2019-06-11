@@ -485,6 +485,17 @@
 (check-sat)
 (get-model)
 
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
 
 ;N_2 
 ;cmodel

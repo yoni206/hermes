@@ -490,6 +490,18 @@
 (get-model)
 
 
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
+
+(check-sat)
+(get-model)
+
 ;( get-value ( (|SWIMLAnnex.Coordinate_dot_Impl.lat| (|SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Command_dot_Impl.Map| (|iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))))) ) ) 
 ;( get-value ( (|SWIMLAnnex.Coordinate_dot_Impl.long| (|SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Command_dot_Impl.Map| (|iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))))) ) ) 
 ;( get-value ( (|SWIMLAnnex.Coordinate_dot_Impl.alt| (|SWIMLAnnex.Map_dot_Impl.wp1| (|SWIMLAnnex.Command_dot_Impl.Map| (|iml.ports.EventDataPort<SWIMLAnnex.Command_dot_Impl>.data| (|SWIMLAnnex.RadioDriver.recv_map_in| (|SWIMLAnnex.MC_SW_dot_Impl.RADIO| |SWIMLAnnex.inst|)))))) ) ) 
