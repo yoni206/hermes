@@ -20,7 +20,4 @@
 
 (check-sat)
 (get-value (a b (f a) (f b)))
-(get-value (a))
 
-(check-sat)
-(get-value (a b (f a) (f b)))

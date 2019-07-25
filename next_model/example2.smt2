@@ -7,9 +7,6 @@
 
 (check-sat)
 (get-model)
-(get-value (a b c))
-
-
 (check-sat)
 (get-model)
 (check-sat)
