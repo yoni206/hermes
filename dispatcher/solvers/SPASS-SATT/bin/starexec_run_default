@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./SPASS-SATT $1

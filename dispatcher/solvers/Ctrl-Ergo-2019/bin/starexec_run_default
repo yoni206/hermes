@@ -1,0 +1,1 @@
+./run distribute 4 configs $1

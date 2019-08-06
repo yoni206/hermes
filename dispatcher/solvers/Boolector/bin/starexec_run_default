@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/yoniz/git/hermes/dispatcher/solvers/Boolector/bin//home/yoniz/git/hermes/dispatcher/solvers/Boolector/bin/./boolector -uc -br fun --fun:preprop --prop:nprops=10000 --simp-norm-adds --declsort-bv-width=16 $1
