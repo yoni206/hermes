@@ -182,7 +182,7 @@ def select_solvers_by_logic(logic):
     elif logic == "QF_ALIA":
         result = [YICES_NAME, CVC4_NAME, Z3_NAME, VERIT]
     elif logic in ["QF_S", "QF_SLIA"]:
-        result = [CVC4]
+        result = [CVC4_NAME]
     elif logic == "QF_ABVFP":
         result = [CVC4_NAME]
     elif logic == "QF_BVFP":
