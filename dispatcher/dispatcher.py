@@ -78,7 +78,9 @@ def worker(i, procs):
 
         stdout, stderr = proc.communicate()
         encoding = args.encoding
-        result = ''.join([stdout.decode(encoding), stderr.decode(encoding)]).strip()
+        stdout_lines = stdout.decode(encoding).splitlines()
+        stderr_lines = stderr.decode(encoding)
+        result = stdout_lines[0]
 
         # Remove from process list since process terminated
         procs[i] = 0
