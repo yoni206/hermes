@@ -1,0 +1,8 @@
+sat
+((a (- 1)) (b (- 2)) ((f a) 1))
+unsat
+(error "Cannot get value unless immediately preceded by SAT/INVALID or UNKNOWN response.")
+unsat
+(error "Cannot get value unless immediately preceded by SAT/INVALID or UNKNOWN response.")
+unsat
+(error "Cannot get value unless immediately preceded by SAT/INVALID or UNKNOWN response.")
