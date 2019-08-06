@@ -2,7 +2,7 @@
 
 # Configuration script structure adapted from CVC4's configuration for SMTCOMP 2015
 
-exec=./veriT
+exec=/home/yoniz/git/hermes/dispatcher/solvers/veriT/bin/./veriT
 problem="$1"
 
 logic=$(expr "$(grep -m1 '^[^;]*set-logic' "$problem")" : ' *(set-logic  *\([A-Z_]*\) *) *$')

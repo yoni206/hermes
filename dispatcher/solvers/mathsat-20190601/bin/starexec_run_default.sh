@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./mathsat $1
+/home/yoniz/git/hermes/dispatcher/solvers/mathsat-20190601/bin/./mathsat $1
