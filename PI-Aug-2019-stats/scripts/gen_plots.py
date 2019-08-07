@@ -20,7 +20,7 @@ for csv_file in os.listdir(cluster_csv_dir):
     data = ps.read_csv(cluster_csv_dir + "/" + csv_file)
     data = data.applymap(to_int)
     data.sort_values(data.columns[-1],inplace=True)
-    data = data.tail()
+    data = data.tail(10)
     print(data)
     p = data.plot(kind='bar', x="DIRECTORY")
     f = p.get_figure()
