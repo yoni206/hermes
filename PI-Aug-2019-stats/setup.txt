@@ -1,0 +1,7 @@
+Hardware:
+- A cluster with Intel Xeon E5-2620v4 CPUs with 2.1Ghz
+- 128GB memory
+
+Limits:
+- time: 20 minutes
+- memory: 8000MB
