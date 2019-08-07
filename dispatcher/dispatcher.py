@@ -80,7 +80,6 @@ def worker(i, procs):
         encoding = args.encoding
         stdout_lines = stdout.decode(encoding).splitlines()
         stderr_lines = stderr.decode(encoding)
-        result = stdout_lines[0]
 
         # Remove from process list since process terminated
         procs[i] = 0
@@ -91,14 +90,17 @@ def worker(i, procs):
     except:
         pass
 
-    if result in ['sat', 'unsat']:
-        return result
-    return 'unknown'
+    if is_result_sat_or_unsat(stdout_lines):
+        return stdout_lines
+    return ['unknown']
+
+def is_result_sat_or_unsat(lines):
+    return lines[0].strip() in ["sat", "unsat"]
 
 # Terminate pool processes
 def terminate(result):
     global g_result
-    if not g_result and result in ['sat', 'unsat']:
+    if not g_result and result[0] in ['sat', 'unsat']:
         g_result = result
         pool.terminate()
 
@@ -226,6 +228,6 @@ if __name__ == '__main__':
         pass
 
     if g_result:
-        print(g_result)
+        print("\n".join(g_result))
     else:
         print('unknown')
