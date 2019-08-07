@@ -17,8 +17,9 @@ for csv_file in os.listdir(cluster_csv_dir):
     data = ps.read_csv(cluster_csv_dir + "/" + csv_file)
     data = data.applymap(to_int)
     #data.sort_values(data.columns[2], inplace=True)
-    print(data)
-    p = data.plot(kind='bar', x=data.columns[1])
+    #print(data)
+    print(data.columns)
+    p = data.plot(kind='bar', x="DIRECTORY")
     f = p.get_figure()
     f.savefig('/home/yoniz/git/hermes/PI-Aug-2019-stats/plots/' + csv_file + '.png')
 
