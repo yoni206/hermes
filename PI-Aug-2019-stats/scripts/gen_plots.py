@@ -25,4 +25,5 @@ for csv_file in os.listdir(cluster_csv_dir):
     p = data.plot(kind='bar', x="DIRECTORY")
     f = p.get_figure()
     f.savefig('/home/yoniz/git/hermes/PI-Aug-2019-stats/plots/' + csv_file + '.png')
+    print("panda")
 
