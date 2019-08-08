@@ -9,6 +9,8 @@ import os
 import re
 from enum import Enum
 
+pool = None
+
 class Config:
     def __init__(self):
         pass
@@ -128,11 +130,10 @@ def log(msg, config):
         print('[dispatcher] {}'.format(msg))
 
 # Spawn solver instance
-def worker(i, procs, config):
+def worker(i, solvers, procs, config):
     cmd = []
     cmd.extend(solvers[i])
     cmd.append(config.benchmark)
-
     try:
         log('{} start: {}'.format(i, ' '.join(cmd)), config)
         start = time.time()
@@ -141,9 +142,8 @@ def worker(i, procs, config):
         procs[i] = proc.pid
 
         stdout, stderr = proc.communicate()
-        encoding = config.encoding
-        stdout_lines = stdout.decode(encoding).splitlines()
-        stderr_lines = stderr.decode(encoding).splitlines()
+        stdout_lines = stdout.decode('utf-8').splitlines()
+        stderr_lines = stderr.decode('utf-8').splitlines()
 
         # Remove from process list since process terminated
         procs[i] = 0
@@ -153,9 +153,8 @@ def worker(i, procs, config):
         log('{} done: {} ({}s)'.format(i, (msg_lines), time.time() - start), config)
     except subprocess.CalledProcessError as error:
         log('{} error: {}'.format(i, error.output.strip()), config)
-    except:
+    except Exception as e:
         pass
-
     if is_result_sat_or_unsat(stdout_lines):
         return stdout_lines
     return ['unknown']
@@ -177,7 +176,7 @@ def parse_args():
     ap.add_argument('-v', dest='verbose', action='store_true', help="increase verbosity")
     ap.add_argument('-e', dest='encoding', type=str, default="utf-8", help="system encoding (default: utf-8)")
     ap.add_argument('-s', dest='solvers', type=str, nargs='+', choices=ALL_NAMES + [NORMAL_NAME, GENERIC_NAME, ALL_NAME], help = "a space-separated list of solvers to use, or a special option (all, normal, generic).\n all - use all solvers. normal - select solver by benchmark. generic - use cvc4.")
-    ap.add_argument('-m', dest='models', type=bool, default=False, help = "should the solver run in model-producing mode?") 
+    ap.add_argument('-m', dest='models', action='store_true', help = "should the solver run in model-producing mode?") 
     ap.add_argument('-o', dest='extra_options', type=str, nargs='*', help = "More options to use with the solver. This argument (unlike the others) must be given with an equal sign. For example: -o='--finite-model-find'")
     ap.add_argument('benchmark', help="path to smt-lib 2 file")
     return ap.parse_args()
@@ -294,10 +293,7 @@ def select_solvers_by_logic(logic):
         assert(False)
     return result
 
-
-if __name__ == '__main__':
-    args = parse_args()
-    config = get_configs(args)
+def solve_configuration(config):
     solvers = get_solvers(config)
     try:
         with multiprocessing.Manager() as manager:
@@ -305,9 +301,10 @@ if __name__ == '__main__':
             procs = manager.list([0 for i in range(ncpus)])
 
             log('starting {} solver instances.'.format(ncpus), config)
+            global pool
             pool = multiprocessing.Pool(ncpus)
             for i in range(ncpus):
-                pool.apply_async(worker, args=(i, procs, config), callback=terminate)
+                pool.apply_async(worker, args=(i, solvers, procs, config), callback=terminate)
             pool.close()
             pool.join()
 
@@ -325,6 +322,12 @@ if __name__ == '__main__':
         pass
 
     if g_result:
-        print("\n".join(g_result))
+        return g_result
     else:
-        print('unknown')
+        return ['unknown']
+
+if __name__ == '__main__':
+    args = parse_args()
+    config = get_configs(args)
+    result = solve_configuration(config)
+    print("\n".join(result))
