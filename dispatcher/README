@@ -15,8 +15,8 @@ Description
 Installation:
   - cd to the main directory
   - run:
-    # docker build -t img .
-    # docker run -it img
+    # docker build -t dispatcher .
+    # docker run -it dispatcher
     # cd dispatcher
     # make
 
@@ -33,7 +33,10 @@ Usage:
 Example:
   - The following run will return a result quickly: 
     # python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s normal
-  -The following run will take long time before terminating:
+  -The following run will take long time (few minutes) before terminating:
     # python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s generic
 
-
+Additional Options:
+- Using the -s option, <mode> can have more values than "generic" or "normal". 
+  It can be a space-separated list of solver names, to be used in portfolio.
+- Using -v will dump some debug details
