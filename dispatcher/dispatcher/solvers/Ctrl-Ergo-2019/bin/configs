@@ -1,0 +1,7 @@
+1200 -silent
+600 -silent -minimal-bj
+600 -silent -positive-decisions
+600 -silent -tableaux 0
+600 -silent -subst-lets
+600 -silent -global-lra-init
+600 -silent -rewrite-lra-let-eqs
