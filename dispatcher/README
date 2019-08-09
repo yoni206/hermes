@@ -1,0 +1,39 @@
+Prerequisites: 
+  docker
+
+Description
+  - This image contains a script "dispatcher.py" that runs SMT-LIB 2 files using various solvers.
+  - The script runs in two modes:
+    - normal: running the query using a portfolio of solvers. 
+              The solvers are chosen based on the results
+              of the last SMT-COMP.
+              Roughly speaking, the best 4 solvers for the logic of the query are used.
+              The current pool of solvers includes:
+              CVC4, Z3, Yices, VERIT, MATHSAT, SPASS_SATT
+    - generic: running the query using CVC4
+
+Installation:
+  - cd to the main directory
+  - run:
+    # docker build -t img .
+    # docker run -it img
+    # cd dispatcher
+    # make
+
+Usage:
+  - if needed, run the following command again:
+    # docker run -it img
+  - run:
+    # cd dispatcher
+    # python3 dispatcher.py <path> -s <mode>
+    where:
+      - <path> is the path to an smt2 file
+      - <mode> is either "normal" (for running a portfolio) or "generic" (for running CVC4)
+
+Example:
+  - The following run will return a result quickly: 
+    # python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s normal
+  -The following run will take long time before terminating:
+    # python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s generic
+
+
