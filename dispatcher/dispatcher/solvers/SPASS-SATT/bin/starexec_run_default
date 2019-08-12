@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/home/yoniz/git/hermes/dispatcher/dispatcher/solvers/SPASS-SATT/bin/./SPASS-SATT $1

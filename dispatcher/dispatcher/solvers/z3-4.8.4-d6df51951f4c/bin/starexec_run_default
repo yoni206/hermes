@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/home/yoniz/git/hermes/dispatcher/dispatcher/solvers/z3-4.8.4-d6df51951f4c/bin/./z3 -smt2 -in < "$1" 2>&1

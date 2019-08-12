@@ -1,1 +1,0 @@
-Boolector non incremental track configuration 2019

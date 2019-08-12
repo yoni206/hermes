@@ -8,10 +8,10 @@ sed: unzip
 unzip: clean
 	#create all solver directories
 	#-o is for "override
-	unzip -o solvers/\*.zip -d solvers
+	unzip -o solvers/comp/\*.zip -d solvers/comp/
 	#eliminate space
-	mv "solvers/Yices 2.6.2" solvers/Yices_2.6.2
+	mv "solvers/comp/Yices 2.6.2" solvers/comp/Yices_2.6.2
 
 clean:
 	#remove all solver directories
-	rm -rf `find solvers -maxdepth 1 -type d | grep "/"`
+	rm -rf `find solvers/comp -maxdepth 1 -type d | grep "/"`
