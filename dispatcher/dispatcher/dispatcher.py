@@ -57,26 +57,26 @@ ALL_NAME = "all"
 #by default we use the competition script
 #for models, we use the binary
 #also, for special options, we use binary
-cvc4_comp_script = solvers_dir + "/CVC4-2019-06-03-d350fe1/bin/" + starexec_suffix
-cvc4_binary = solvers_dir + "/CVC4-2019-06-03-d350fe1/bin/cvc4"
+cvc4_comp_script = solvers_dir + "/comp/CVC4-2019-06-03-d350fe1/bin/" + starexec_suffix
+cvc4_binary = solvers_dir + "/releases/cvc4-1.7-x86_64-linux-opt"
 
-yices_comp_script = solvers_dir + "/Yices_2.6.2/bin/" + starexec_suffix
-yices_binary = solvers_dir + "/Yices_2.6.2/bin/yices2" 
+yices_comp_script = solvers_dir + "/comp/Yices_2.6.2/bin/" + starexec_suffix
+yices_binary = solvers_dir + "/releases/yices-2.6.1/bin/yices-smt2" 
 
-boolector_comp_script = solvers_dir + "/Boolector/bin/" + starexec_suffix
-boolector_binary = solvers_dir + "/Boolector/bin/boolector"
+boolector_comp_script = solvers_dir + "/comp/Boolector/bin/" + starexec_suffix
+boolector_binary = solvers_dir + "/releases/boolector/build/bin/boolector"
 
-verit_comp_script = solvers_dir + "/veriT/bin/" + starexec_suffix
-verit_binary = solvers_dir + "/veriT/bin/veriT" 
+verit_comp_script = solvers_dir + "/comp/veriT/bin/" + starexec_suffix
+verit_binary = solvers_dir + "/releases/veriT-stable2016/veriT" 
 
-spasssatt_comp_script = solvers_dir + "/SPASS-SATT/bin/" + starexec_suffix
-spasssatt_binary = solvers_dir + "/SPASS-SATT/bin/SPASS-SATT"
+spasssatt_comp_script = solvers_dir + "/comp/SPASS-SATT/bin/" + starexec_suffix
+spasssatt_binary = solvers_dir + "/releases/SPASS-SATT_v1.1/SPASS-SATT"
 
-mathsat_comp_script = solvers_dir + "/mathsat-20190601/bin/" + starexec_suffix + ".sh"
-mathsat_binary = solvers_dir + "/mathsat-20190601/bin/mathsat" 
+mathsat_comp_script = solvers_dir + "/comp/mathsat-20190601/bin/" + starexec_suffix + ".sh"
+mathsat_binary = solvers_dir + "/releases/mathsat-5.5.4-linux-x86_64/bin/mathsat" 
 
-z3_comp_script = solvers_dir + "/z3-4.8.4-d6df51951f4c/bin/" + starexec_suffix
-z3_binary = solvers_dir + "/z3-4.8.4-d6df51951f4c/bin/z3" 
+z3_comp_script = solvers_dir + "/comp/z3-4.8.4-d6df51951f4c/bin/" + starexec_suffix
+z3_binary = solvers_dir + "/releases/z3-4.8.5-x64-ubuntu-16.04/bin/z3" 
 #ctrlergo_binary = solvers_dir + "/Ctrl-Ergo-2019/bin/" + starexec_suffix
 
 #Commands are lists because they may include options
