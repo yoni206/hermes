@@ -28,10 +28,12 @@ def to_int(x):
             return x
     return result
 
-def highlight_max(s):    
+def highlight_max(s):
+    '''
+    highlight the maximum in a Series yellow.
+    '''
     is_max = s == s.max()
-    print("panda", is_max)
-    return ['background-color: red' if v else '' for v in is_max]
+    return ['background-color: yellow' if v else '' for v in is_max]
 
 def gen_diff(d): 
     if "yices" in d.columns:
