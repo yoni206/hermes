@@ -1,0 +1,61 @@
+# Change variables in this file to reflect your needs, wishes, constraints
+MKDIR = mkdir -p
+ECHO = echo
+RM = rm -f
+INSTALL = install
+
+prefix		?=@prefix@
+exec_prefix	?=@exec_prefix@
+datarootdir     ?=@datarootdir@
+datadir         ?=@datadir@
+BINDIR		?="$(DESTDIR)@bindir@"
+LIBDIR		?="$(DESTDIR)@libdir@"
+DATADIR		?="$(DESTDIR)@datarootdir@"
+MANDIR		?="$(DESTDIR)@mandir@"
+
+YACC            = bison -y
+YFLAGS		?=  @YFLAGS@
+LEX		?=  @LEX@
+LFLAGS		?=  @LFLAGS@
+
+DOXYGEN         ?=  @DOXYGEN@
+MAKE            ?=  @MAKE@
+
+PROOF_PRODUCTION ?=  @PROOF_PRODUCTION@
+
+CPPFLAGS        = @CPPFLAGS@
+CFLAGS          = @CFLAGS@
+LDFLAGS         = @LDFLAGS@
+
+ETAGS		= @ETAGS@
+CTAGS		= @CTAGS@
+
+ECHO_N		= printf
+ECHO		= echo
+
+# Installation directories
+PREFIX      = $(prefix)
+PREFIX_BIN  = $(prefix)/bin
+
+CC = @CC@
+
+%.o:%.c
+	@$(ECHO) "CC $<"
+	@$(CC) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
+
+%.c:%.y
+	@echo $(YACC) $(YFLAGS) -o $@  $<
+	@$(ECHO) "YACC $<"
+	@$(YACC) $(YFLAGS) -o $@  $<
+
+%.c:%.l
+	@echo $(LEX) $(LFLAGS) -o $@ $<
+	@$(ECHO) "LEX $<"
+	@$(LEX) $(LFLAGS) -o $@ $<
+
+clean::
+	@$(RM) *~ *.o *.da *.bb *.bbg dependencies smtsyn.output
+
+veryclean:: clean
+	@$(ECHO) "Cleanup generated configuration and build files..."
+	@$(RM) -Rf config.log config.status configure Makefile Makefile.config autom4te.cache

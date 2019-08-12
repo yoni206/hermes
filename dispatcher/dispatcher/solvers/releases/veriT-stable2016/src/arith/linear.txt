@@ -1,0 +1,341 @@
+Basic algorithm
+---------------
+
+In a very abstracted view, the simplex maintains
+ - a set of equations A x = 0, where one variable is basic
+ - a set of lower and upper bounds for variables
+ - a set of values for variables
+
+update(x_i,v), x_i non-basic
+  D = v - Beta(x_i)
+  for each a_ki in C(x_i) is not null
+    Beta(x_k) = Beta(x_k) + a_ki D
+    if x_k unmarked in modified vars
+      mark x_k for modifed vars
+	 add x_k to table for modified vars
+    if Beta(x_k) out of bound and x_k not marked for unsat basic:
+      mark x_k for selection of unsat basic
+      add x_k to table for selection of unsatisfied basic
+  Beta(x_i) = v
+
+pivot(x_i, x_j) // x_i basic, x_j non-basic
+  // L(x_i) = \sum_k a_ik x_k
+  // L(x_i) = \sum_{k \neq j} a_ik x_k + a_ij x_j
+  L(x_j) = 1/a_ij x_i + \sum_{k \neq j} (a_ik / -a_ij) x_k
+  L(x_i) = 0
+  for each a_kj in C(x_j)
+    Subsitute x_j by L(x_j) in L(x_k) // TODO
+  Compute C(x_i) // TODO
+
+pivot_and_update(x_i, x_j, v) // x_i basic, x_j non-basic
+  pivot(x_i, x_j)
+  update(x_i, v)
+
+check()
+  while(1)
+  next_var:
+    x = remove smallest basic from table for unsat basic
+    if (x = 0) return SAT
+    if Beta(x) < low(x)
+      for each a_ik in L(x) // should be iterated by increasing order k
+        if (aik > 0 and Beta(x_k) < up(x_k)) or
+           (aik < 0 and Beta(x_k) > low(x_k))
+          pivot_and_update(x, x_k, low(x))
+          goto next_var
+      return UNSAT
+    if Beta(x) > up(x)
+      for each a_ik in L(x) // should be iterated by increasing order k
+        if (aik < 0 and Beta(x_k) < up(x_k)) or
+           (aik > 0 and Beta(x_k) > low(x_k))
+          pivot_and_update(x, x_k, up(x))
+          goto next_var
+      return UNSAT
+
+Required indexings
+------------------
+
+update(x_i,v) needs indexing of all k such that a_ki is non-null,
+preferably giving a_ki straight.
+
+pivot(x_i, x_j) requires the same indexing (for j)
+
+One needs two indexing of table A.
+1.  One should be able to inspect the line corresponding to a given
+    basic variable (to repair an unsatisfied bound)
+2.  One should be able to get all the basic variables such that
+    the coefficient corresponding to a given non-basic variable is non-null.
+    Using a matrix will not give good results because problems are
+    typically sparse.  There exists several datastructures for sparse
+    matrices (http://en.wikipedia.org/wiki/Sparse_matrix) however they
+    do not seem to fit our operations.
+
+CVC4 uses a doubly linked table, where each element has pointers to
+the left, right, up, down elements.  Column does not need to be
+updated if element is not set to 0.
+
+We used a sorted (on variable ids) list for lines and doubly
+(unsorted) linked lists for columns.  Addition, removal, modification
+of a given element in a column is constant time.
+
+Integer vs. rational coefficients
+---------------------------------
+
+It seems working with integers is OK.  The surplus of work is anyway
+not avoidable by using rationals, and it avoids doing plenty of
+divisions.  It may happen that the coefficients grow larger, but I
+believe that (TODO: check) most time it will remain OK.
+
+Let's rewrite the algorithm
+// L_i : list of (a_ik, i, k)
+// L_i : \sum_k a_ik x_k = 0
+// L_i : -aii x_i = \sum_{k\neq i} a_ik x_k
+// C_k : list of (a_ik, i, k)
+// There is no need of a C_k for independent term or proof variables
+// Beta_i : value of x_i
+// mark_i : x_i is marked as being modified
+// mark_unsat_i : x_i is basic and has unsatisfied bound
+Maintain a copy of a_kk with beta(x_k)
+
+update(i, v), x_i non-basic
+  D = Beta_i - v
+  for each a_ki in C_i (a_ki not null)
+    Beta_k = Beta_k + [ a_ki / a_kk ] D
+    if !mark_k
+      mark_k = 1
+	 add k to table for modified vars
+    if Beta_k out of bound and !mark_unsat_i
+      mark_unsat_i = 1
+      add x_k to table for selection of unsatisfied basic
+  Beta_i = v
+
+pivot(i, j) // x_i basic, x_j non-basic
+  L_j = L_i
+  save a_jj along with Beta_j
+  L_i = 0
+  for each a_kj in C_j
+    L_k = a_jj L_k - a_kj L_i (and update the C_l accordingly)
+    Remove the a_ki (that should become 0) to rebuilt the a_kj (that
+    should be non-null)
+    normalize if any akl is larger than the square of largest representable?
+
+pivot_and_update(i, j, v) // x_i basic, x_j non-basic
+  pivot(i, j)
+  update(i, v)
+
+check()
+  while(1)
+  next_var:
+    x_i = remove smallest basic from table for unsat basic
+    if (x_i = 0) return SAT
+    if Beta_i < low_i
+      for each a_ik in L_i // should be iterated by increasing order k
+        if (a_ik/a_ii > 0 and Beta_k < up_k) or
+           (a_ik/a_ii < 0 and Beta_k > low_k)
+          pivot_and_update(i, k, low_i)
+          goto next_var
+      return UNSAT
+    if Beta_i > up_i
+      for each a_ik in L_i // should be iterated by increasing order k
+        if (a_ik/a_ii < 0 and Beta_k < up_k) or
+           (a_ik/a_ii > 0 and Beta_k > low_k)
+          pivot_and_update(i, k, up_i)
+          goto next_var
+      return UNSAT
+
+Literals versus variables
+-------------------------
+
+The incentive for using literals was that bounds are handled uniformly
+for the upper and the lower bound.  However, it makes the whole rest
+unnatural: to update the value of basic variables (and check bounds),
+one has to go through both the list of positive occurrences and
+negative occurrences.  Maintaining two lists might prove expensive,
+specifically when a coefficient changes sign.
+
+Constant terms within the equality constraints
+----------------------------------------------
+
+Several algorithms do not feature constant terms within constraints.
+An equality
+a_1 x_1 + ... a_n x_n = c
+is thus handled introducing a new slack
+s = a_1 x_1 + ... a_n x_n
+and fixing both its bounds to c.
+
+Another way is to have a special non-basic variable 1 whose valued is
+fixed to be 1.  Its value will never be changed.  This is equivalent
+to allow independent terms, except that this variable will be checked
+in the check() loop.
+
+I believe the only difference is that we introduce only one variable
+instead of many of them.  Anyway those variables will eventually be
+set to non-basic.  Then they should never be turned back to basic.
+
+Inputing constraints
+--------------------
+
+The modules handles two kinds of constaints:
+
+- equalities x_0 = \Sigma_i a_i x_i + c
+
+- bounds of variables x_0 # c where # is either < <= = > >=
+
+Within an SMT framework, the constraints the module will be given are
+of the following kinds:
+
+- Definitions, sent once and forall, linking variables together by a
+  theory construction.  In the present case, it is x_0 = \Sigma_i a_i
+  x_i + c.  Their use in a conflict or a deduction does not require
+  any justification, even while outputting precise proofs.  In the set
+  of all definitions, every constraint introduces a new, unique
+  variable.  This simply introduces one equality.
+
+- Predicates, notified once and forall, and later asserted positively
+  or negatively, e.g. \Sigma_i a_i x_i # c where # is < , <=, or =.
+  We do not consider a simple equality x = y as being of this kind.
+  This introduces one equality, and stores the bound that would come
+  on assertion of the literal.
+
+- Assertion of a predicate.  Sets the bounds accordingly.  This comes
+  from the NO module directly
+
+- Equalities of the type X = Y, coming from CC, either because of an
+  asserted equation in the original formula, or any other reasoning
+  including congruence, transitivity,...
+
+  One way to handle this equality is to make both X and Y non-basic,
+  then add an equation X = Y for either X or Y, so that X or Y (let's
+  say X) become basic.  This involves eliminating X from every
+  equation.  Backtracking such an equality involves eliminating the
+  equation X = Y everywhere, which is not very practical.
+
+  Another solution is to add an equation S = X - Y where S is a new
+  slack.  Then set S to be equal to 0.  On backtracking, such an
+  equation does not have to be removed, but only the bounds on S.  It
+  necessitates to record the slack corresponding to X - Y, so that the
+  same slack is not introduced twice.
+
+- Replacement of the type X = Y, coming from CC.  It states that X
+  will be now referred as Y.
+
+Only the three last constraints may be backtracked.
+
+Three types of variables:
+- N: non-basic
+- B: basic, whose value is obtained from non-basic ones
+- P: passive, with no bounds on them, and that is not constrained
+  directly.
+
+P variables are just like B ones, but their value is not updated
+systematically, their bounds are not checked, and their definition may
+include B and N variables.  Their value are updated only when a value
+is required, e.g. for propagation.  Maybe there will be some need for
+a data-structure to do that efficiently, i.e. update only vars whose
+value actually changed.  This will require to remember in a list which
+values changed (for B and N variables) since last update of those
+variable.  An indexing of P variables by B and N vars will also be
+necessary.
+
+When the module gets a new constraint
+
+a_1 x_1 + ... + a_n x_n + c = 0
+
+it should
+- eliminate all basic and passive variables
+- choose one non-basic variable, preferably unconstrained
+- set this variable as basic and eliminate in all other constraints
+
+It comes to gaussian elimination.
+
+Explanation / proofs
+--------------------
+
+Anything asserted BEFORE the first poppable point does not have to be
+tagged with a reason, be backtrackable, nor leave a trace in conflicts
+when not proof producing.  When proof producing however, assertions of
+predicates and equalities have to be fully justified.  Definitions
+don't, because they basically introduce dummy variables.
+
+Among the definitions, some variables are not used in the predicates.
+They can thus be "eliminated", that is, their value is defined with
+respect to the other variables.  It remains to understand what to do
+if we get an equality about these variables, or how to deduce
+equalities involving those variables
+
+Pushed equalities should be tagged with proof.  Proof are just simple
+variables.  Bounds should also be tagged.  If we imagine doing bound
+propagation, it will be necessary to have linear expressions to get
+the linear expression for bounds.
+
+TODO!!!!!
+
+Arbitrary precision arithmetic
+------------------------------
+
+There exists several packages: MPIR, GMP, CLN.  CLN is C++.  GMP and
+MPIR are compatible
+
+Unsatisfied basic variables
+---------------------------
+
+To store basic variables with unsatisfied bound, one need a
+datastructure which allows for efficient addition.
+
+For strategies (Bland rule or other), it is even required to have some
+sorting of those variables.  This would either require to sort a table
+regularly or to insert at the right place.  A heap seems to be the
+right solution.
+
+Storing a backup solution
+-------------------------
+
+One need to store two vectors of values in case one assertion renders
+the problem unsatisfiable.
+
+Maintain a list of all modified variables. Add a bit associated to
+variable to ensure variable not put twice in the list.  At each check
+while returning sat, store the modified variables in copy and reset
+list of modified variables.  For a pop from unsat to sat, restore the
+variables.
+
+Passive variables
+-----------------
+
+Passive variables are unbounded basic variables.  Their definition can
+be kept inactive (no pivoting required for those linear expressions).
+There is no need to keep in the simplex computation a variable which
+is not constrained.  It should be made basic, then its definition can
+just be freezed (removed from the C[])
+
+The good simplex is the dense one, where every variable is
+constrained.
+
+Compiling
+---------
+
+gcc -g -Wall -Wconversion -c general.c -o general.o; \
+gcc -g -Wall -Wconversion -c linear.c -o linear.o; \
+gcc -g -Wall -Wconversion linear.o general.o -o linear
+
+TODO
+----
+
+It may be valuable to have a bit set on variables whose value
+completely fixed to speed up the bound-checking in the check() loop.
+In the current implementation, it would involve LAdelta_neq would not
+be called on those variables.
+
+
+Arbitrary precision: implement only late, to know which strategy to use:
+- every number may be stored in either native or arbitrary precision
+- if one overflow is detected, the whole module turns to arbitrary precision
+The chosen strategy will depend on how many overflow there are.  If
+few, the first will ensure completeness and efficiency.
+
+Proofs
+
+Backtracking
+
+Equality deduction
+
+Theory propagation

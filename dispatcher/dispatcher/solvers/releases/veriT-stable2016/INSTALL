@@ -1,0 +1,73 @@
+===============================================================================
+                         The veriT SMT solver
+              Compilation and installation instructions
+===============================================================================
+
+
+Requirements
+============
+
+veriT depend on the following software being already installed:
+
+- GNU autoconf and GNU make
+- C compiler: installation has been tested with gcc and clang.
+- ar & ranlib
+- flex & bison
+- wget, tar, patch, unzip, to fetch and build external dependencies
+- [optional] doxygen, to generate the documenation
+
+veriT depends on GMP (GNU Multiple Precision Arithmetic Library [http://gmplib.org]). 
+It will be automatically dowloaded and compiled under the extern subdirectory during 
+the installation process.
+
+Compilation and installation
+============================
+
+Step 1 (identification of the available software):
+
+% autoconf
+
+Step 2 (configuration of the build process):
+
+% ./configure
+
+Some options are available, type the following command to read their documentation
+
+% ./configure --help
+
+Step 3 (build veriT):
+
+% make
+
+Step 4 (install veriT):
+
+Then as superuser:
+
+% make install
+
+If you do not have superuser rights to your machine, change the PREFIX_BIN
+variable to the directory you would like veriT to be installed.
+
+Do not forget to extend your PATH variable accordingly if it is needed.
+In bash/zsh it is done by the following command.
+
+% export PATH=$PATH:<veriT install directory>.
+
+Other customizations are possible in Makefile.config. They are documented in
+Makefile.config itself.
+
+Documentation
+=============
+
+Optionally, you may want to generate documentation for veriT. This will only
+work if doxygen is installed when the compilation and installation procedure
+is started.
+
+The following command generates both user and developer documentation:
+
+% make doc
+
+Note
+----
+Generating the documentation takes much more time and space than the compilation
+itself.

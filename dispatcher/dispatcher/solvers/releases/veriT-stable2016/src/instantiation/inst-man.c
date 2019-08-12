@@ -1,0 +1,2279 @@
+/*
+Copyright (c) 2009-2013, INRIA, Universite de Nancy 2 and Universidade
+Federal do Rio Grande do Norte.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+   * Neither the name of the Universite de Nancy 2 or the Universidade Federal
+     do Rio Grande do Norte nor the names of its contributors may be used
+     to endorse or promote products derived from this software without
+     specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY INRIA, Universite de Nancy 2 and
+Universidade Federal do Rio Grande do Norte ''AS IS'' AND ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL INRIA, Université de Nancy 2 and
+Universidade Federal do Rio Grande do Norte BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
+#include "limits.h"
+#include "math.h"
+#include "float.h"
+#include "options.h"
+#include "statistics.h"
+
+#include "stack.h"
+#include "pre.h"
+#include "bitset.h"
+#include "bool.h"
+#include "veriT-SAT.h"
+#include "DAG.h"
+#include "DAG-subst.h"
+#include "DAG-print.h"
+#include "DAG-ptr.h"
+#include "proof.h"
+
+#include "free-vars.h"
+#include "inst-trigger.h"
+#include "inst-index.h"
+#include "inst-pre.h"
+#include "inst-man.h"
+
+#if defined(DEBUG_HEURISTICS)
+#define DEBUG_INST 1
+#endif
+
+/* [TODO] Is this necessary? */
+Tprop_id DAG_PROP_CNF;
+Tprop_id DAG_PROP_INSTS;
+Tprop_id DAG_PROP_SYMBS;
+
+/* [TODO] workaround to know how many instances were produced at each succesful round */
+unsigned insts_ccfv_round;
+unsigned insts_triggers_round;
+unsigned insts_sorts_round;
+
+/*
+  --------------------------------------------------------------
+  Options
+  --------------------------------------------------------------
+*/
+
+/**
+   \addtogroup arguments_developer
+
+   - --CIs-off
+
+   Disable seach for conflicting instances for active quantified formulas. */
+static bool CIs_off;
+
+/**
+   \addtogroup arguments_developer
+
+   - --CIs-bound=X
+
+   Bound the number of found CIs per round */
+int CIs_bound;
+
+/**
+   \addtogroup arguments_developer
+
+   - --inst-sorts-threshold
+
+   Maximum number of sort instantiations to be derived from a
+   quantifier. Default is 10^4 [optimize] */
+static int insts_sorts_threshold;
+
+/**
+   \addtogroup arguments_developer
+
+   - --triggers-nested
+
+   Uses old triggers but includes nested ones */
+bool triggers_nested;
+
+/**
+   \addtogroup arguments_developer
+
+   - --triggers-new
+
+   Uses new triggers (include nested ones). */
+bool triggers_new;
+
+/**
+   \addtogroup arguments_developer
+
+   - --triggers-single-weak
+
+   Uses weak single-triggers (minimal depths). */
+bool triggers_single_weak;
+
+/**
+   \addtogroup arguments_developer
+
+   - --triggers-multi-weak
+
+   Uses weak multi-triggers (minimal depths) */
+bool triggers_multi_weak;
+
+/**
+   \addtogroup arguments_user
+
+   - --index-SIG
+
+   Index CC signature rather than minimized ground model. */
+static bool index_SIG;
+
+/**
+   \addtogroup arguments_user
+
+   - --index-SAT-triggers
+
+   Index ground model rather than CC signature. */
+static bool index_SAT_triggers;
+
+/**
+   \addtogroup arguments_user
+   - --index-sorts
+
+   Index SAT stack for use in sort instantiation */
+static bool index_sorts;
+
+/**
+   \addtogroup arguments_user
+   - --index-sorts-minimal-depth
+
+   Use sort index terms with minimal depth with higher priority */
+static bool index_sorts_minimal_depth;
+
+/**
+   \addtogroup arguments_user
+   - --index-sorts-exhaust-depth
+
+   Try all depths first before increasing inst level */
+/* static bool index_sorts_exhaust_depth_first; */
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion
+
+   Delete unused instances between instantiation rounds [unstable] */
+static bool inst_deletion;
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion-loops
+
+   Prevent matching loops by forcing sort inst [unstable]
+
+   For now I'll only capture loops in which a new term is generated by a
+   quantified formula instantiated and that term would lead to new
+   instantiations of that same quantified formula.
+
+   [TODO] Limitations:
+
+   - only used with --inst-deletion-track-vars because it's easier for now (when
+     marking clauses I don't know from which quantified formulas they came from)
+
+   - terms that appear in more than one instance will be only considered by one
+     of the qnt_forms (because of how I'm using of DAG_tmp in inst_mark_var_rec)
+
+   - Two or more quantified formulas could be producing a loop: Q1 generates
+     terms triggering insts in Q2, which produces terms generating insts in Q1
+     and so on. This is not captured (neither do I know now how I would do that)
+
+   - It introduces a huge overhead... retrieving terms from the index becomes
+     very expensive. Think how to optimize.
+ */
+bool inst_deletion_loops;
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion-priority-ccfv
+
+   Give highest priority for CCFV instances [unstable] */
+static bool inst_deletion_priority_ccfv;
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion-no-promotion
+
+   Don't promote "useful" things, just have everything "deleted" [unstable] */
+static bool inst_deletion_no_promotion;
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion-track-vars
+
+   Track vars activity rather than clauses */
+bool inst_deletion_track_vars;
+
+/**
+   \addtogroup arguments_user
+
+   - --inst-deletion-ccfv
+
+   Delete unused instances between instantiation rounds also for CCFV [unstable] */
+static bool inst_deletion_ccfv;
+
+#ifdef POLARITY_FILTER
+/**
+   \addtogroup arguments_developer
+
+   - --bool-required-off
+
+   Do not prune by this superset of the prime-implicant. */
+bool opt_bool_required_off;
+#endif
+
+/**
+   \addtogroup arguments_developer
+
+   - --prime-implicant-off
+
+   Do not prune boolean model by computing its prime implicant. */
+bool prime_implicant_off;
+
+/**
+   \addtogroup arguments_developer
+
+   - --prune-cnf-off
+
+   Do not prune boolean model from removing unnecessary literals added by CNF
+   transformation */
+bool prune_cnf_off;
+
+/*
+  --------------------------------------------------------------
+  Stats
+  --------------------------------------------------------------
+*/
+
+#define STATS_INST
+
+#if defined(STATS_INST) || defined (DEBUG_INST)
+
+extern unsigned ccfv_stats_rounds;
+
+/* [TODO] Workarounds for counting proper stats */
+bool doing_ccfv = true;
+bool doing_triggers = true;
+
+/* \brief How much time handling unifirers consumed */
+static unsigned insts_stats_time;
+/* for interal control */
+static float insts_time;
+static float tmp_insts_time;
+
+/* \brief Number of instantiations rounds */
+static unsigned insts_stats_rounds;
+
+static unsigned insts_stats_ccfv_before_last;
+
+/* \brief How many instances CCFV generated. */
+static unsigned insts_stats_ccfv;
+
+/* \brief How many redundant instances CCFV generated. */
+static unsigned insts_stats_redundant_ccfv;
+
+/* \brief How many instances triggers generated. */
+static unsigned insts_stats_triggers;
+
+/* \brief How many redundant instances triggers generated. */
+static unsigned insts_stats_redundant_triggers_tree;
+static unsigned insts_stats_redundant_triggers;
+
+static unsigned insts_stats_sorts;
+static unsigned insts_stats_redundant_sorts;
+
+static unsigned sorts_stats_time;
+static unsigned sorts_stats_rounds;
+
+/** \brief how many times needed to do sort inst beyoind minimal depth */
+static unsigned sorts_stats_more_depth;
+
+/** \brief how many times needed to go to sig table */
+static unsigned sorts_stats_more_SIG;
+
+static float ccfv_calls, ccfv_success;
+#endif
+
+/* #define STATS_ONLY */
+
+#ifdef STATS_ONLY
+
+extern Tstack_DAG CC_quantified;
+
+/* \brief How many quantifier alternations in initially asserted
+   quantified formulas */
+static unsigned stats_alt;
+
+/* \brief Deepst alternation in given benchmark */
+static unsigned stats_alt_max;
+
+/**
+   \author Haniel Barbosa
+
+   \brief computes number of quantifier alternations in a DAG, as well as the
+   deepest alternation
+
+   \param DAG a subformula
+   \param pol polarity under which DAG occurs
+   \param underForall Whether DAG is under a universar or existential quantifier
+   \param depth keeps the value of deepest alternation in DAG
+   \return the total number of alternations in DAG
+   \remark traverses DAG as a tree in depth-first manner
+   \remark A(EA and AE) is three alternations and the deepest alternation is two
+   (for the first conjunct)
+   \remark First call should always be in last argument of quantified DAG */
+static void
+compute_alternations(void)
+{
+  unsigned alt_depth, alternations = 0;
+  for (i = 0; i < stack_size(CC_quantified); ++i)
+    {
+      TDAG qformula = stack_get(CC_quantified, i);
+      alt_depth = 0;
+      alternations +=
+        count_alternations(DAG_arg_last(qformula), 1,
+                           DAG_symb(qformula) == QUANTIFIER_FORALL,
+                           &alt_depth);
+      if (alt_depth > stats_counter_get(stats_alt_max))
+        stats_counter_set(stats_alt_max, alt_depth);
+      /* if (alt_depth > 1) */
+      /*   my_DAG_message("%d alternations, Deepest %d: {%d}%D\n", */
+      /*                  alternations, alt_depth, qformula, qformula); */
+    }
+  stats_counter_set(stats_alt, alternations);
+  /* my_message("Quantifier alternations: %d, deepest: %d\n", */
+  /*            stats_counter_get(stats_alt), */
+  /*            stats_counter_get(stats_alt_max)); */
+}
+#endif
+
+/*
+  --------------------------------------------------------------
+  Debugging
+  --------------------------------------------------------------
+*/
+
+#if defined(DEBUG) || DEBUG_INST
+
+extern uint32_t   *gc_count;
+
+void
+print_Tinst(Tinst inst, unsigned depth)
+{
+  unsigned i;
+  char * shift = NULL;
+  MY_MALLOC(shift, (depth*2 + 1)*sizeof(char));
+  memset(shift, ' ', (depth*2));
+  shift[depth*2] = '\0';
+  /* my_DAG_message("%s[%d/%D]\n", shift, inst.DAG, inst.DAG); */
+  my_DAG_message("%s[{%d}%D]\n", shift, inst.DAG, inst.DAG);
+  for (i = 0; i < inst.size; ++i)
+    print_Tinst(inst.next[i], depth+1);
+  if (depth == 1)
+    printf("--------------------------------------------------\n");
+  free(shift);
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Tstack_Tinst(Tstack_Tinst stack)
+{
+  unsigned i, j;
+  for (i = 0; i < stack_size(stack); ++i)
+    {
+      my_DAG_message("Formula: {%d}%D\n", stack_get(stack, i).DAG, stack_get(stack, i).DAG);
+      for (j = 0; j < stack_get(stack, i).size; ++j)
+        print_Tinst(stack_get(stack, i).next[j], 0);
+    }
+  my_message_return();
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_boolean(Tboolean_value bvalue)
+{
+  if (bvalue == 0)
+    my_message("FALSE\n");
+  else if (bvalue == 1)
+    my_message("TRUE\n");
+  else
+    my_message("UNDEFINED\n");
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_SAT_stack(void)
+{
+  unsigned i;
+  my_DAG_message("SAT stack:\n");
+  for (i = 0; i < SAT_literal_stack_n; i++)
+    my_DAG_message("lit %d; %D\n", SAT_literal_stack[i],
+                   lit_to_DAG(SAT_literal_stack[i]));
+  my_message_return();
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Pindex(Pindex p_index)
+{
+  unsigned i;
+  my_message("Index_pred:\n      #[%s]:\n", DAG_symb_name2(p_index.symbol));
+  my_message("Positive signatures:\n");
+  if (p_index.signatures[1] && !stack_is_empty(p_index.signatures[1]))
+    {
+      for (i = 0; i < stack_size(p_index.signatures[1]); ++i)
+        my_DAG_message("\t(%d): [%d]{%d}%D:\n", i,
+                       CC_abstract(stack_get(p_index.signatures[1], i)),
+                       stack_get(p_index.signatures[1], i),
+                       stack_get(p_index.signatures[1], i));
+      my_message("--------------\n");
+    }
+  my_message("Negative signatures:\n");
+  if (p_index.signatures[0] && !stack_is_empty(p_index.signatures[0]))
+    {
+      for (i = 0; i < stack_size(p_index.signatures[0]); ++i)
+        my_DAG_message("\t(%d): [%d]{%d}%D:\n", i,
+                       CC_abstract(stack_get(p_index.signatures[0], i)),
+                       stack_get(p_index.signatures[0], i),
+                       stack_get(p_index.signatures[0], i));
+      /* my_message("--------------\n"); */
+    }
+  my_message_return();
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Findex(Findex f_index)
+{
+  unsigned i;
+  my_message("Index:\n      #[%s]:\n", DAG_symb_name2(f_index.symbol));
+  my_message("Signatures:\n");
+  if (f_index.signatures && !stack_is_empty(f_index.signatures))
+    {
+      for (i = 0; i < stack_size(f_index.signatures); ++i)
+        my_DAG_message("\t(%d): [%d]{%d}%D:\n", i,
+                       CC_abstract(stack_get(f_index.signatures, i)),
+                       stack_get(f_index.signatures, i),
+                       stack_get(f_index.signatures, i));
+      my_message("--------------\n");
+    }
+  my_message("Diseq terms:\n");
+  if (f_index.diseq_terms && !stack_is_empty(f_index.diseq_terms))
+    {
+      for (i = 0; i < stack_size(f_index.diseq_terms); ++i)
+        my_DAG_message("\t(%d): [%d]{%d}%D:\n", i,
+                       CC_abstract(stack_get(f_index.diseq_terms, i)),
+                       stack_get(f_index.diseq_terms, i),
+                       stack_get(f_index.diseq_terms, i));
+      my_message("--------------\n");
+    }
+  my_message_return();
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_PDAG(TDAG * PDAG, unsigned arity)
+{
+  unsigned i;
+
+  for (i = 0; i < arity; ++i)
+    my_DAG_message("\t[%d]: %D\n", i, PDAG[i]);
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Tstack_Symb(Tstack_DAG stack)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(stack); ++i)
+    my_DAG_message("\t[%d]: {%d}%s\n", i, stack_get(stack, i), DAG_symb_name2(stack_get(stack, i)));
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Tstack_DAG(Tstack_DAG stack)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(stack); ++i)
+    /* my_DAG_message("\t[%d]: {%d}%D\n", i, stack_get(stack, i), */
+    /*                stack_get(stack, i)); */
+    my_DAG_message("\t[%d]: {%d/gc:%d}%D\n", i, stack_get(stack, i),
+                   gc_count[stack_get(stack, i)], stack_get(stack, i));
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_Tstack_DAGstack(Tstack_DAGstack stack)
+{
+  unsigned i, j;
+  for (i = 0; i < stack_size(stack); ++i)
+    {
+      my_message("\t[%d]\n", i);
+      for (j = 0; j < stack_size(stack_get(stack, i)); ++j)
+        /* my_DAG_message("\t\t[%d]: {%d}%D\n", j, */
+        /*                stack_get(stack_get(stack, i), j), */
+        /*                stack_get(stack_get(stack, i), j)); */
+        my_DAG_message("\t\t[%d]: {%d/gc:%d}%D\n", j,
+                       stack_get(stack_get(stack, i), j),
+                       gc_count[stack_get(stack_get(stack, i), j)],
+                       stack_get(stack_get(stack, i), j));
+    }
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_shifted_Tstack_DAG(Tstack_DAG stack, char * shift)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(stack); ++i)
+    my_DAG_message("  %s[%d]: %D\n", shift, i, stack_get(stack, i));
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_DAG(TDAG DAG)
+{
+  my_DAG_message("{%d}%D\n", DAG, DAG);
+  /* my_DAG_message("{%d/gc:%d}%D\n", DAG, gc_count[DAG], DAG); */
+}
+
+/*--------------------------------------------------------------*/
+
+void
+print_DAG_count(TDAG DAG)
+{
+  unsigned i;
+  my_DAG_message("{%d/gc:%d}%D\n", DAG, gc_count[DAG], DAG);
+  for (i = 0; i < DAG_arity(DAG); ++i)
+    my_DAG_message("\t[%d/gc:%d] %D\n", DAG_arg(DAG, i),
+                   gc_count[DAG_arg(DAG, i)], DAG_arg(DAG, i));
+}
+
+#endif
+
+/*
+  --------------------------------------------------------------
+  Groundness
+  --------------------------------------------------------------
+*/
+
+typedef struct VarClass
+{
+  unsigned rep_ind;
+  Tstack_unsigned vars_inds;
+} VarClass;
+
+TSstack(_VarClass, VarClass); /* typedefs Tstack_VarClass */
+
+/* Associates a sort to a set of variables indices */
+typedef struct SortVars
+{
+  Tsort sort;
+  Tstack_VarClass var_classes;
+} SortVars;
+
+TSstack(_SortVars, SortVars); /* typedefs Tstack_SortVars */
+
+/* Destructive */
+Tstack_Tunifier
+ground_unifier(Tunifier unifier, unsigned cap, bool all_CIs)
+{
+  unsigned i, j, k, l, var_ind, rep_ind;
+  Tstack_DAG terms;
+  Tstack_unsigned free_vars_inds;
+  Tstack_VarClass var_classes;
+  Tstack_SortVars sort_vars;
+  Tstack_Tunifier result, old_result;
+  stack_INIT(free_vars_inds);
+  stack_INIT(result);
+  for (i = 0; i < unifier->size; ++i)
+    {
+      rep_ind = unifier->val[i].rep? i : unify_find(unifier, i);
+      if (unifier->val[rep_ind].term)
+        {
+          /* Guarantee that the term the var is equal to is disequal to all
+             terms in diff */
+          if (all_CIs &&
+              diff_breaks(unifier, rep_ind, unifier->val[rep_ind].term, true))
+            {
+              stack_free(result);
+              return NULL;
+            }
+          if (unifier->val[rep_ind].diff)
+            stack_free(unifier->val[rep_ind].diff);
+          if (i != rep_ind)
+            {
+              unifier->val[i].rep = true;
+              unifier->val[i].term = unifier->val[rep_ind].term;
+              unifier->val[i].diff = NULL;
+              set_ground_var(unifier, i);
+            }
+          continue;
+        }
+      stack_push(free_vars_inds, i);
+    }
+  stack_push(result, unifier);
+#ifdef DEBUG
+  if (stack_is_empty(free_vars_inds))
+    for (i = 0; i < unifier->size; ++i)
+      assert(unifier->val[i].rep && ground(unifier->val[i].term));
+#endif
+  /* Unifier was grounded already */
+  if (stack_is_empty(free_vars_inds))
+    {
+      assert(unify_grounded(unifier));
+      stack_free(free_vars_inds);
+      return result;
+    }
+  /* Partition free variables per sort/class */
+  stack_INIT(sort_vars);
+  while (!stack_is_empty(free_vars_inds))
+    {
+      var_ind = stack_pop(free_vars_inds);
+      rep_ind = unify_find(unifier, var_ind);
+      for (i = 0; i < stack_size(sort_vars); ++i)
+        if (DAG_sort(unifier->val[var_ind].var) == stack_get(sort_vars, i).sort)
+          break;
+      if (i != stack_size(sort_vars))
+        {
+          for (j = 0; j < stack_size(stack_get(sort_vars, i).var_classes); ++j)
+            if (stack_get(stack_get(sort_vars, i).var_classes, j).rep_ind == rep_ind)
+              break;
+          if (j != stack_size(stack_get(sort_vars, i).var_classes))
+            stack_push(stack_get(stack_get(sort_vars, i).var_classes, j).vars_inds, var_ind);
+          else
+            {
+              VarClass var_class;
+              var_class.rep_ind = rep_ind;
+              stack_INIT(var_class.vars_inds);
+              stack_push(var_class.vars_inds, var_ind);
+              stack_push(stack_get(sort_vars, i).var_classes, var_class);
+            }
+          continue;
+        }
+      VarClass var_class;
+      var_class.rep_ind = rep_ind;
+      stack_INIT(var_class.vars_inds);
+      stack_push(var_class.vars_inds, var_ind);
+      stack_inc(sort_vars);
+      stack_top(sort_vars).sort = DAG_sort(unifier->val[var_ind].var);
+      stack_INIT(stack_top(sort_vars).var_classes);
+      stack_push(stack_top(sort_vars).var_classes, var_class);
+    }
+  stack_free(free_vars_inds);
+  assert(!stack_is_empty(sort_vars));
+  /* Collect all ground terms from sort classes of free variables, then ground
+     all variables with all terms (per sort), doing the proper combinations */
+  stack_INIT(old_result);
+  for (i = 0; i < stack_size(sort_vars); ++i)
+    {
+      terms = index_sorts_minimal_depth?
+        get_sort_terms_shallow(stack_get(sort_vars, i).sort) :
+        get_sort_terms(stack_get(sort_vars, i).sort);
+      if (!terms)
+        break;
+      /* For each free variable class, generate a set of unifiers by combining
+         previous ones with each term in its sort class */
+      var_classes = stack_get(sort_vars, i).var_classes;
+      for (j = 0; j < stack_size(var_classes); ++j)
+        {
+          stack_merge(old_result, result);
+          stack_reset(result);
+          rep_ind = stack_get(var_classes, j).rep_ind;
+          /* To avoid explosion; [TODO] needs to be refined */
+          for (k = 0; k < stack_size(terms) && k < cap; ++k)
+            for (l = 0; l < stack_size(old_result); ++l)
+              {
+                unifier = unify_copy(stack_get(old_result, l));
+                if (unify_union_ground(unifier, rep_ind,
+                                       stack_get(var_classes, j).vars_inds,
+                                       stack_get(terms, k), all_CIs))
+                  stack_push(result, unifier);
+                else
+                  unify_free(unifier);
+              }
+          stack_apply(old_result, unify_free);
+          stack_reset(old_result);
+        }
+      stack_free(terms);
+    }
+  stack_free(old_result);
+  /* [TODO] One sort class at least is empty. What should be done in such cases?
+     Giving up does not seem as the best option. How often does this happen in
+     SMT-LIB? */
+  if (i != stack_size(sort_vars))
+    {
+      for (i = 0; i < stack_size(sort_vars); ++i)
+        {
+          for (j = 0; j < stack_size(stack_get(sort_vars, i).var_classes); ++j)
+            stack_free(stack_get(stack_get(sort_vars, i).var_classes, j).vars_inds);
+          stack_free(stack_get(sort_vars, i).var_classes);
+        }
+      stack_free(sort_vars);
+      stack_apply(result, unify_free);
+      stack_free(result);
+      return NULL;
+    }
+  for (i = 0; i < stack_size(sort_vars); ++i)
+    {
+      for (j = 0; j < stack_size(stack_get(sort_vars, i).var_classes); ++j)
+        stack_free(stack_get(stack_get(sort_vars, i).var_classes, j).vars_inds);
+      stack_free(stack_get(sort_vars, i).var_classes);
+    }
+  stack_free(sort_vars);
+#ifdef DEBUG
+  for (i = 0; i < stack_size(result); ++i)
+    for (j = 0; j < stack_get(result, i)->size; ++j)
+      assert(stack_get(result, i)->val[j].rep &&
+             ground(stack_get(result, i)->val[j].term));
+  for (i = 0; i < stack_size(result); ++i)
+    assert(unify_grounded(stack_get(result, i)));
+#endif
+  if (stack_is_empty(result))
+    stack_free(result);
+  return result;
+}
+
+/*
+  --------------------------------------------------------------
+  Symbols
+  --------------------------------------------------------------
+*/
+
+#define symbs_of ((Tstack_OSymb *) DAG_tmp)
+
+/*--------------------------------------------------------------*/
+
+void
+DAG_prop_symbols_free(Tstack_OSymb * symbs)
+{
+  stack_free(*symbs);
+}
+
+/*--------------------------------------------------------------*/
+
+void
+DAG_tmp_reset_symbs(TDAG DAG)
+{
+  unsigned i;
+  if (!symbs_of[DAG])
+    return;
+  stack_free(symbs_of[DAG]);
+  for (i = 0; i < DAG_arity(DAG); i++)
+    DAG_tmp_reset_symbs(DAG_arg(DAG, i));
+}
+
+/*--------------------------------------------------------------*/
+
+void
+set_symbs(TDAG DAG, bool is_pred, Tstack_DAG vars)
+{
+  unsigned i, j, k;
+  TDAG tmp_DAG;
+  OSymb osymb, tmp;
+  Tstack_OSymb tmp_stack;
+  assert(DAG_symb(DAG) != QUANTIFIER_FORALL &&
+         DAG_symb(DAG) != QUANTIFIER_EXISTS);
+  assert(DAG_arity(DAG) && !ground(DAG));
+  if (symbs_of[DAG])
+    return;
+  if (!symbs_of[DAG])
+    stack_INIT(symbs_of[DAG]);
+  if (!is_pred)
+    {
+      osymb.symbol = DAG_symb(DAG);
+      osymb.nb_occurs = 1;
+      stack_push(symbs_of[DAG], osymb);
+    }
+  for (i = 0; i < DAG_arity(DAG); ++i)
+    {
+      tmp_DAG = DAG_arg(DAG, i);
+      /* [TODO] this is problematic if groundness changes between clauses; some
+         terms won't have their symbols accounted for */
+      if (!DAG_arity(tmp_DAG) || ground(tmp_DAG))
+        continue;
+      set_symbs(tmp_DAG, false, vars);
+      if (stack_is_empty(symbs_of[tmp_DAG]))
+        continue;
+      /* [TODO] see if this can't be done more efficiently */
+      stack_INIT(tmp_stack);
+      for (j = 0; j < stack_size(symbs_of[tmp_DAG]); ++j)
+        {
+          for (k = 0; k < stack_size(symbs_of[DAG]); ++k)
+            if (stack_get(symbs_of[tmp_DAG], j).symbol
+                == stack_get(symbs_of[DAG], k).symbol)
+              {
+                tmp.symbol = stack_get(symbs_of[DAG], k).symbol;
+                tmp.nb_occurs = stack_get(symbs_of[DAG], k).nb_occurs
+                  + stack_get(symbs_of[tmp_DAG], j).nb_occurs;
+                stack_push(tmp_stack, tmp);
+                break;
+              }
+            else
+              stack_push(tmp_stack, stack_get(symbs_of[DAG], k));
+          if (k == stack_size(symbs_of[DAG]))
+            stack_push(tmp_stack, stack_get(symbs_of[tmp_DAG], j));
+        }
+      stack_reset(symbs_of[DAG]);
+      stack_merge(symbs_of[DAG], tmp_stack);
+      stack_free(tmp_stack);
+    }
+  stack_COPY(tmp_stack, symbs_of[DAG]);
+  DAG_prop_set(DAG, DAG_PROP_SYMBS, &tmp_stack);
+}
+
+/*--------------------------------------------------------------*/
+
+unsigned
+score_lit(TDAG DAG, bool pol)
+{
+  unsigned i, score;
+  Findex f_index;
+  Pindex p_index;
+  OSymb osymb;
+  Tstack_OSymb symbs = *(Tstack_OSymb *) DAG_prop_get(DAG, DAG_PROP_SYMBS);
+  score = 0;
+  /* If solely vars or terms with fresh symbols only, super effective */
+  if (stack_is_empty(symbs))
+    return score;
+  score++;
+  score = !pol*1000;
+  if (DAG_symb(DAG) != PREDICATE_EQ)
+    if (get_Pindex(DAG_symb(DAG), &p_index)
+        && p_index.signatures[pol])
+      score += stack_size(p_index.signatures[pol]);
+  for (i = 0; i < stack_size(symbs); ++i)
+    {
+      osymb = stack_get(symbs, i);
+      if (!get_Findex(osymb.symbol, &f_index)
+          || (pol && !f_index.signatures)
+          || !pol)
+        continue;
+      if (pol && f_index.signatures)
+        {
+          score += stack_size(f_index.signatures) * osymb.nb_occurs;
+          continue;
+        }
+    }
+  return score;
+}
+
+/*
+  --------------------------------------------------------------
+  Instantiation data structures and global state
+  --------------------------------------------------------------
+*/
+
+typedef enum Tstrategy {
+  inst_CCFV,
+  inst_TRIGGERS,
+  inst_SORTS
+} Tstrategy;
+
+typedef struct Tclause_vars
+{
+  unsigned id;
+  Tstrategy strategy;
+  Tstack_unsigned vars;
+} Tclause_vars;
+
+TSstack(_clause_vars, Tclause_vars); /* typedefs Tstack_clause_vars */
+
+/** \brief stores id and literals of clauses from trigger and sort instantiations */
+static Tstack_clause_vars inst_clause_vars;
+
+TSstack(_var, Tvar); /* typedefs Tstack_var */
+
+/**
+   \brief stores the instances (not the lemmas) produced in the last round
+   \remark used for annotating the respective literals with an inst round */
+static Tstack_DAG last_instances;
+
+/** \brief stores the variables from all instances (not the lemmas) produced */
+static Tstack_var inst_vars;
+
+/** \brief associates lits to qnt formulas from which they were derived */
+Tstack_DAG * lit_qforms;
+/** \brief associates indexed DAGs to lits in which they appeared */
+Tstack_var * index_lits;
+
+/** \brief store ids of clauses from trigger and sort instantiations */
+/* static Tstack_unsigned inst_clauses; */
+
+/** \brief store instantiations (in tree form) from triggers and sorts */
+static Tstack_Tinst qform_insts;
+
+/** Accumulates all instances generated */
+static Tbs insts_bs = NULL;
+
+/** \brief Whether quantified formula has already been prepared for
+    instantiation (normal forms, triggers) */
+static bool * inst_prep;
+
+void inst_free(Tinst inst);
+
+/*--------------------------------------------------------------*/
+
+static void
+prep_hook_resize(unsigned old_alloc, unsigned new_alloc)
+{
+  unsigned i;
+  MY_REALLOC(inst_prep, new_alloc * sizeof(bool));
+  for (i = old_alloc; i < new_alloc; ++i)
+    inst_prep[i] = false;
+}
+
+/*--------------------------------------------------------------*/
+
+static void
+insts_bs_hook_resize(unsigned old_alloc, unsigned new_alloc)
+{
+  if (!new_alloc)
+    return;
+  new_alloc = (new_alloc + 7) >> 3;
+  assert(new_alloc >= insts_bs->size);
+  MY_REALLOC(insts_bs, sizeof(struct TSbs) + new_alloc * sizeof(unsigned char));
+  bzero(insts_bs->v + insts_bs->size, (new_alloc - insts_bs->size) * sizeof(unsigned char));
+  insts_bs->size = new_alloc;
+  /* bitset_enlarge(insts_bs, new_alloc); */
+}
+
+/*--------------------------------------------------------------*/
+
+void
+DAG_prop_vars_free(Tstack_DAG * Pstack)
+{
+  stack_free(*Pstack);
+}
+
+/*--------------------------------------------------------------*/
+
+void
+DAG_prop_cnf_free(Tstack_DAGstack * Pstack)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(*Pstack); ++i)
+    {
+      stack_apply(stack_get(*Pstack, i), DAG_free);
+      stack_free(stack_get(*Pstack, i));
+    }
+  stack_free(*Pstack);
+}
+
+/*--------------------------------------------------------------*/
+
+/* [TODO] Make sure that the referenced DAG does not need to be
+   freed, i.e., that the referenced DAG is always the same as the
+   clause/qformula */
+void
+DAG_prop_insts_free(TDAG *PDAG)
+{
+  int imid, imin, imax;
+  unsigned i;
+  Tstack_Tinst tmp_stack;
+  /* Wheth er solving has ended or formula has no instantiations */
+  if (!qform_insts || stack_is_empty(qform_insts))
+    return;
+  imin = 0;
+  imax = stack_size(qform_insts)-1;
+  do
+    {
+      imid = imin + (imax - imin)/2;
+      if (*PDAG == stack_get(qform_insts, imid).DAG)
+        break;
+      if (*PDAG < stack_get(qform_insts, imid).DAG)
+        imax = imid-1;
+      else if (*PDAG > stack_get(qform_insts, imid).DAG)
+        imin = imid+1;
+    } while (imin <= imax);
+  if (imin > imax)
+    return;
+  stack_INIT(tmp_stack);
+  for (i = 0; i < imid; ++i)
+    stack_push(tmp_stack, stack_get(qform_insts, i));
+  inst_free(stack_get(qform_insts, imid));
+  for (i = imid+1; i < stack_size(qform_insts); ++i)
+    stack_push(tmp_stack, stack_get(qform_insts, i));
+  stack_free(qform_insts);
+  qform_insts = tmp_stack;
+}
+
+/*
+  --------------------------------------------------------------
+  Insts dismissal
+  --------------------------------------------------------------
+*/
+
+/** \brief workaround to warn trigger inst I'm trying to avoid loops */
+bool inst_check_loop = false;
+/** \brief workaround to warn veriT I'm marking the lemmas */
+bool inst_marking = false;
+/** \brief workaround for storing the round when instantiation finished */
+unsigned inst_done_round = 0;
+/** \brief workaround for storing which strategy yielded instances */
+Tstrategy inst_successful;
+/** \brief workaround for quantified formula being marked */
+TDAG current_qform;
+
+/*--------------------------------------------------------------*/
+
+static void
+lits_inst_hook_resize(unsigned old_alloc, unsigned new_alloc)
+{
+  unsigned i;
+  MY_REALLOC(lit_qforms, new_alloc * sizeof(Tstack_DAG));
+  MY_REALLOC(index_lits, new_alloc * sizeof(Tstack_var));
+  for (i = old_alloc; i < new_alloc; ++i)
+    {
+      lit_qforms[i] = NULL;
+      index_lits[i] = NULL;
+    }
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_promote_vars(void)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(inst_vars); ++i)
+    if (SAT_var_get_activity(stack_get(inst_vars, i)))
+      promote_var_lvl(stack_get(inst_vars, i));
+  inst_marking = true;
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_promote_clauses(void)
+{
+  unsigned i;
+  for (i = 0; i < stack_size(inst_clause_vars); ++i)
+    if (SAT_clause_get_activity(stack_get(inst_clause_vars, i).id))
+      stack_apply(stack_get(inst_clause_vars, i).vars, promote_var_lvl);
+  inst_marking = true;
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_mark_var(TDAG DAG)
+{
+  Tvar var = DAG_to_var(DAG);
+  set_var_lvl_arg(var, inst_done_round);
+  stack_push(stack_top(inst_clause_vars).vars, var);
+}
+
+/*--------------------------------------------------------------*/
+
+static void
+inst_mark_var_rec(TDAG DAG)
+{
+  unsigned i;
+  Tvar var;
+  if (DAG_tmp_bool[DAG])
+    return;
+  DAG_tmp_bool[DAG] = 1;
+  if (quantifier(DAG_symb(DAG)))
+    return;
+  if (DAG_literal(DAG))
+    {
+      var = lit_var(DAG_to_lit(DAG));
+      set_var_lvl_arg(var, inst_done_round);
+      /* [TODO] should add only if it was undefined before */
+      stack_push(inst_vars, var);
+      /* Associate new vars to respective quantified formula */
+      if (inst_deletion_loops && inst_successful == inst_TRIGGERS &&
+          get_var_lvl(var) == get_deepest_lvl())
+        {
+          if (!lit_qforms[var])
+            stack_INIT(lit_qforms[var]);
+          stack_push(lit_qforms[var], current_qform);
+          stack_sort(lit_qforms[var], DAG_cmp_q);
+          /* [TODO] is this necessary? */
+          stack_uniq(lit_qforms[var]);
+        }
+      return;
+    }
+  for (i = 0; i < DAG_arity(DAG); ++i)
+    inst_mark_var_rec(DAG_arg(DAG, i));
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_mark_instances(void)
+{
+  unsigned i;
+  DAG_tmp_reserve();
+  for (i = 0; i < stack_size(last_instances); ++i)
+    {
+      current_qform = DAG_arg0(DAG_arg(stack_get(last_instances, i), 0));
+      inst_mark_var_rec(DAG_arg(stack_get(last_instances, i), 1));
+    }
+  /* stack_apply(last_instances, inst_mark_var_rec); */
+  for (i = 0; i < stack_size(last_instances); ++i)
+    {
+      DAG_tmp_reset_bool(DAG_arg(stack_get(last_instances, i), 1));
+      DAG_free(stack_get(last_instances, i));
+    }
+  stack_reset(last_instances);
+  DAG_tmp_release();
+  inst_marking = false;
+}
+
+/*--------------------------------------------------------------*/
+
+static void
+inst_mark_clause_rec(TDAG DAG)
+{
+  unsigned i;
+  Tvar var;
+  if (DAG_tmp_bool[DAG])
+    return;
+  DAG_tmp_bool[DAG] = 1;
+  if (quantifier(DAG_symb(DAG)))
+    return;
+  if (DAG_literal(DAG))
+    {
+      var = lit_var(DAG_to_lit(DAG));
+      set_var_lvl_arg(var, inst_done_round);
+      stack_push(stack_top(inst_clause_vars).vars, var);
+      return;
+    }
+  for (i = 0; i < DAG_arity(DAG); ++i)
+    inst_mark_var_rec(DAG_arg(DAG, i));
+}
+
+/*--------------------------------------------------------------*/
+
+/* [TODO] Instead of storing literals just have them retrieved from the SAT
+   solver when checking the active clauses? */
+void
+inst_mark_clause(Tclause clause, unsigned clause_id)
+{
+  unsigned i;
+  /* Does not need to consider clauses in root level */
+  if (!inst_done_round || !clause_id)
+    return;
+#if DEBUG_INST > 2
+  my_DAG_message("Adding clause %d:\n", clause_id);
+  for (i = 0; i < clause->nb_lits; ++i)
+    my_DAG_message("\tlit %d; var %d; %D\n", clause->lits[i],
+                   lit_var(clause->lits[i]), lit_to_DAG(clause->lits[i]));
+  my_message_return();
+#endif
+  stack_inc(inst_clause_vars);
+  stack_top(inst_clause_vars).id = clause_id;
+  stack_top(inst_clause_vars).strategy = inst_successful;
+  stack_INIT(stack_top(inst_clause_vars).vars);
+  for (i = 0; i < clause->nb_lits; ++i)
+    {
+      /* HB Literals may stand for complex formulas */
+      DAG_tmp_reserve();
+      inst_mark_clause_rec(lit_to_DAG(clause->lits[i]));
+      DAG_tmp_reset_bool(lit_to_DAG(clause->lits[i]));
+      DAG_tmp_release();
+      stack_push(stack_top(inst_clause_vars).vars, lit_var(clause->lits[i]));
+    }
+}
+
+/*--------------------------------------------------------------*/
+
+/*
+  --------------------------------------------------------------
+  Insts management
+  --------------------------------------------------------------
+*/
+
+int
+inst_cmp_q(Tinst *Pinst1, Tinst *Pinst2)
+{
+  return (int) Pinst1->DAG - (int) Pinst2->DAG;
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_free(Tinst inst)
+{
+  unsigned i;
+  assert(inst.size);
+  for (i = 0; i < inst.size; ++i)
+    if (inst.next[i].size) /* Whether it's not a leaf */
+      inst_free(inst.next[i]);
+  free(inst.next);
+}
+
+/*--------------------------------------------------------------*/
+
+static bool
+inst_redundant(Tinst inst, Tunifier unifier)
+{
+  unsigned i, var_pos = 0;
+  Tinst tmp_inst;
+  tmp_inst = inst;
+  while (tmp_inst.next)
+    {
+      for (i = 0; i < tmp_inst.size; ++i)
+        if (tmp_inst.next[i].DAG == unifier->val[var_pos].term)
+          break;
+      if (i == tmp_inst.size)
+        return false;
+      tmp_inst = tmp_inst.next[i];
+      ++var_pos;
+    }
+  return true;
+}
+
+/*--------------------------------------------------------------*/
+
+/* Needs to be destructive, if reachs unifier is not fresh */
+static Tinst
+build_inst_tree(Tinst inst, Tunifier unifier, unsigned var_pos)
+{
+  unsigned i;
+  if (var_pos == unifier->size)
+    return inst;
+  for (i = 0; i < inst.size; ++i)
+    if (inst.next[i].DAG == unifier->val[var_pos].term)
+      {
+        inst.next[i] = build_inst_tree(inst.next[i], unifier, var_pos+1);
+        return inst;
+      }
+  MY_REALLOC(inst.next, (inst.size + 1)*sizeof(Tinst));
+  inst.next[inst.size].DAG = unifier->val[var_pos].term;
+  inst.next[inst.size].size = 0;
+  inst.next[inst.size++].next = NULL;
+  if (var_pos == unifier->size -1)
+    return inst;
+  inst.next[inst.size-1] = build_inst_tree(inst.next[inst.size-1], unifier, var_pos+1);
+  return inst;
+}
+
+/*--------------------------------------------------------------*/
+
+/* [TODO] does not account for different unifiers generating the same
+   instance, for that it would be required to have the instance DAG
+   pinned down... only relevant if it happens ofter, check this */
+/**
+   \author Haniel Barbosa
+   \brief adds a given instantiation, if fresh, to set of
+   instantiations of given formula
+   \param form a formula being instantiated
+   \param unifier an instantiation
+   \return true if provided instantiation is fresh, false otherwise
+
+   \remark Assumes the variables of the unifier are in the same order
+   of the variables of formula */
+bool
+inst_add(TDAG form, Tunifier unifier)
+{
+  int imid, imin, imax;
+  Tinst inst;
+  /* Look if formula already has instantiations */
+  assert(qform_insts);
+  if (!stack_is_empty(qform_insts))
+    {
+      imin = 0;
+      imax = stack_size(qform_insts) - 1;
+      do
+        {
+          imid = imin + (imax - imin)/2;
+          if (form == stack_get(qform_insts, imid).DAG)
+            break;
+          if (form < stack_get(qform_insts, imid).DAG)
+            imax = imid-1;
+          else if (form > stack_get(qform_insts, imid).DAG)
+            imin = imid+1;
+        } while (imin <= imax);
+      /* Try to add unifier to inst tree */
+      if (imin <= imax)
+        {
+          if (inst_redundant(stack_get(qform_insts, imid), unifier))
+            {
+#if DEBUG_INST > 3
+              my_message("unifier\n");
+              unify_print(unifier);
+              my_message("is redundant with inst:\n");
+              print_Tinst(stack_get(qform_insts, imid), 0);
+              my_message_return();
+#endif
+              return false;
+            }
+          stack_set(qform_insts, imid,
+                    build_inst_tree(stack_get(qform_insts, imid), unifier, 0));
+#if DEBUG_INST > 3
+          my_message("unifier\n");
+          unify_print(unifier);
+          my_DAG_message("added into:\n");
+          print_Tinst(stack_get(qform_insts, imid), 0);
+          my_message_return();
+#endif
+          return true;
+        }
+    }
+  /* First instantiation */
+  inst.DAG = form;
+  inst.size = 0;
+  inst.next = NULL;
+  inst = build_inst_tree(inst, unifier, 0);
+#if DEBUG_INST > 3
+  my_message("unifier\n");
+  unify_print(unifier);
+  my_DAG_message("added into:\n");
+  print_Tinst(inst, 0);
+#endif
+  stack_push(qform_insts, inst);
+  stack_sort(qform_insts, inst_cmp_q);
+  return true;
+}
+
+/*
+  --------------------------------------------------------------
+  Instantiating
+  --------------------------------------------------------------
+*/
+
+unsigned
+DAG_tmp_inst(TDAG src)
+{
+  unsigned i, res = 0;
+  TDAG * PDAG, tmp_DAG;
+  Tstack_DAG DAGs;
+  if (DAG_tmp_DAG[src])
+    return DAG_tmp_DAG[src] != src;
+  for (i = 0; i < DAG_arity(src); i++)
+    res |= DAG_tmp_inst(DAG_arg(src, i));
+  if (res)
+    {
+      if (DAG_symb(src) == QUANTIFIER_FORALL)
+        {
+          stack_INIT(DAGs);
+          for (i = 0; i < DAG_arity(src) - 1; i++)
+            if (DAG_tmp_DAG[DAG_arg(src, i)] == DAG_arg(src, i))
+              stack_push(DAGs, DAG_arg(src, i));
+          if (!stack_is_empty(DAGs))
+            {
+              stack_push(DAGs, DAG_tmp_DAG[DAG_arg_last(src)]);
+              tmp_DAG = DAG_new_stack(QUANTIFIER_FORALL, DAGs);
+            }
+          else
+            tmp_DAG = DAG_tmp_DAG[DAG_arg_last(src)];
+          stack_free(DAGs);
+          DAG_tmp_DAG[src] = tmp_DAG;
+          return 1;
+        }
+      MY_MALLOC(PDAG, DAG_arity(src) * sizeof(TDAG));
+      for (i = 0; i < DAG_arity(src); i++)
+        PDAG[i] = DAG_tmp_DAG[DAG_arg(src, i)];
+      tmp_DAG = DAG_new(DAG_symb(src), DAG_arity(src), PDAG);
+      DAG_tmp_DAG[src] = tmp_DAG;
+      return 1;
+    }
+  DAG_tmp_DAG[src] = src;
+  return 0;
+}
+
+/*--------------------------------------------------------------*/
+
+static TDAG
+get_instance(TDAGinst DAGinst)
+{
+  if (!DAGinst.clause)
+    return DAG_arg_last(DAGinst.qform);
+  if (stack_size(DAGinst.clause) == 1)
+    return DAG_dup(stack_get(DAGinst.clause, 0));
+  return DAG_dup(DAG_new_stack(CONNECTOR_OR, DAGinst.clause));
+}
+
+/*--------------------------------------------------------------*/
+
+/**
+   \author Haniel Barbosa
+   \brief Attemps to creates a new instance for each instantiation of
+   given clause
+   \param qt_form quantified formula having its clause instantiated
+   \param DAG clause being instantiated
+   \param lemmas accumulates all instantiations generated of given clause
+
+   \remark Instances are only created for E-unifiers for which all
+   variables can be valuated with ground terms. It's still unclear
+   what to do when their sort has no ground terms
+
+   \remark A hash table with the generated instances is used for a
+   second level of redundancy check for the instantiations (the first
+   being the previous grounded E-unifiers used for instantiating this
+   clause, saved in a property) */
+static void
+inst_unifiers(TDAGinst DAGinst, Tstack_DAG * Plemmas)
+{
+  unsigned i;
+  TDAG DAG, instance, lemma = DAG_NULL;
+  Tunifier unifier;
+  DAG = get_instance(DAGinst);
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  stats_timer_start(insts_stats_time);
+  tmp_insts_time = stats_timer_get(insts_stats_time);
+#endif
+#if DEBUG_INST > 1
+  if (!DAGinst.clause)
+    my_DAG_message("Instances of {%d}%D\n", DAGinst.qform, DAGinst.qform);
+  else
+    my_DAG_message("Instances of clause from {%d}%D\n", DAGinst.qform, DAGinst.qform);
+#endif
+  /* I only don't need the thing of redundant insts if I'm saturating sort
+     classes. Just do it and get this over with. */
+  while (!stack_is_empty(DAGinst.insts))
+    {
+      unifier = stack_pop(DAGinst.insts);
+      if (!DAGinst.clause && !inst_add(DAGinst.qform, unifier))
+        {
+#ifdef STATS_INST
+          if (doing_triggers)
+            stats_counter_inc(insts_stats_redundant_triggers_tree);
+          else
+            stats_counter_inc(insts_stats_redundant_sorts);
+#endif
+          unify_free(unifier);
+          continue;
+        }
+#ifdef DEBUG
+      for (i = 0; i < unifier->size; ++i)
+        assert(DAG_sort(unifier->val[i].var) == DAG_sort(unifier->val[i].term));
+#endif
+      DAG_tmp_reserve();
+      for (i = 0; i < unifier->size; ++i)
+        DAG_tmp_DAG[unifier->val[i].var] = unifier->val[i].term;
+      /* DAG_tmp_subst(DAG); */
+      DAG_tmp_inst(DAG);
+      instance = DAG_dup(DAG_tmp_DAG[DAG]);
+#ifdef PROOF
+      if (proof_on)
+        {
+          DAG_tmp_reset_DAG(DAG);
+          /* Since pre-processing not removing "y" in (forall xy. p(x)) */
+          for (i = 0; i < unifier->size; ++i)
+            DAG_tmp_DAG[unifier->val[i].var] = DAG_NULL;
+        }
+      else
+        DAG_tmp_reset_DAG(DAG);
+#else
+      DAG_tmp_reset_DAG(DAG);
+#endif
+      DAG_tmp_release();
+      lemma = DAG_dup(DAG_or2(DAG_not(DAGinst.qform), instance));
+      DAG_free(instance);
+      if (!bitset_in(insts_bs, lemma))
+        {
+#if defined(STATS_INST) || defined (DEBUG_INST)
+          if (doing_ccfv)
+            stats_counter_inc(insts_stats_ccfv);
+          else if (doing_triggers)
+            stats_counter_inc(insts_stats_triggers);
+          else
+            stats_counter_inc(insts_stats_sorts);
+#endif
+#if DEBUG_INST > 1
+          unify_print(unifier);
+          my_DAG_message("\t{%d}%D\n", instance, instance);
+#endif
+          bitset_insert(insts_bs, DAG_dup(lemma));
+#ifdef PROOF
+          if (proof_on)
+            {
+              Tproof proof;
+              TDAG * PDAG;
+              MY_MALLOC(PDAG, unifier->size * sizeof(TDAG));
+              for (i = 0; i < unifier->size; ++i)
+                PDAG[i] = unifier->val[i].term;
+              proof = proof_add_forall_inst_lemma(lemma, unifier->size, PDAG);
+              lemma = pre_process_instance_proof(lemma, &proof);
+              proof_set_lemma_id(lemma, proof);
+              free(PDAG);
+            }
+          else
+            lemma = pre_process_instance(lemma);
+#else
+          lemma = pre_process_instance(lemma);
+#endif
+          if (inst_deletion && inst_deletion_track_vars)
+            stack_push(last_instances, DAG_dup(lemma));
+          /* [TODO] Awful workaround for not having proper polarity handle */
+          if (triggers_new)
+            set_triggers(DAG_arg(lemma, 1), NULL, NULL);
+          else
+            set_triggers_old(lemma);
+          stack_push(*Plemmas, lemma);
+          /* stack_push(*Plemmas, pre_process_instance(lemma)); */
+          unify_free(unifier);
+          continue;
+        }
+#if defined(STATS_INST) || defined (DEBUG_INST)
+      if (doing_ccfv)
+        stats_counter_inc(insts_stats_redundant_ccfv);
+      else if (doing_triggers)
+        stats_counter_inc(insts_stats_redundant_triggers);
+      else
+        stats_counter_inc(insts_stats_redundant_sorts);
+#endif
+      DAG_free(lemma);
+      unify_free(unifier);
+    }
+  stack_free(DAGinst.insts);
+  if (DAGinst.clause)
+    {
+      DAG_free(DAG);
+      return;
+    }
+  /* There was at least one succeesful instantiation */
+  if (lemma && !DAG_prop_check(DAG, DAG_PROP_INSTS))
+    DAG_prop_set(DAG, DAG_PROP_INSTS, &DAG);
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  insts_time += stats_timer_get(insts_stats_time) - tmp_insts_time;
+  stats_timer_stop(insts_stats_time);
+#endif
+}
+
+/*
+  --------------------------------------------------------------
+  Searching instantiations
+  --------------------------------------------------------------
+*/
+
+/**
+   \author Haniel Barbosa
+   \brief releases the context dependent information at the end of each
+   instantiation cycle */
+void
+inst_cycle_done(void)
+{
+  /* [TODO] make sure it's OK to have this done here */
+  CC_reset_symbols();
+  CC_free_diseqs();
+}
+
+/*--------------------------------------------------------------*/
+
+/**
+   \author Haniel Barbosa
+   \brief initializes the context dependent information at each instantiation
+   cycle
+   \remark indexes the ground model
+   \remark prepares quantified formulas for CCFV */
+void
+inst_cycle_init(void)
+{
+  unsigned i;
+  TDAG DAG;
+  insts_time = 0;
+  /* [TODO] Should I trust this guy? Is it affected by the prime implicant? */
+  for (i = 0; i < stack_size(CC_quantified); ++i)
+    {
+      DAG = stack_get(CC_quantified, i);
+      if (inst_prep[DAG])
+        continue;
+      assert(DAG_symb(DAG) != QUANTIFIER_EXISTS &&
+             DAG_arg_last(DAG) != TRUE && DAG_arg_last(DAG) != FALSE);
+      if (triggers_new)
+        set_triggers(DAG, NULL, NULL);
+      else
+        inst_pre(DAG);
+      if (triggers_nested && !triggers_new)
+        set_nested_triggers(DAG, NULL, NULL);
+      if (!CIs_off)
+        set_NFs(DAG);
+      inst_prep[DAG] = true;
+    }
+  if (!index_SIG)
+    {
+      if (!prime_implicant_off)
+        SAT_prime_implicant();
+      if (!prune_cnf_off)
+        prune_cnf_model();
+    }
+#ifdef STATS_INST
+  stats_counter_inc(insts_stats_rounds);
+#endif
+}
+
+/*--------------------------------------------------------------*/
+
+static Tstack_DAGinst
+inst_sorts(void)
+{
+  unsigned i, j, cap, found_unifiers = 0;
+  TDAG qform;
+  Tstack_DAG vars;
+  Tstack_DAGinst result;
+  Tstack_Tunifier grounds;
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  stats_counter_inc(sorts_stats_rounds);
+  stats_timer_start(sorts_stats_time);
+#endif
+  stack_INIT(result);
+  for (i = 0; i < stack_size(CC_quantified); ++i)
+    {
+      qform = stack_get(CC_quantified, i);
+      stack_INIT(vars);
+      for (j = 0; j < DAG_arity(qform) - 1; ++j)
+        stack_push(vars, DAG_arg(qform, j));
+      stack_sort(vars, DAG_cmp_q);
+      /* [TODO] this is not necessary */
+      stack_uniq(vars);
+      cap = pow((double)insts_sorts_threshold, 1/(double)stack_size(vars));
+      /* my_DAG_message("Got cap %d for {%d}%D\n", cap, qform, qform); */
+      if (index_sorts)
+        grounds = ground_unifier(unify_new(vars), cap, false);
+      else
+        grounds = unify_ground(unify_new(vars), cap, false);
+      stack_free(vars);
+      if (!grounds)
+        {
+#if DEBUG_INST > 2
+          my_DAG_message("inst_sorts: unifier ungroundable\n");
+#endif
+          continue;
+        }
+      found_unifiers += stack_size(grounds);
+
+      stack_inc(result);
+      stack_top(result).qform = qform;
+      stack_top(result).clause = NULL;
+      stack_COPY(stack_top(result).insts, grounds);
+      stack_free(grounds);
+    }
+#ifdef STATS_INST
+  stats_timer_stop(sorts_stats_time);
+#if DEBUG_INST
+  my_message("\t\t(%2.2fs) Sorts %d: got %d unifiers\n",
+             stats_timer_get(sorts_stats_time),
+             stats_counter_get(sorts_stats_rounds), found_unifiers);
+#endif
+#endif
+  if (stack_is_empty(result))
+    stack_free(result);
+  return result;
+}
+
+/*--------------------------------------------------------------*/
+
+#define UNDEF_LVL UINT_MAX
+
+static bool
+inst_strategy(Tstrategy strategy, unsigned inst_lvl, Tstack_DAG * Plemmas)
+{
+  Tstack_DAGinst result = NULL;
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  doing_ccfv = strategy == inst_CCFV? true : false;
+  doing_triggers = strategy == inst_TRIGGERS? true : false;
+  if (doing_ccfv)
+    ++ccfv_calls;
+#endif
+  if (strategy == inst_CCFV)
+    {
+      set_SAT_index(inst_lvl);
+      result = CCFV();
+      unset_model_index();
+    }
+  else if (strategy == inst_TRIGGERS)
+    {
+      if (inst_deletion_loops && inst_lvl && inst_lvl == get_deepest_lvl())
+        {
+          set_SAT_lit_index(inst_lvl);
+          inst_check_loop = true;
+        }
+      else
+        set_SAT_index(inst_lvl);
+      result = triggers();
+      if (inst_deletion_loops && inst_lvl && inst_lvl == get_deepest_lvl())
+        {
+          unset_model_lit_index();
+          inst_check_loop = false;
+        }
+      else
+        unset_model_index();
+    }
+  else if (strategy == inst_SORTS)
+    {
+      if (index_sorts)
+        set_sorts_index(inst_lvl);
+      result = inst_sorts();
+      if (index_sorts)
+        unset_sorts_index();
+    }
+  if (!result)
+    return false;
+  while (!stack_is_empty(result))
+    inst_unifiers(stack_pop(result), Plemmas);
+  stack_free(result);
+  if (stack_is_empty(*Plemmas))
+    return false;
+  if (strategy == inst_CCFV && inst_lvl < get_deepest_lvl())
+    stats_counter_inc(insts_stats_ccfv_before_last);
+  if (SAT_set_markup())
+    update_lvl_up();
+  /* [TODO] workaround which should disappear */
+  if (inst_deletion_priority_ccfv && strategy == inst_CCFV)
+    inst_done_round = 0;
+  else
+    inst_done_round = get_last_lvl();
+  inst_successful = strategy;
+  inst_cycle_done();
+#ifdef STATS_INST
+#if DEBUG_INST
+  my_message("[(%2.2fs), Round %d, Lvl %d] Instances: %d\n",
+             insts_time, stats_counter_get(insts_stats_rounds),
+             inst_deletion_priority_ccfv && doing_ccfv? 0 : get_last_lvl(),
+             doing_ccfv? (stats_counter_get(insts_stats_ccfv) - insts_ccfv_round)
+             : (doing_triggers?
+                (stats_counter_get(insts_stats_triggers) - insts_triggers_round)
+                : (stats_counter_get(insts_stats_sorts) - insts_sorts_round)));
+#endif
+#if DEBUG_INST > 1
+  print_Tstack_DAG(*Plemmas);
+  my_message_return();
+#endif
+  insts_ccfv_round = stats_counter_get(insts_stats_ccfv);
+  insts_triggers_round = stats_counter_get(insts_stats_triggers);
+  insts_sorts_round = stats_counter_get(insts_stats_sorts);
+  if (doing_ccfv)
+    ++ccfv_success;
+#endif
+  return true;
+}
+
+/*--------------------------------------------------------------*/
+
+static bool
+inst_strategy_conservative(Tstrategy strategy, unsigned inst_lvl,
+                           Tstack_DAG * Plemmas)
+{
+  Tstack_DAGinst result = NULL;
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  doing_ccfv = strategy == inst_CCFV? true : false;
+  doing_triggers = strategy == inst_TRIGGERS? true : false;
+  if (doing_ccfv)
+    ++ccfv_calls;
+#endif
+  if (strategy == inst_CCFV)
+    result = CCFV();
+  else if (strategy == inst_TRIGGERS)
+    result = triggers();
+  else if (strategy == inst_SORTS)
+    {
+      if (index_sorts)
+        set_sorts_index(inst_lvl);
+      result = inst_sorts();
+      if (index_sorts)
+        unset_sorts_index();
+    }
+  if (!result)
+    return false;
+  while (!stack_is_empty(result))
+    inst_unifiers(stack_pop(result), Plemmas);
+  stack_free(result);
+  if (stack_is_empty(*Plemmas))
+    return false;
+  unset_model_index();
+  inst_cycle_done();
+#ifdef STATS_INST
+#if DEBUG_INST
+  my_message("[(%2.2fs), Round %d] Instances: %d\n",
+             insts_time, stats_counter_get(insts_stats_rounds),
+             doing_ccfv? (stats_counter_get(insts_stats_ccfv) - insts_ccfv_round)
+             : (doing_triggers?
+                (stats_counter_get(insts_stats_triggers) - insts_triggers_round)
+                : (stats_counter_get(insts_stats_sorts) - insts_sorts_round)));
+#endif
+#if DEBUG_INST > 1
+  print_Tstack_DAG(*Plemmas);
+  my_message_return();
+#endif
+  insts_ccfv_round = stats_counter_get(insts_stats_ccfv);
+  insts_triggers_round = stats_counter_get(insts_stats_triggers);
+  insts_sorts_round = stats_counter_get(insts_stats_sorts);
+  if (doing_ccfv)
+    ++ccfv_success;
+#endif
+  return true;
+}
+
+/*--------------------------------------------------------------*/
+
+/**
+   \author Haniel Barbosa
+   \brief instantiate as it was always done, without deleting
+   \remark this should disappear, only done to simplify the index building */
+static void
+inst_conservative(Tstack_DAG * Plemmas)
+{
+  if (!index_SIG)
+    set_SAT_index(UNDEF_LVL);
+  else
+    set_SIG_index();
+  /* Search for CIs and constraints */
+  if (!CIs_off && inst_strategy_conservative(inst_CCFV, UNDEF_LVL, Plemmas))
+    return;
+  if (!index_SIG && !index_SAT_triggers)
+    {
+      unset_model_index();
+      set_SIG_index();
+    }
+  if (inst_strategy_conservative(inst_TRIGGERS, UNDEF_LVL, Plemmas))
+    return;
+  /* Try exhaustive sort instantiation */
+  if (inst_strategy_conservative(inst_SORTS, UNDEF_LVL, Plemmas))
+    return;
+  if (index_sorts)
+    {
+      if (index_sorts_minimal_depth)
+        {
+#ifdef STATS_INST
+          stats_counter_inc(sorts_stats_more_depth);
+#endif
+          /* Try again, now collecting all depths */
+          index_sorts_minimal_depth = false;
+          if (inst_strategy_conservative(inst_SORTS, UNDEF_LVL, Plemmas))
+            {
+              index_sorts_minimal_depth = true;
+              return;
+            }
+          index_sorts_minimal_depth = true;
+        }
+      /* Try again, now with signature table */
+      index_sorts = false;
+      if (inst_strategy_conservative(inst_SORTS, UNDEF_LVL, Plemmas))
+        {
+#ifdef STATS_INST
+          stats_counter_inc(sorts_stats_more_SIG);
+#endif
+          index_sorts = true;
+          return;
+        }
+    }
+#if defined(STATS_INST) && defined(DEBUG_INST)
+  my_message("[(%2.2fs), Round %d] Instances: 0\n", insts_time,
+             stats_counter_get(insts_stats_rounds));
+#endif
+  unset_model_index();
+  inst_cycle_done();
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst(Tstack_DAG * Plemmas)
+{
+  unsigned lvl;
+  inst_cycle_init();
+  /* For now, can only use SAT index for triggers if it also used for CIs */
+  assert(!index_SAT_triggers || !index_SIG);
+  /* context_structural_recursion(DAG_NULL, NULL, 0); */
+  if (!inst_deletion)
+    {
+#ifdef STATS_ONLY
+      compute_alternations();
+      inst_cycle_done();
+      return;
+#endif
+      inst_conservative(Plemmas);
+      return;
+    }
+  /* Promote literals from conflicts */
+  if (!inst_deletion_no_promotion && inst_deletion_track_vars)
+    inst_promote_vars();
+  else if (!inst_deletion_no_promotion)
+    inst_promote_clauses();
+  /* Search for CIs and constraints */
+  if (!CIs_off && inst_deletion_ccfv)
+    {
+      /* [TODO] Make sure that OK to consider stuff from sort instantiation */
+      /* Loof for CIs in literals from firs round on; try successively until no
+         more rounds; found insts are marked with level 1 */
+      lvl = 0;
+      do
+        {
+          if (inst_strategy(inst_CCFV, lvl, Plemmas))
+            return;
+        } while (lvl++ < get_deepest_lvl());
+    }
+  else
+    if (!CIs_off && inst_strategy(inst_CCFV, UNDEF_LVL, Plemmas))
+      return;
+  /* Instantiate triggers */
+  do
+    {
+      /* Look for trigger instantiations from literals from last round
+         (effectively the first); try successively until no more rounds */
+      if (inst_strategy(inst_TRIGGERS, get_last_lvl(), Plemmas))
+        return;
+    } while (update_lvl_next());
+  /* Instantiate sorts, as a last resort */
+  if (index_sorts)
+    {
+      /* Look for insts in literals from first round on; try successively until
+         no more rounds; found insts are marked with deepest lvl + 1 */
+      lvl = 0;
+      do
+        {
+          if (inst_strategy(inst_SORTS, lvl, Plemmas))
+            return;
+        } while (lvl++ < get_deepest_lvl());
+      if (index_sorts_minimal_depth)
+        {
+#ifdef STATS_INST
+          stats_counter_inc(sorts_stats_more_depth);
+#endif
+          /* Try again, now collecting all depths */
+          index_sorts_minimal_depth = false;
+          lvl = 0;
+          do
+            {
+              if (inst_strategy(inst_SORTS, lvl, Plemmas))
+                {
+                  index_sorts_minimal_depth = true;
+                  return;
+                }
+            } while (lvl++ < get_deepest_lvl());
+        }
+      /* Try again, now with signature table */
+      index_sorts = false;
+      if (inst_strategy_conservative(inst_SORTS, UNDEF_LVL, Plemmas))
+        {
+#ifdef STATS_INST
+          stats_counter_inc(sorts_stats_more_SIG);
+#endif
+          index_sorts = true;
+          return;
+        }
+      return;
+    }
+  /* Try exhaustive sort instantiation */
+  if (inst_strategy_conservative(inst_SORTS, UNDEF_LVL, Plemmas))
+    return;
+#if defined(STATS_INST) && defined(DEBUG_INST)
+  my_message("[(%2.2fs), Round %d] Instances: 0\n", insts_time,
+             stats_counter_get(insts_stats_rounds));
+#endif
+  inst_cycle_done();
+}
+/* [TODO] handle this */
+/* #ifdef DEBUG */
+/*       if (!CIs_off && dump_CIs && stack_size(veriT_lemmas)) */
+/*         veriT_dump_literals_and_CIs("unsat", veriT_lemmas); */
+/* #endif */
+
+/*
+  --------------------------------------------------------------
+  Init/done
+  --------------------------------------------------------------
+*/
+
+
+void
+inst_init()
+{
+  insts_time = 0;
+  ccfv_calls = 0;
+  ccfv_success = 0;
+  inst_index_init();
+  CCFV_init();
+  CCFV_bckt_init();
+  triggers_init();
+
+  insts_bs = bitset_new(1);
+  DAG_set_hook_resize(insts_bs_hook_resize);
+
+  stack_INIT(inst_clause_vars);
+  stack_INIT(last_instances);
+  stack_INIT(inst_vars);
+  stack_INIT(qform_insts);
+  DAG_PROP_INSTS = DAG_prop_new((TFfree) DAG_prop_insts_free,
+                                sizeof(Tstack_DAG));
+  DAG_PROP_CNF = DAG_prop_new((TFfree) DAG_prop_cnf_free,
+                              sizeof(Tstack_DAG));
+  DAG_PROP_SYMBS = DAG_prop_new((TFfree) DAG_prop_symbols_free,
+                                sizeof(Tstack_OSymb));
+
+  DAG_set_hook_resize(fvars_hook_resize);
+  DAG_set_hook_free(fvars_hook_free);
+  /* [TODO] awful workaround, should disappear */
+  inst_prep = NULL;
+  DAG_set_hook_resize(prep_hook_resize);
+
+  lit_qforms = NULL;
+  index_lits = NULL;
+  DAG_set_hook_resize(lits_inst_hook_resize);
+
+  CIs_off = false;
+  options_new(0, "CIs-off",
+              "Disables search for conflicting instances for active quantified formulas", &CIs_off);
+  triggers_nested = false;
+
+  options_new_int(0, "CIs-bound",
+                  "Limit max number of insts per round in depth-first search.",
+                  "UNIT_MAX",
+                  &CIs_bound);
+  CIs_bound = UINT_MAX;
+
+  options_new_int(0, "inst-sorts-threshold",
+                  "Limit to number of sort insts per quantifier [optimize]",
+                  "10^4",
+                  &insts_sorts_threshold);
+  insts_sorts_threshold = 10000;
+
+  options_new(0, "triggers-nested",
+              "Uses old triggers but include nested ones [unstable]",
+              &triggers_nested);
+  triggers_new = false;
+  options_new(0, "triggers-new",
+              "Uses new triggers (include nested ones, multi-triggers) [unstable]",
+              &triggers_new);
+  triggers_single_weak = false;
+  options_new(0, "triggers-single-weak",
+              "Uses weak multi-triggers (minimal depths)",
+              &triggers_single_weak);
+  triggers_multi_weak = false;
+  options_new(0, "triggers-multi-weak",
+              "Uses weak multi-triggers (minimal depths)",
+              &triggers_multi_weak);
+  index_SIG = false;
+  options_new(0, "index-SIG",
+              "Index CC signature rather than ground model",
+              &index_SIG);
+  index_SAT_triggers = false;
+  options_new(0, "index-SAT-triggers",
+              "Uses ground model rather than CC signature for triggers",
+              &index_SAT_triggers);
+
+  index_sorts = false;
+  options_new(0, "index-sorts",
+              "Use indexed SAT stack for sort instantiation",
+              &index_sorts);
+  index_sorts_minimal_depth = false;
+  /* options_new(0, "index-sorts-minimal-depth", */
+  /*             "[unstable]", */
+  /*             &index_sorts_minimal_depth); */
+  /* index_sorts_exhaust_depth_first = false; */
+  /* options_new(0, "index-sorts-exhaust-depth", */
+  /*             "[unstable]", */
+  /*             &index_sorts_exhaust_depth_first); */
+
+  inst_deletion = false;
+  options_new(0, "inst-deletion",
+              "Delete instances between instantiation rounds",
+              &inst_deletion);
+  inst_deletion_loops = false;
+  options_new(0, "inst-deletion-loops",
+              "Prevent matching loops by forcing sort inst",
+              &inst_deletion_loops);
+  inst_deletion_priority_ccfv = false;
+  /* options_new(0, "inst-deletion-priority-ccfv", */
+  /*             "Give highest priority for CCFV insts [unstable]", */
+  /*             &inst_deletion_priority_ccfv); */
+  inst_deletion_no_promotion = false;
+  /* options_new(0, "inst-deletion-no-promotion", */
+  /*             "Never promote instances [unstable]", */
+  /*             &inst_deletion_no_promotion); */
+
+  inst_deletion_track_vars = false;
+  options_new(0, "inst-deletion-track-vars",
+              "Track vars activity rather than clauses",
+              &inst_deletion_track_vars);
+
+  inst_deletion_ccfv = false;
+  /* options_new(0, "inst-deletion-ccfv", */
+  /*             "Delete instances between instantiation rounds also for CCFV [unstable]", */
+  /*             &inst_deletion_ccfv); */
+#ifdef POLARITY_FILTER
+  opt_bool_required_off = false;
+  options_new(0, "bool-required-off",
+              "Do not prune ground model based on this superset of the prime implicant.",
+              &opt_bool_required_off);
+#endif
+  prime_implicant_off = false;
+  options_new(0, "prime-implicant-off",
+              "Do not prune ground model by computing its prime_implicant_off.",
+              &prime_implicant_off);
+  prune_cnf_off = false;
+  options_new(0, "prune-cnf-off",
+              "Do not prune ground model by removing CNF overhead.",
+              &prune_cnf_off);
+#if defined(STATS_INST) || defined (DEBUG_INST)
+  insts_ccfv_round = 0;
+  insts_triggers_round = 0;
+  insts_sorts_round = 0;
+
+  insts_stats_time =
+    stats_timer_new("insts/time", "Insts time", "%7.2f",
+                    STATS_TIMER_ALL);
+  insts_stats_rounds  =
+    stats_counter_new("insts/rounds",
+                      "how many instantiation rounds",
+                      "%6d");
+  insts_stats_ccfv_before_last =
+    stats_counter_new("ccfv/before_last",
+                      "how many instances times CCFV with deletion was useful",
+                      "%6d");
+  insts_stats_ccfv =
+    stats_counter_new("ccfv/insts",
+                      "how many instances CCFV generated",
+                      "%6d");
+  insts_stats_redundant_ccfv =
+    stats_counter_new("ccfv/redundant",
+                      "how many redundant instances CCFV computed",
+                      "%6d");
+  insts_stats_triggers =
+    stats_counter_new("triggers/insts",
+                      "how many instances triggers generated",
+                      "%6d");
+  insts_stats_redundant_triggers =
+    stats_counter_new("triggers/redundant",
+                      "how many redundant instances triggers computed",
+                      "%6d");
+  insts_stats_redundant_triggers_tree =
+    stats_counter_new("triggers/tree_redundant",
+                      "how many redundant instances triggers computed",
+                      "%6d");
+  sorts_stats_time =
+    stats_timer_new("sorts_time", "Sorts Instantiation time", "%7.2f",
+                    STATS_TIMER_ALL);
+  sorts_stats_rounds =
+    stats_counter_new("sorts/rounds",
+                      "number of sorts instantiation rounds",
+                      "%6d");
+  sorts_stats_more_depth =
+    stats_counter_new("sorts/more_depth",
+                      "how many times went beyond minimal depth",
+                      "%6d");
+  sorts_stats_more_SIG =
+    stats_counter_new("sorts/more_SIG",
+                      "how many times went to SIG table",
+                      "%6d");
+  insts_stats_sorts =
+    stats_counter_new("sorts/insts",
+                      "how many instances sorts instantiation generated",
+                      "%6d");
+  insts_stats_redundant_sorts =
+    stats_counter_new("sorts/redundant",
+                      "how many redundant instances sorts inst computed",
+                      "%6d");
+#endif
+#ifdef STATS_ONLY
+  stats_alt =
+    stats_counter_new("alterns",
+                      "how many quant alternations",
+                      "%6d");
+  stats_alt_max =
+    stats_counter_new("alterns_max",
+                      "deepest alternation in benchmark",
+                      "%6d");
+#endif
+}
+
+/*--------------------------------------------------------------*/
+
+void
+inst_done()
+{
+  unsigned w, i;
+#ifdef STATS_INST
+  unsigned j;
+  float total_ccfv = 0, promoted_ccfv = 0, total_triggers = 0,
+    promoted_triggers = 0, total_sorts = 0, promoted_sorts = 0;
+  for (j = 0; j < stack_size(inst_clause_vars); ++j)
+    {
+      if (stack_get(inst_clause_vars, j).strategy == inst_CCFV)
+        ++total_ccfv;
+      else if (stack_get(inst_clause_vars, j).strategy == inst_TRIGGERS)
+        ++total_triggers;
+      else if (stack_get(inst_clause_vars, j).strategy == inst_SORTS)
+        ++total_sorts;
+      if (!SAT_clause_get_activity(stack_get(inst_clause_vars, j).id))
+        continue;
+      if (stack_get(inst_clause_vars, j).strategy == inst_CCFV)
+        ++promoted_ccfv;
+      else if (stack_get(inst_clause_vars, j).strategy == inst_TRIGGERS)
+        ++promoted_triggers;
+      else if (stack_get(inst_clause_vars, j).strategy == inst_SORTS)
+        ++promoted_sorts;
+    }
+  assert(total_ccfv >= promoted_ccfv && total_triggers >= promoted_triggers &&
+         total_sorts >= promoted_sorts);
+  stats_float("del/promoted_ccfv",
+              "how many instantiation from ccfv were promoted",
+              "%7.2f", total_ccfv && promoted_ccfv?
+              promoted_ccfv/total_ccfv : 0);
+  stats_float("del/promoted_triggers",
+              "how many instantiation from triggers were promoted",
+              "%7.2f", total_triggers && promoted_triggers?
+              promoted_triggers/total_triggers : 0);
+  stats_float("del/promoted_sorts",
+              "how many instantiation from sorts were promoted",
+              "%7.2f", total_sorts && promoted_sorts?
+              promoted_sorts/total_sorts : 0);
+  stats_float("ccfv/success",
+              "rate of success (found insts) of CCFV calls",
+              "%7.2f", ccfv_calls && ccfv_success? ccfv_success/ccfv_calls : 0);
+#endif
+  while (!stack_is_empty(inst_clause_vars))
+    {
+      stack_free(stack_top(inst_clause_vars).vars);
+      stack_dec(inst_clause_vars);
+    }
+  for (w = 0; w < insts_bs->size; ++w)
+    for (i = 0; i < 8; ++i)
+      if (insts_bs->v[w] & (1 << i))
+        DAG_free(w*8+i);
+  bitset_free(insts_bs);
+  while (!stack_is_empty(qform_insts))
+    inst_free(stack_pop(qform_insts));
+  stack_free(qform_insts);
+  stack_free(inst_clause_vars);
+  stack_free(last_instances);
+  if (inst_deletion_track_vars && inst_deletion_loops)
+    for (i = 0; i < stack_size(inst_vars); ++i)
+      if (lit_qforms[stack_get(inst_vars, i)])
+        stack_free(lit_qforms[stack_get(inst_vars, i)]);
+  stack_free(inst_vars);
+  CCFV_done();
+  CCFV_bckt_done();
+}
+
+/*--------------------------------------------------------------*/

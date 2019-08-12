@@ -1,0 +1,57 @@
+===============================================================================
+                         The veriT SMT solver
+                         General informations
+===============================================================================
+
+About
+=====
+
+The veriT solver provides a complete satisfiability procedure for
+quantifier-free formulas with uninterpreted functions and linear arithmetics on
+real numbers. It also comes with incomplete procedures for formulas with
+linear integer arithmetics and quantifiers. For some logics, veriT has the 
+capability to build proofs which may then be reused or checked by external tools.
+
+veriT is available under the BSD license.  It has a front-end for the SMTLIB-2
+language (documented at http://www.smtlib.org), but does not support
+sophisticated interactions through the SMT command language.
+
+Installation
+============
+
+Compilation and installation instructions are in the INSTALL file.
+
+Documentation is available in man, html and latex formats in the directories
+doc/user/verit and doc/user/libveriT.
+
+Usage
+=====
+
+The following command prints a list of the available options and a short
+description of each option:
+
+  % verit --help
+
+Notice that, in compliance with SMT-LIB, identifiers beginning with @ are 
+reserved for veriT's internal naming necessities.
+
+Installation also generates the executable veriT-SAT, which contains the veriT
+underlying SAT solver compiled as a standalone tool.  It takes input in the
+DIMACS format.
+
+Source organization
+===================
+
+Here is a small description of what you will find under each subdirectory:
+- src: veriT's source code
+- extern: source and binaries from library dependencies
+- doc: veriT's user documentation
+
+Known problems
+==============
+
+On some systems (e.g. Fedora) the YACC variable is not set in a right way, for
+some reason.  If you experience problems with bison/yacc compiling veriT, set
+for instance
+YACC="/usr/bin/bison -y"
+before running make
