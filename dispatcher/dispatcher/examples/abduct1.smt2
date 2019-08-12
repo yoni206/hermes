@@ -1,3 +1,4 @@
+(set-logic QF_UFNIA)
 (declare-const p.recv_map__data__Map__wp1__lat  Int)
 (declare-const p.recv_map__data__Map__wp1__long  Int)
 (declare-const p.recv_map__data__Map__wp1__alt  Int)
@@ -238,3 +239,5 @@
 (assert p.guarantee)
 
 (check-sat)
+
+(get-abduct A p.guarantee)
