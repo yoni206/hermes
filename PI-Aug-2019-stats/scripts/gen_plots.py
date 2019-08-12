@@ -30,10 +30,7 @@ def to_int(x):
 
 def highlight_max(s):    
     is_max = s == s.max()
-    if (len([v for v in s if v == is_max]) != 1):
-        return ''
-    else:
-        return ['background-color: red' if v else '' for v in is_max]
+    return ['background-color: red' if v else '' for v in is_max]
 
 def gen_diff(d): 
     if "yices" in d.columns:
