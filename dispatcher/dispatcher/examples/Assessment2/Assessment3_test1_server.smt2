@@ -1,4 +1,4 @@
-(set-logic QF_UfLIA)
+(set-logic QF_UFLIA)
 (declare-sort examples.SW.static.Command_dot_Impl 0)
 (declare-sort examples.SW.static.Map_dot_Impl 0)
 (declare-sort examples.SW.static.MC_SW_dot_Impl 0)
