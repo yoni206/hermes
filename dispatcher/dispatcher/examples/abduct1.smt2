@@ -235,7 +235,7 @@
 ; kb
 (assert (and (and (and (and p.assumption (=> p.RADIO__assumption p.RADIO__guarantee)) (=> p.FPLN__assumption p.FPLN__guarantee)) (=> p.WPM__assumption p.WPM__guarantee)) (=> p.UART__assumption p.UART__guarantee)))
 
-; g
+; goal
 (assert p.guarantee)
 
 (check-sat)
