@@ -14,4 +14,4 @@ unzip: clean
 
 clean:
 	#remove all solver directories
-	rm -rf `find solvers/comp -maxdepth 1 -type d | grep "/"`
+	rm -rf `find solvers/comp/ -maxdepth 1 -type d | grep -v comp/$`
