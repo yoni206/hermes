@@ -38,6 +38,7 @@ def get_solver_command(config, solver_name, solver_mode, extra_options=""):
 
 
 CVC4_NAME = "cvc4"
+CVC4_FMF_NAME = "cvc4_fmf"
 YICES_NAME = "yices"
 BOOLECTOR_NAME = "boolector"
 VERIT_NAME = "verit"
@@ -85,6 +86,11 @@ NAMES_AND_MODES_TO_COMMANDS =  {
         SOLVER_MODE.COMPETITION: [cvc4_comp_script],
         SOLVER_MODE.BINARY: [cvc4_binary],
         SOLVER_MODE.MODELS: [cvc4_binary, '--produce-models']
+    },
+    CVC4_FMF_NAME: {
+        SOLVER_MODE.COMPETITION: None,
+        SOLVER_MODE.BINARY: [cvc4_binary, '--finite-model-find'],
+        SOLVER_MODE.MODELS: [cvc4_binary, '--produce-models', '--finite-model-find']
     },
     YICES_NAME: {
         SOLVER_MODE.COMPETITION: [yices_comp_script],
