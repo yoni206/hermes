@@ -1,4 +1,7 @@
-all: sed
+all: sed chmod
+
+chmod:
+	chmod -R 755 solvers
 
 sed: unzip
 	#add the real path in each solver script
@@ -14,4 +17,4 @@ unzip: clean
 
 clean:
 	#remove all solver directories
-	rm -rf `find solvers/comp/ -maxdepth 1 -type d | grep -v comp/$`
+	rm -rf `find solvers/comp/ -maxdepth 1 -type d | grep -v comp/$$ `

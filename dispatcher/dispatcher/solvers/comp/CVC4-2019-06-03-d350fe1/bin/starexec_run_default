@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cvc4=/home/yoniz/git/hermes/dispatcher/dispatcher/solvers/CVC4-2019-06-03-d350fe1/bin/./cvc4
+cvc4=/home/yoniz/git/hermes/dispatcher/dispatcher/solvers/comp/CVC4-2019-06-03-d350fe1/bin/./cvc4
 bench="$1"
 
 logic=$(expr "$(grep -m1 '^[^;]*set-logic' "$bench")" : ' *(set-logic  *\([A-Z_]*\) *) *$')
