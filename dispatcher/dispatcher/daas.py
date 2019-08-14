@@ -9,11 +9,12 @@ class LANG(Enum):
     SMTLIB = "smtlib"
 
 class VerificationTask:
-    def __init__(self):
-        self.id = ""
-        self.query = ""
-        self.language = LANG.SMTLIB
-        self.additional_options = ""
+    def __init__(self, id="", query="", lang=LANG.SMTLIB, options="", solvers="normal"):
+        self.id = id
+        self.query = query
+        self.language = lang
+        self.additional_options = options
+        self.solvers = solvers
 
 class VerificationResult:
     def __init__(self):
@@ -35,7 +36,7 @@ def verify(task):
         f.write(task.query)
     config = dispatcher.Config()
     config.ncpus = multiprocessing.cpu_count()
-    config.verbose = False
+    config.verbose = True
     config.encoding = "plain"
     config.solvers = task.solvers
     config.models = True
@@ -50,19 +51,20 @@ def verify(task):
     return result
 
 def test1():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/simple/simple_get_value.smt2") as f:
-        smtlib = f.read()
-    task = VerificationTask()
-    task.id = "test"
-    task.query = smtlib
-    task.language = LANG.SMTLIB
-    task.solvers = ["normal"]
-    result = verify(task)
-    print(result)
+    for i in range(1, 4):
+        with open("/home/elkfraaf/projects/hermes/yoni/hermes/dispatcher/dispatcher/tmp/N_" + str(i) + ".smt2") as f:
+            smtlib = f.read()
+        task = VerificationTask()
+        task.id = "test"
+        task.query = smtlib
+        task.language = LANG.SMTLIB
+        task.solvers = ["normal"]
+        result = verify(task)
+        print(result)
 
 
 def test2():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/simple/simple_get_value.smt2") as f:
+    with open("examples/simple/simple_get_value.smt2") as f:
         smtlib = f.read()
     task = VerificationTask()
     task.id = "test"
@@ -73,4 +75,4 @@ def test2():
     print(result)
 
 if __name__ == '__main__':
-    test2()
+    test1()

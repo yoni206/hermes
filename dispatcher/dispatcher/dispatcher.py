@@ -294,6 +294,8 @@ def select_solvers_by_logic(logic):
     return result
 
 def solve_configuration(config):
+    global g_result
+    g_result = None
     solvers = get_solvers(config)
     try:
         with multiprocessing.Manager() as manager:
