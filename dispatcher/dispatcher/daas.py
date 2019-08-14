@@ -50,13 +50,13 @@ def verify(task):
     return result
 
 def test1():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/simple/simple_get_value.smt2") as f:
+    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/bug.smt2", "r") as f:
         smtlib = f.read()
     task = VerificationTask()
     task.id = "test"
     task.query = smtlib
     task.language = LANG.SMTLIB
-    task.solvers = ["normal"]
+    task.solvers = ["all"]
     result = verify(task)
     print(result)
 
@@ -73,4 +73,4 @@ def test2():
     print(result)
 
 if __name__ == '__main__':
-    test2()
+    test1()
