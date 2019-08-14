@@ -24,5 +24,5 @@ COPY dispatcher /dispatcher
 
 WORKDIR /dispatcher
 
-CMD python3 server.py
+CMD ./run_server.sh
 

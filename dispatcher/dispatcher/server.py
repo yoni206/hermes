@@ -4,6 +4,7 @@ import json
 
 app = Flask(__name__)
 
+
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
@@ -15,6 +16,11 @@ def shutdown_server():
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'
+
+
+@app.route('/ping', methods=['POST', 'GET'])
+def ping():
+    return 'Server is up and running...'
 
 
 @app.route('/verify', methods=['POST'])
@@ -29,4 +35,6 @@ def solve_reasoning_graph():
 
     return json.dumps(solver_output, default=lambda o: o.__dict__)
 
-app.run(debug=True)
+
+if __name__ == '__main__':
+    app.run(debug=True)
