@@ -33,8 +33,6 @@ def highlight_max(s):
     highlight the maximum in a Series yellow.
     '''
     is_max = s == s.max()
-    print("panda")
-    print("panda", is_max)
     return ['background-color: yellow' if v else '' for v in is_max]
 
 def gen_diff(d): 
@@ -56,8 +54,7 @@ for csv_file in os.listdir(cluster_csv_dir):
     p = data.plot(kind='bar', x="DIRECTORY")
     f = p.get_figure()
     f.savefig('/home/yoniz/git/hermes/PI-Aug-2019-stats/plots/' + csv_file + '.png')
-    data.style.apply(highlight_max)
-    tab = data.style.render()
+    tab = data.style.apply(highlight_max).render()
     with open('/home/yoniz/git/hermes/PI-Aug-2019-stats/tables/' + csv_file + '.html', 'w') as f:
         f.write(tab)
 
