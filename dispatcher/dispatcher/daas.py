@@ -9,7 +9,7 @@ class LANG(Enum):
     SMTLIB = "smtlib"
 
 class VerificationTask:
-    def __init__(self, id="", query="", lang=LANG.SMTLIB, options="", solvers="normal"):
+    def __init__(self, id="", query="", lang=LANG.SMTLIB, options="", solvers=["normal"]):
         self.id = id
         self.query = query
         self.language = lang
