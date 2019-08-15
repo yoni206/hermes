@@ -59,7 +59,7 @@ ALL_NAME = "all"
 #for models, we use the binary
 #also, for special options, we use binary
 cvc4_comp_script = solvers_dir + "/comp/CVC4-2019-06-03-d350fe1/bin/" + starexec_suffix
-cvc4_binary = solvers_dir + "/releases/cvc4-1.7-x86_64-linux-opt"
+cvc4_binary = solvers_dir + "/releases/cvc4_master"
 
 yices_comp_script = solvers_dir + "/comp/Yices_2.6.2/bin/" + starexec_suffix
 yices_binary = solvers_dir + "/releases/yices-2.6.1/bin/yices-smt2" 
