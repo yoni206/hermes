@@ -38,6 +38,7 @@ def get_solver_command(config, solver_name, solver_mode, extra_options=""):
 
 
 CVC4_NAME = "cvc4"
+CVC4_FMF_NAME = "cvc4_fmf"
 YICES_NAME = "yices"
 BOOLECTOR_NAME = "boolector"
 VERIT_NAME = "verit"
@@ -58,7 +59,7 @@ ALL_NAME = "all"
 #for models, we use the binary
 #also, for special options, we use binary
 cvc4_comp_script = solvers_dir + "/comp/CVC4-2019-06-03-d350fe1/bin/" + starexec_suffix
-cvc4_binary = solvers_dir + "/releases/cvc4-1.7-x86_64-linux-opt"
+cvc4_binary = solvers_dir + "/releases/cvc4_master"
 
 yices_comp_script = solvers_dir + "/comp/Yices_2.6.2/bin/" + starexec_suffix
 yices_binary = solvers_dir + "/releases/yices-2.6.1/bin/yices-smt2" 
@@ -85,6 +86,11 @@ NAMES_AND_MODES_TO_COMMANDS =  {
         SOLVER_MODE.COMPETITION: [cvc4_comp_script],
         SOLVER_MODE.BINARY: [cvc4_binary],
         SOLVER_MODE.MODELS: [cvc4_binary, '--produce-models']
+    },
+    CVC4_FMF_NAME: {
+        SOLVER_MODE.COMPETITION: None,
+        SOLVER_MODE.BINARY: [cvc4_binary, '--finite-model-find'],
+        SOLVER_MODE.MODELS: [cvc4_binary, '--produce-models', '--finite-model-find']
     },
     YICES_NAME: {
         SOLVER_MODE.COMPETITION: [yices_comp_script],
@@ -294,6 +300,7 @@ def select_solvers_by_logic(logic):
     return result
 
 def solve_configuration(config):
+    #clean previous result
     global g_result
     g_result = None
     solvers = get_solvers(config)
