@@ -69,7 +69,12 @@ def verify_lustre(task):
     #ignore warnings:
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
-    return result_json
+    
+    result = VerificationResult()
+    result.id = task.id
+    result.result = ""
+    result.explanation = str(result_json)
+    return result
 
 
 def verify(task):
