@@ -1,0 +1,210 @@
+type iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type iml_dot_systems_dot_InDataPort__examples_dot_SW_dot_agree_dot_Mission_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Mission_dot_Impl;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type examples_dot_SW_dot_agree_dot_Command_dot_Impl = struct { 
+	 Pattern : examples_dot_SW_dot_agree_dot_FlightPattern;
+	  HMAC : bool;
+	  Map : examples_dot_SW_dot_agree_dot_Map_dot_Impl 
+} ;
+
+type iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type examples_dot_SW_dot_agree_dot_Map_dot_Impl = struct { 
+	 wp2 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp1 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp4 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp3 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl 
+} ;
+
+type examples_dot_SW_dot_agree_dot_Mission_dot_Impl = struct { 
+	 wp9 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp2 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp1 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp4 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp3 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp6 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp5 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp8 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp7 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp10 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl 
+} ;
+
+type iml_dot_systems_dot_Direction = enum {
+	 iml_dot_systems_dot_Direction_dot_IN,
+	  iml_dot_systems_dot_Direction_dot_OUT,
+	  iml_dot_systems_dot_Direction_dot_INOUT 
+} ;
+
+type iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Command_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl = struct { 
+	 crc : bool;
+	  wp2 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp1 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp4 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  wp3 : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl 
+} ;
+
+type iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Command_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+type examples_dot_SW_dot_agree_dot_FlightPattern = enum {
+	 examples_dot_SW_dot_agree_dot_FlightPattern_dot_ZigZag,
+	  examples_dot_SW_dot_agree_dot_FlightPattern_dot_StraightLine,
+	  examples_dot_SW_dot_agree_dot_FlightPattern_dot_Perimeter 
+} ;
+
+node  examples_dot_SW_dot_agree_dot_MC_SW_dot_Impl ( recv_map : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__;  position_status : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ )
+returns ( waypoint : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__;  send_status : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ )
+(*@contract 
+	var Req003_MC_SW : bool  = ( waypoint.data.crc=  true ); 
+	 var Req001_MC_SW : bool  = ( recv_map.data.HMAC=  true ); 
+	 var Req002_MC_SW : bool  = ( recv_map.data.HMAC=  true ); 
+	 var assumption : bool  = ( Req001_MC_SW  and  Req002_MC_SW  ); 
+	 var guarantee : bool  = ( Req003_MC_SW ) ; 
+	 assume assumption ; 
+	 guarantee guarantee ; 
+*) 
+
+ var WPM_waypoint : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ ;
+ var RADIO_send_status_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;
+  var RADIO_recv_map_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__ ;
+ var UART_position_status_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;
+  var UART_waypoint_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ ;
+ var FPLN_flight_plan : iml_dot_systems_dot_OutDataPort__examples_dot_SW_dot_agree_dot_Mission_dot_Impl__ ;
+let
+( WPM_waypoint ) = examples_dot_SW_dot_agree_dot_WaypointManager ( UART_position_status_out, FPLN_flight_plan) ; 
+( RADIO_send_status_out,  RADIO_recv_map_out ) = examples_dot_SW_dot_agree_dot_RadioDriver ( UART_position_status_out, recv_map) ; 
+( UART_position_status_out,  UART_waypoint_out ) = examples_dot_SW_dot_agree_dot_UARTDriver ( WPM_waypoint, position_status) ; 
+( FPLN_flight_plan ) = examples_dot_SW_dot_agree_dot_FlightPlanner ( RADIO_recv_map_out, UART_position_status_out) ; 
+--%MAIN;
+tel
+
+node good_mission (  mission : examples_dot_SW_dot_agree_dot_Mission_dot_Impl )
+returns (_return : bool )
+let
+    _return = good_coordinate(  mission.wp1  )  and  good_coordinate(  mission.wp2  )   and  good_coordinate(  mission.wp3  )   and  good_coordinate(  mission.wp4  )   and  good_coordinate(  mission.wp5  )   and  good_coordinate(  mission.wp6  )   and  good_coordinate(  mission.wp7  )   and  good_coordinate(  mission.wp8  )   and  good_coordinate(  mission.wp9  )   and  good_coordinate(  mission.wp10  )  ;
+tel
+
+node good_coordinate (  coord : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl )
+returns (_return : bool )
+let
+    _return =  coord.lat >=  90   and   coord.lat <=  90    and   coord.long >=  180    and   coord.long <=  180    and   coord.alt >=  0    and   coord.alt <=  15000   ;
+tel
+
+node good_mission_window (  win : examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl )
+returns (_return : bool )
+let
+    _return = good_coordinate(  win.wp1  )  and  good_coordinate(  win.wp2  )   and  good_coordinate(  win.wp3  )   and  good_coordinate(  win.wp4  )  ;
+tel
+
+node good_gs_command (  cmd : examples_dot_SW_dot_agree_dot_Command_dot_Impl )
+returns (_return : bool )
+let
+    _return = good_map(  cmd.Map  )  and  good_pattern(  cmd.Pattern  )   and  good_HMAC(  cmd.HMAC  )  ;
+tel
+
+node good_pattern (  pattern : examples_dot_SW_dot_agree_dot_FlightPattern )
+returns (_return : bool )
+let
+    _return = pattern=  examples_dot_SW_dot_agree_dot_FlightPattern_dot_ZigZag  or  ( pattern=  examples_dot_SW_dot_agree_dot_FlightPattern_dot_StraightLine )   or  ( pattern=  examples_dot_SW_dot_agree_dot_FlightPattern_dot_Perimeter )  ;
+tel
+
+node good_HMAC (  hmac : bool )
+returns (_return : bool )
+let
+    _return = ( hmac=  true )  or  ( hmac=  false )  ;
+tel
+
+node good_map (  map : examples_dot_SW_dot_agree_dot_Map_dot_Impl )
+returns (_return : bool )
+let
+    _return = good_coordinate(  map.wp1  )  and  good_coordinate(  map.wp2  )   and  good_coordinate(  map.wp3  )   and  good_coordinate(  map.wp4  )  ;
+tel
+
+type examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl = struct { 
+	 alt : int;
+	  lat : int;
+	  long : int 
+} ;
+
+type iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl;
+	  event : bool;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+node imported examples_dot_SW_dot_agree_dot_UARTDriver ( waypoint_in : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__;  position_status_in : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ )
+returns ( position_status_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;  waypoint_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ )
+(*@contract 
+	var Req002_UARTDriver : bool  = ( waypoint_out.data.crc=  true ); 
+	 var Req001_UARTDriver : bool  = ( good_mission_window(  waypoint_in.data  ) ); 
+	 var assumption : bool  = ( Req001_UARTDriver ); 
+	 var guarantee : bool  = ( Req002_UARTDriver ) ; 
+	 assume assumption ; 
+	 guarantee guarantee ; 
+*) 
+
+type iml_dot_systems_dot_OutDataPort__examples_dot_SW_dot_agree_dot_Mission_dot_Impl__ = struct { 
+	 data : examples_dot_SW_dot_agree_dot_Mission_dot_Impl;
+	  direction : iml_dot_systems_dot_Direction 
+} ;
+
+node imported examples_dot_SW_dot_agree_dot_RadioDriver ( send_status_in : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;  recv_map_in : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__ )
+returns ( send_status_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;  recv_map_out : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__ )
+(*@contract 
+	var Req002_RadioDriver : bool  = ( recv_map_out.data.HMAC=  true ); 
+	 var assumption : bool  = ( Req001_RadioDriver ); 
+	 var guarantee : bool  = ( Req002_RadioDriver ); 
+	 var Req001_RadioDriver : bool  = ( recv_map_in.data.HMAC=  true ) ; 
+	 assume assumption ; 
+	 guarantee guarantee ; 
+*) 
+
+node imported examples_dot_SW_dot_agree_dot_WaypointManager ( position_status : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__;  flight_plan : iml_dot_systems_dot_InDataPort__examples_dot_SW_dot_agree_dot_Mission_dot_Impl__ )
+returns ( waypoint : iml_dot_systems_dot_OutEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_MissionWindow_dot_Impl__ )
+(*@contract 
+	var Req002_WaypointManager : bool  = ( good_mission_window(  waypoint.data  ) ); 
+	 var assumption : bool  = ( Req001_WaypointManager ); 
+	 var guarantee : bool  = ( Req002_WaypointManager ); 
+	 var Req001_WaypointManager : bool  = ( good_mission(  flight_plan.data  ) ) ; 
+	 assume assumption ; 
+	 guarantee guarantee ; 
+*) 
+
+node imported examples_dot_SW_dot_agree_dot_FlightPlanner ( recv_map : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Command_dot_Impl__;  position_status : iml_dot_systems_dot_InEventDataPort__iml_dot_lang_dot_Bool__examples_dot_SW_dot_agree_dot_Coordinate_dot_Impl__ )
+returns ( flight_plan : iml_dot_systems_dot_OutDataPort__examples_dot_SW_dot_agree_dot_Mission_dot_Impl__ )
+(*@contract 
+	var Req003_FlightPlanner : bool  = ( good_mission(  flight_plan.data  ) ); 
+	 var Req001_FlightPlanner : bool  = ( recv_map.data.HMAC=  true ); 
+	 var assumption : bool  = ( Req001_FlightPlanner  and  Req002_FlightPlanner  ); 
+	 var guarantee : bool  = ( Req003_FlightPlanner ); 
+	 var Req002_FlightPlanner : bool  = ( good_gs_command(  recv_map.data  ) ) ; 
+	 assume assumption ; 
+	 guarantee guarantee ; 
+*) 
