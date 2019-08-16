@@ -338,5 +338,7 @@ def solve_configuration(config):
 if __name__ == '__main__':
     args = parse_args()
     config = get_configs(args)
+    if not config.verbose:
+        signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
     result = solve_configuration(config)
     print("\n".join(result))
