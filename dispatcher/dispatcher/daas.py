@@ -110,7 +110,7 @@ def test2():
     print(result)
 
 def test_json():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/lustre/SW_agree.LUS") as f:
+    with open("examples/lustre/SW_agree.LUS") as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "test_json"
