@@ -16,11 +16,17 @@ RUN apt-get update \
   && pip3 install --upgrade pip \
   && apt-get install unzip
 
+RUN apt-get install -y wget libgomp1
+
 RUN pip3 install flask
 
 EXPOSE 5000
 
 COPY dispatcher /dispatcher
+
+RUN cp /dispatcher/solvers/releases/z3-4.8.5-x64-ubuntu-16.04/bin/z3 /bin/ && \
+    cp /dispatcher/solvers/releases/yices-2.6.1/bin/yices-smt2 /bin/ && \
+    cp /dispatcher/solvers/releases/cvc4_master /bin/cvc4
 
 WORKDIR /dispatcher
 
