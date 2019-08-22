@@ -34,10 +34,9 @@ def solve_reasoning_graph():
         task = VerificationTask(query["id"], query["query"], LANG[query["lang"]], additional_options, ["normal"])
         result = verify(task)
         solver_output["results"].append(result)
-        print(query["id"] + ": " + result.result)
 
     return json.dumps(solver_output, default=lambda o: o.__dict__)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
