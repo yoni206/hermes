@@ -154,9 +154,10 @@ def worker(i, solvers, procs, config):
         # Remove from process list since process terminated
         procs[i] = 0
         msg_lines = []
-        msg_lines.extend(stdout_lines)
+        if len(stdout_lines) > 0 :
+            msg_lines.append(stdout_lines[0])
         msg_lines.extend(stderr_lines)
-        log('{} done: {} ({}s)'.format(i, (msg_lines), time.time() - start), config)
+        log('{} done: {} ({}s)'.format(i, msg_lines, time.time() - start), config)
     except subprocess.CalledProcessError as error:
         log('{} error: {}'.format(i, error.output.strip()), config)
     except Exception as e:

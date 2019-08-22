@@ -65,6 +65,7 @@ def verify_lustre(task):
     with open(tmp_path, "w") as f:
         f.write(task.query)
     kind2_command.append(tmp_path)
+    print('[dispatcher] Running Kind2: {}'.format(" ".join(kind2_command)))
     result_object = subprocess.run(kind2_command, stdout=subprocess.PIPE)
     result_string = result_object.stdout.decode('utf-8')
     #ignore warnings:
