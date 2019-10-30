@@ -4,12 +4,15 @@ import multiprocessing
 import subprocess
 from enum import Enum
 import json
+from kind2 import *
 
-TMP_DIR="tmp"
+TMP_DIR = "tmp"
+
 
 class LANG(Enum):
     SMTLIB = "smtlib"
     LUSTRE = "lustre"
+
 
 class VerificationTask:
     def __init__(self):
@@ -17,6 +20,7 @@ class VerificationTask:
         self.query = ""
         self.language = LANG.SMTLIB
         self.additional_options = ""
+
 
 class VerificationResult:
     def __init__(self):
@@ -27,8 +31,9 @@ class VerificationResult:
     def __str__(self):
         return (self.id + "\n" + self.result + "\n" + self.explanation)
 
-#arg task is a VerificationTask
-#result is a VerificationResult
+
+# arg task is a VerificationTask
+# result is a VerificationResult
 def verify_smt(task):
     filename = task.id + ".smt2"
     if not os.path.exists(TMP_DIR):
@@ -52,10 +57,11 @@ def verify_smt(task):
     result.explanation = " ".join(disp_result_lines[1:])
     return result
 
+
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
-    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json"]
+    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -66,15 +72,32 @@ def verify_lustre(task):
     kind2_command.append(tmp_path)
     result_object = subprocess.run(kind2_command, stdout=subprocess.PIPE)
     result_string = result_object.stdout.decode('utf-8')
-    #ignore warnings:
+    # ignore warnings:
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
-    
+    analyses = analyze_json_result(result_json)
+
     result = VerificationResult()
     result.id = task.id
     result.result = ""
     result.explanation = str(result_json)
     return result
+
+
+def analyze_json_result(json_result):
+    analyses: List[Kind2Analysis] = []
+    for jsonObject in json_result:
+        analysis: Kind2Analysis
+        if Kind2Object(jsonObject['objectType']) == Kind2Object.analysisStart:
+            analysis = Kind2Analysis(jsonObject)
+        elif Kind2Object(jsonObject['objectType']) == Kind2Object.property:
+            analysis.add_property(jsonObject)
+        elif Kind2Object(jsonObject['objectType']) == Kind2Object.analysisStop:
+            analyses.append(analysis)
+        else:
+            pass
+
+    return analyses
 
 
 def verify(task):
@@ -83,7 +106,8 @@ def verify(task):
     elif task.language == LANG.LUSTRE:
         return verify_lustre(task)
     else:
-        assert(False)
+        assert (False)
+
 
 def test1():
     with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/bug.smt2", "r") as f:
@@ -108,8 +132,9 @@ def test2():
     result = verify(task)
     print(result)
 
+
 def test_json():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/lustre/SW_agree.LUS") as f:
+    with open("examples/lustre/SW_agree.LUS") as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "test_json"
@@ -118,5 +143,16 @@ def test_json():
     result = verify(task)
     print(result)
 
+
+def test_door_lock():
+    with open("examples/lustre/Door_lock.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "test_door_lock"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+
+
 if __name__ == '__main__':
-    test_json()
+    test_door_lock()
