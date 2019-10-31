@@ -34,6 +34,10 @@ class Property:
         self.column = json_object['column']
         self.answer = Answer(json_object['answer']['value'])
 
+    def __str__(self):
+        string: str = self.name + " answer is " + str(self.answer.value)
+        return string
+
 
 class Analysis:
     def __init__(self, json_object: Dict[str, str]):
@@ -52,15 +56,18 @@ class Suggestion:
     suggestionType: SuggestionType
     explanations: List[str]
     label: str
+    analysis: Analysis
+    not_proved_properties: List[Property]
 
     def __init__(self, suggestion_type: SuggestionType):
         self.suggestionType = suggestion_type
         self.explanations = []
 
     def __str__(self):
-        string: str = "Suggestion: " + self.label + "\n"
+        string: str = ""
         for explanation in self.explanations:
             string += explanation + "\n"
+        string += "Suggestion: " + self.label + "\n"
         return string
 
     @classmethod
@@ -74,21 +81,29 @@ class Suggestion:
 
     @classmethod
     def not_proved_properties(cls, analysis: Analysis, not_proved_properties: List[Property]):
-        # suggestion 6
+        # suggestion 5
         suggestion = cls(SuggestionType.FixReportedIssues)
-        suggestion.label = "Fix reported issues for {}'s subcomponents.".format(analysis.top)
+        suggestion.analysis = analysis
+        suggestion.not_proved_properties = not_proved_properties
+        suggestion.label = "Either make {}’s assumptions stronger, or fix {}’s definition to " \
+                           "satisfy {}’s guarantees".format(analysis.top, analysis.top, analysis.top)
         suggestion.explanations.append(
             'Component {} does not satisfy its contract after refinement'.format(analysis.top))
+        suggestion.explanations.append("Issues:\n")
+        for property in not_proved_properties:
+            suggestion.explanations.append(str(property))
         # suggestion.explanations.append('No component of the system was refined.')
         return suggestion
 
+class Kind2Result:
+    pass
 
 class NodeResult:
     node_analyses: List[Analysis]
     node_name: str
     suggestion: Suggestion
 
-    def __init__(self, node_name: str, analysis: Analysis):
+    def __init__(self, kind2Result: Kind2Result, node_name: str, analysis: Analysis):
         self.node_name = node_name
         self.node_analyses = [analysis]
 
@@ -114,7 +129,7 @@ class Kind2Result:
         if node in self.result_dict.keys():
             self.result_dict[node].append(analysis)
         else:
-            self.result_dict[node] = NodeResult(node, analysis)
+            self.result_dict[node] = NodeResult(self, node, analysis)
 
     def analyze(self):
         for node in self.result_dict.keys():
