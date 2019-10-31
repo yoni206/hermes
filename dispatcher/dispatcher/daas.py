@@ -75,7 +75,7 @@ def verify_lustre(task):
     # ignore warnings:
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
-    analyses = analyze_json_result(result_json)
+    kind2_result = analyze_json_result(result_json)
 
     result = VerificationResult()
     result.id = task.id
@@ -85,19 +85,19 @@ def verify_lustre(task):
 
 
 def analyze_json_result(json_result):
-    analyses: List[Kind2Analysis] = []
-    for jsonObject in json_result:
+    kind2_result = Kind2Result()
+    for json_object in json_result:
         analysis: Kind2Analysis
-        if Kind2Object(jsonObject['objectType']) == Kind2Object.analysisStart:
-            analysis = Kind2Analysis(jsonObject)
-        elif Kind2Object(jsonObject['objectType']) == Kind2Object.property:
-            analysis.add_property(jsonObject)
-        elif Kind2Object(jsonObject['objectType']) == Kind2Object.analysisStop:
-            analyses.append(analysis)
+        if Kind2Object(json_object['objectType']) == Kind2Object.analysisStart:
+            analysis = Kind2Analysis(json_object)
+        elif Kind2Object(json_object['objectType']) == Kind2Object.property:
+            analysis.add_property(json_object)
+        elif Kind2Object(json_object['objectType']) == Kind2Object.analysisStop:
+            kind2_result.put_analysis(analysis.top, analysis)
         else:
             pass
 
-    return analyses
+    return kind2_result
 
 
 def verify(task):

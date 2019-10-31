@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Dict
+from typing import Dict, List
 
 
 class Kind2Object(Enum):
@@ -41,3 +41,18 @@ class Kind2Analysis:
         name, scope, line = json_object['name'], json_object['scope'], json_object['line']
         column, answer = json_object['column'], Answer(json_object['answer']['value'])
         self.properties.append(Property(name, scope, line, column, answer))
+
+
+class Kind2Result:
+    analyses: Dict[str, List[Kind2Analysis]]
+
+    def __init__(self):
+        self.analyses = {}
+
+    def put_analysis(self, node: str, analysis: Kind2Analysis):
+        if node in self.analyses.keys():
+            self.analyses[node].append(analysis)
+        else:
+            self.analyses[node] = [analysis]
+
+
