@@ -103,9 +103,11 @@ class NodeResult:
     node_analyses: List[Analysis]
     node_name: str
     suggestion: Suggestion
+    kind2Result: Kind2Result
 
     def __init__(self, kind2Result: Kind2Result, node_name: str, analysis: Analysis):
         self.node_name = node_name
+        self.kind2Result = kind2Result
         self.node_analyses = [analysis]
 
     def append(self, analysis: Analysis):
