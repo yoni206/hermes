@@ -35,7 +35,8 @@ class Property:
         self.answer = Answer(json_object['answer']['value'])
 
     def __str__(self):
-        string: str = self.name + " answer is " + str(self.answer.value)
+        string: str = "Property " + self.name + " in line " + str(self.line) + " column " + \
+                      str(self.column) + " is " + str(self.answer.value)
         return string
 
 
@@ -89,7 +90,7 @@ class Suggestion:
                            "satisfy {}’s guarantees".format(analysis.top, analysis.top, analysis.top)
         suggestion.explanations.append(
             'Component {} does not satisfy its contract after refinement'.format(analysis.top))
-        suggestion.explanations.append("Issues:\n")
+        suggestion.explanations.append("\nIssues:")
         for property in not_proved_properties:
             suggestion.explanations.append(str(property))
         # suggestion.explanations.append('No component of the system was refined.')
