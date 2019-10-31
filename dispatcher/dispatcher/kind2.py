@@ -27,15 +27,7 @@ class Kind2Analysis:
         self.abstract = json_object['abstract']
         self.concrete = json_object['concrete']
         self.assumptions = json_object['assumptions']
-        self.suggestions = []
-        self.explanations = []
         self.properties = []
-        self.get_suggestions_and_explanations()
-
-    def get_suggestions_and_explanations(self):
-        if not self.abstract and not self.assumptions:
-            self.suggestions.append("No action required.")
-            self.explanations.append("No component of the system was refined.")
 
     def add_property(self, json_object: Dict[str, str]):
         name, scope, line = json_object['name'], json_object['scope'], json_object['line']
@@ -45,14 +37,24 @@ class Kind2Analysis:
 
 class Kind2Result:
     analyses: Dict[str, List[Kind2Analysis]]
+    suggestions: List[str]
+    explanations: List[str]
 
     def __init__(self):
         self.analyses = {}
+        self.suggestions = []
+        self.explanations = []
 
     def put_analysis(self, node: str, analysis: Kind2Analysis):
         if node in self.analyses.keys():
             self.analyses[node].append(analysis)
         else:
             self.analyses[node] = [analysis]
+
+    def get_suggestions_and_explanations(self):
+        if not self.abstract and not self.assumptions:
+            self.suggestions.append("No action required.")
+            self.explanations.append("No component of the system was refined.")
+
 
 
