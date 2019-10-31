@@ -138,3 +138,19 @@ class Kind2Result:
         for node_result in self.result_dict.values():
             string += str(node_result) + "\n"
         return string
+
+
+def analyze_json_result(json_result):
+    kind2_result = Kind2Result()
+    for json_object in json_result:
+        analysis: Analysis
+        if Kind2Object(json_object['objectType']) == Kind2Object.analysisStart:
+            analysis = Analysis(json_object)
+        elif Kind2Object(json_object['objectType']) == Kind2Object.property:
+            analysis.add_property(json_object)
+        elif Kind2Object(json_object['objectType']) == Kind2Object.analysisStop:
+            kind2_result.put_analysis(analysis.top, analysis)
+        else:
+            pass
+
+    return kind2_result
