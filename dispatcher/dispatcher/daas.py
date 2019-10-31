@@ -76,7 +76,8 @@ def verify_lustre(task):
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
     kind2_result = analyze_json_result(result_json)
-
+    kind2_result.analyze()
+    print(kind2_result)
     result = VerificationResult()
     result.id = task.id
     result.result = ""
@@ -87,9 +88,9 @@ def verify_lustre(task):
 def analyze_json_result(json_result):
     kind2_result = Kind2Result()
     for json_object in json_result:
-        analysis: Kind2Analysis
+        analysis: Analysis
         if Kind2Object(json_object['objectType']) == Kind2Object.analysisStart:
-            analysis = Kind2Analysis(json_object)
+            analysis = Analysis(json_object)
         elif Kind2Object(json_object['objectType']) == Kind2Object.property:
             analysis.add_property(json_object)
         elif Kind2Object(json_object['objectType']) == Kind2Object.analysisStop:
