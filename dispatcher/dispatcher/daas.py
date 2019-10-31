@@ -139,5 +139,16 @@ def test_door_lock():
     print(result)
 
 
+def test_door_lock1():
+    with open("examples/lustre/Door_lock_S1.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "test_door_lock"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
 if __name__ == '__main__':
-    test_door_lock()
+    test_door_lock1()

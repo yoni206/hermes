@@ -75,9 +75,10 @@ class Suggestion:
     @classmethod
     def not_proved_properties(cls, analysis: Analysis, not_proved_properties: List[Property]):
         # suggestion 6
-        suggestion = cls(SuggestionType.NoActionRequired)
+        suggestion = cls(SuggestionType.FixReportedIssues)
+        suggestion.label = "Fix reported issues for {}'s subcomponents.".format(analysis.top)
         suggestion.explanations.append(
-            'Component %s does not satisfy its contract after refinement'.format(analysis.top))
+            'Component {} does not satisfy its contract after refinement'.format(analysis.top))
         # suggestion.explanations.append('No component of the system was refined.')
         return suggestion
 
