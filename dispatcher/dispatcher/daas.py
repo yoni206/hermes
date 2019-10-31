@@ -77,11 +77,10 @@ def verify_lustre(task):
     result_json = json.loads(result_string)
     kind2_result = analyze_json_result(result_json)
     kind2_result.analyze()
-    print(kind2_result)
     result = VerificationResult()
     result.id = task.id
     result.result = ""
-    result.explanation = str(result_json)
+    result.explanation = str(kind2_result)
     return result
 
 
@@ -137,6 +136,7 @@ def test_door_lock():
     task.query = lustre
     task.language = LANG.LUSTRE
     result = verify(task)
+    print(result)
 
 
 if __name__ == '__main__':
