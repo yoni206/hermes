@@ -56,7 +56,7 @@ def verify_smt(task):
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
-    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json"]
+    kind2_command = [solvers_dir + "/model_checkers/kind2", "--color", "false"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -69,13 +69,13 @@ def verify_lustre(task):
     result_object = subprocess.run(kind2_command, stdout=subprocess.PIPE)
     result_string = result_object.stdout.decode('utf-8')
     #ignore warnings:
-    result_string = result_string[result_string.find("["):]
-    result_json = json.loads(result_string)
+    # result_string = result_string[result_string.find("["):]
+    # result_json = json.loads(result_string)
     
     result = VerificationResult()
     result.id = task.id
     result.result = ""
-    result.explanation = str(result_json)
+    result.explanation = result_string[result_string.find("======="):] # str(result_json)
     return result
 
 
