@@ -61,7 +61,8 @@ def verify_smt(task):
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
-    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true"]
+    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
+                     "--timeout", "5"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -128,8 +129,8 @@ def test_json():
     print(result)
 
 
-def test_door_lock():
-    with open("examples/lustre/Door_lock.lus") as f:
+def s1():
+    with open("examples/lustre/S1.lus") as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "test_door_lock"
@@ -139,7 +140,29 @@ def test_door_lock():
     print(result)
 
 
-def test_door_lock1():
+def test_door_lock2():
+    with open("examples/lustre/Door_lock_S2.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "test_door_lock"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
+def test_door_lock3():
+    with open("examples/lustre/Door_lock_S3.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "test_door_lock"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
+def test_door_lock5():
     with open("examples/lustre/Door_lock_S1.lus") as f:
         lustre = f.read()
     task = VerificationTask()
@@ -150,5 +173,72 @@ def test_door_lock1():
     print(result)
 
 
+def s5():
+    with open("examples/lustre/S5.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "s6"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
+
+def s5b():
+    with open("examples/lustre/S5b.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "s6"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
+def s6():
+    with open("examples/lustre/S6.lus") as f:
+        lustre = f.read()
+    task = VerificationTask()
+    task.id = "s6"
+    task.query = lustre
+    task.language = LANG.LUSTRE
+    result = verify(task)
+    print(result)
+
+
+def unknown():
+    with open("examples/lustre/unknown.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
+def bacteria1():
+    with open("examples/lustre/bacteria1.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
+def bacteria2():
+    with open("examples/lustre/bacteria2.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
 if __name__ == '__main__':
-    test_door_lock1()
+    bacteria1()
