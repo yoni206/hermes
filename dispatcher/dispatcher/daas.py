@@ -241,4 +241,4 @@ def bacteria2():
 
 
 if __name__ == '__main__':
-    bacteria1()
+    bacteria2()
