@@ -116,8 +116,8 @@ def test2():
     print(result)
 
 
-def test_json():
-    with open("examples/lustre/SW_agree.LUS") as f:
+def verify_lustre_file(file_name):
+    with open(file_name) as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "test_json"
@@ -127,16 +127,9 @@ def test_json():
     print(result)
 
 
-def verify_lustre_file(file_name):
-    with open(file_name) as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "s6"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
-
+def test_json():
+    verify_lustre_file("examples/lustre/SW_agree.LUS")
+    
 
 def s5():
     verify_lustre_file("examples/lustre/S5.lus")
