@@ -1,0 +1,93 @@
+type SwitchPosition = enum { Cool, Off, Heat };
+
+const MIN_TEMPERATURE : real = 40.0;
+const MAX_TEMPERATURE : real = 100.0;
+const INITIAL_TEMPERATURE : real = 70.0;
+const DEADBAND : real = 3.0;
+const DIFF : real = 1.0;
+
+
+node Since
+  (X : bool;
+  Y : bool)
+returns
+  (Z : bool);
+let
+  Z = ((X) or (((Y) and (((false) -> ((pre (Z))))))));
+tel
+
+node imported SetDesiredTemperature
+  (up_button : bool;
+  down_button : bool)
+returns
+  (setpoint : real);
+(*@contract
+  var prev_setpoint : real = ((INITIAL_TEMPERATURE) -> ((pre (setpoint))));
+  var increment_condition : bool = ((up_button) and (((prev_setpoint) <= (((MAX_TEMPERATURE) - (DIFF))))));
+  var decrement_condition : bool = ((down_button) and (((prev_setpoint) >= (((MIN_TEMPERATURE) + (DIFF))))));
+  assume (not (((up_button) and (down_button))));
+  guarantee "Setpoint increment" ((increment_condition) => (((setpoint) = (((prev_setpoint) + (DIFF))))));
+  guarantee "Setpoint decrement" ((decrement_condition) => (((setpoint) = (((prev_setpoint) - (DIFF))))));
+  guarantee "Setpoint invariance" (((not (((increment_condition) or (decrement_condition))))) => (((setpoint) = (prev_setpoint))));
+*)
+
+node imported ControlTemperature
+  (switch : SwitchPosition;
+  current_temperature : real;
+  setpoint : real)
+returns
+  (cool_act_signal : bool;
+  heat_act_signal : bool);
+(*@contract
+  var cooling_start_condition : bool = ((((switch) = (Cool))) and (((current_temperature) > (((setpoint) + (DEADBAND))))));
+  var cool_mode : bool = ((cooling_start_condition) -> (((cooling_start_condition) or ((((((pre (cool_mode))) and (((switch) = (Cool))))) and (((current_temperature) > (setpoint))))))));
+  var heating_start_condition : bool = ((((switch) = (Heat))) and (((current_temperature) < (((setpoint) - (DEADBAND))))));
+  var heat_mode : bool = ((heating_start_condition) -> (((heating_start_condition) or ((((((pre (heat_mode))) and (((switch) = (Heat))))) and (((current_temperature) < (setpoint))))))));
+  var off_mode : bool = (((not (cool_mode))) and ((not (heat_mode))));
+  guarantee "Cooling activation" ((cool_act_signal) = (cool_mode));
+  guarantee "Heating activation" ((heat_act_signal) = (heat_mode));
+*)
+
+node ThermostatController_Impl
+  (switch : SwitchPosition;
+  up_button : bool;
+  down_button : bool;
+  current_temperature : real)
+returns
+  (cool_act_signal : bool;
+  heat_act_signal : bool;
+  setpoint : real);
+(*@contract
+  var current_temperature_in_deadzone : bool = ((((((setpoint) - (DEADBAND))) <= (current_temperature))) and (((current_temperature) <= (((setpoint) + (DEADBAND))))));
+  var system_is_off : bool = (((not (cool_act_signal))) and ((not (heat_act_signal))));
+  assume (not (((up_button) and (down_button))));
+  guarantee "Initial temperature is in range" ((((MIN_TEMPERATURE) <= (INITIAL_TEMPERATURE))) and (((INITIAL_TEMPERATURE) <= (MAX_TEMPERATURE))));
+  guarantee "Deadband and Diff are positive values" ((((DEADBAND) > (0.0))) and (((DIFF) > (0.0))));
+  guarantee "No activation signal is enabled if switch is in Off" ((((switch) = (Off))) => ((((not (cool_act_signal))) and ((not (heat_act_signal))))));
+  guarantee "Cooling system is turned On only if switch is in Cool" ((cool_act_signal) => (((switch) = (Cool))));
+  guarantee "Heating system is turned On only if switch is in Heat" ((heat_act_signal) => (((switch) = (Heat))));
+  guarantee "Activation signals are never enabled at the same time" (not (((cool_act_signal) and (heat_act_signal))));
+  guarantee "Setpoint is always in range" ((((MIN_TEMPERATURE) <= (setpoint))) and (((setpoint) <= (MAX_TEMPERATURE))));
+  guarantee "Setpoint doesn't change if no button is pressed" (((((not (up_button))) and ((not (down_button))))) => (((setpoint) = (((INITIAL_TEMPERATURE) -> ((pre (setpoint))))))));
+  guarantee "Setpoint doesn't decrease if the up button is pressed" ((up_button) => ((not (((setpoint) < (((INITIAL_TEMPERATURE) -> ((pre (setpoint))))))))));
+  guarantee "Setpoint doesn't increase if the down button is pressed" ((down_button) => ((not (((setpoint) > (((INITIAL_TEMPERATURE) -> ((pre (setpoint))))))))));
+  guarantee "System is Off if current temperature is in the dead zone and system was Off in the previous step" ((true) -> (((((current_temperature_in_deadzone) and ((pre (system_is_off))))) => (system_is_off))));
+  guarantee "Cooling system is On only if current temperature is higher than setpoint" ((cool_act_signal) => (((current_temperature) > (setpoint))));
+  guarantee "Heating system is On only if current temperature is lower than setpoint" ((heat_act_signal) => (((current_temperature) < (setpoint))));
+  guarantee "Cooling system is On if switch is in Cool and temperature is higher than setpoint plus deadband" ((((((switch) = (Cool))) and (((current_temperature) > (((setpoint) + (DEADBAND))))))) => (cool_act_signal));
+  guarantee "Heating system is On if switch is in Heat and temperature is lower than setpoint minus deadband" ((((((switch) = (Heat))) and (((current_temperature) < (((setpoint) - (DEADBAND))))))) => (heat_act_signal));
+  guarantee "Once cooling system is On, it remains On as long as setpoint hasn't reached and switch is in Cool" ((Since(cool_act_signal, ((((switch) = (Cool))) and (((current_temperature) > (setpoint)))))) => (cool_act_signal));
+  guarantee "Once heating system is On, it remains On as long as setpoint hasn't reached and switch is in Heat" ((Since(heat_act_signal, ((((switch) = (Heat))) and (((current_temperature) < (setpoint)))))) => (heat_act_signal));
+*)
+var
+  set_desired_temperature_port_setpoint : real;
+  control_temperature_port_cool_act_signal : bool;
+  control_temperature_port_heat_act_signal : bool;
+let
+  set_desired_temperature_port_setpoint = SetDesiredTemperature(up_button, down_button);
+  control_temperature_port_cool_act_signal, control_temperature_port_heat_act_signal = ControlTemperature(switch, current_temperature, set_desired_temperature_port_setpoint);
+  cool_act_signal = control_temperature_port_cool_act_signal;
+  heat_act_signal = control_temperature_port_heat_act_signal;
+  setpoint = set_desired_temperature_port_setpoint;
+tel
+

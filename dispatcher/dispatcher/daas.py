@@ -4,7 +4,6 @@ import multiprocessing
 import subprocess
 from enum import Enum
 import json
-from kind2 import *
 
 TMP_DIR = "tmp"
 
@@ -76,12 +75,10 @@ def verify_lustre(task):
     # ignore warnings:
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
-    kind2_result = analyze_json_result(result_json)
-    kind2_result.analyze()
     result = VerificationResult()
     result.id = task.id
     result.result = ""
-    result.explanation = str(kind2_result)
+    result.explanation = str(result_json)
     return result
 
 
@@ -174,6 +171,10 @@ def test_door_lock5():
 
 
 def s5():
+    verifyLustre()
+
+
+def verifyLustre():
     with open("examples/lustre/S5.lus") as f:
         lustre = f.read()
     task = VerificationTask()
@@ -182,7 +183,6 @@ def s5():
     task.language = LANG.LUSTRE
     result = verify(task)
     print(result)
-
 
 
 def s5b():
@@ -240,5 +240,38 @@ def bacteria2():
         print(result)
 
 
+def array():
+    with open("examples/lustre/array.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
+def CruiseController():
+    with open("examples/lustre/CruiseController.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
+def Thermostat():
+    with open("examples/lustre/Thermostat.lus") as f:
+        lustre = f.read()
+        task = VerificationTask()
+        task.id = "s6"
+        task.query = lustre
+        task.language = LANG.LUSTRE
+        result = verify(task)
+        print(result)
+
+
 if __name__ == '__main__':
-    bacteria2()
+    Thermostat()
