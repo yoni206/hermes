@@ -127,54 +127,6 @@ def test_json():
     print(result)
 
 
-def s1():
-    with open("examples/lustre/S1.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "test_door_lock"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
-
-
-def test_door_lock2():
-    with open("examples/lustre/Door_lock_S2.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "test_door_lock"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
-
-
-def test_door_lock3():
-    with open("examples/lustre/Door_lock_S3.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "test_door_lock"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
-
-
-def test_door_lock5():
-    with open("examples/lustre/Door_lock_S1.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "test_door_lock"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
-
-
-def s5():
-    verify_lustre_file("examples/lustre/S5.lus")
-
-
 def verify_lustre_file(file_name):
     with open(file_name) as f:
         lustre = f.read()
@@ -184,6 +136,10 @@ def verify_lustre_file(file_name):
     task.language = LANG.LUSTRE
     result = verify(task)
     print(result)
+
+
+def s5():
+    verify_lustre_file("examples/lustre/S5.lus")
 
 
 def s5b():
