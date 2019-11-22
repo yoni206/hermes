@@ -1,9 +1,10 @@
-import os
-import dispatcher
+import json
 import multiprocessing
+import os
 import subprocess
 from enum import Enum
-import json
+
+import dispatcher
 
 TMP_DIR = "tmp"
 
@@ -171,11 +172,11 @@ def test_door_lock5():
 
 
 def s5():
-    verifyLustre()
+    verify_lustre_file("examples/lustre/S5.lus")
 
 
-def verifyLustre():
-    with open("examples/lustre/S5.lus") as f:
+def verify_lustre_file(file_name):
+    with open(file_name) as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "s6"
@@ -186,92 +187,36 @@ def verifyLustre():
 
 
 def s5b():
-    with open("examples/lustre/S5b.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "s6"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
+    verify_lustre_file("examples/lustre/S5b.lus")
 
 
 def s6():
-    with open("examples/lustre/S6.lus") as f:
-        lustre = f.read()
-    task = VerificationTask()
-    task.id = "s6"
-    task.query = lustre
-    task.language = LANG.LUSTRE
-    result = verify(task)
-    print(result)
+    verify_lustre_file("examples/lustre/S6.lus")
 
 
 def unknown():
-    with open("examples/lustre/unknown.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+    verify_lustre_file("examples/lustre/unknown.lus")
 
 
 def bacteria1():
-    with open("examples/lustre/bacteria1.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+    verify_lustre_file("examples/lustre/bacteria1.lus")
 
 
 def bacteria2():
-    with open("examples/lustre/bacteria2.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+    verify_lustre_file("examples/lustre/bacteria2.lus")
 
 
 def array():
-    with open("examples/lustre/array.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+    verify_lustre_file("examples/lustre/array.lus")
 
 
-def CruiseController():
-    with open("examples/lustre/CruiseController.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+def cruise_controller():
+    verify_lustre_file("examples/lustre/CruiseController.lus")
 
 
-def Thermostat():
-    with open("examples/lustre/Thermostat.lus") as f:
-        lustre = f.read()
-        task = VerificationTask()
-        task.id = "s6"
-        task.query = lustre
-        task.language = LANG.LUSTRE
-        result = verify(task)
-        print(result)
+def thermostat():
+    verify_lustre_file("examples/lustre/Thermostat.lus")
 
 
 if __name__ == '__main__':
-    Thermostat()
+    thermostat()
