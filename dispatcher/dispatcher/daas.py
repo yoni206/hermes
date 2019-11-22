@@ -129,7 +129,7 @@ def verify_lustre_file(file_name):
 
 def test_json():
     verify_lustre_file("examples/lustre/SW_agree.LUS")
-    
+
 
 def s5():
     verify_lustre_file("examples/lustre/S5.lus")
