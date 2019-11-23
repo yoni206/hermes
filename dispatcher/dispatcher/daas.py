@@ -168,8 +168,8 @@ def thermostat():
 
 
 def general():
-    verify_lustre_file("examples/lustre/S6b.lus")
+    verify_lustre_file("examples/lustre/S6.lus")
 
 
 if __name__ == '__main__':
-    unknown()
+    general()
