@@ -62,7 +62,7 @@ def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
     kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
-                     "--timeout", "5"]
+                     "--timeout", "5", "--ind_print_cex", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -131,12 +131,12 @@ def test_json():
     verify_lustre_file("examples/lustre/SW_agree.LUS")
 
 
-def s5():
-    verify_lustre_file("examples/lustre/S5.lus")
-
-
 def s5b():
     verify_lustre_file("examples/lustre/S5b.lus")
+
+
+def s5c():
+    verify_lustre_file("examples/lustre/S5c.lus")
 
 
 def s6():
@@ -167,5 +167,9 @@ def thermostat():
     verify_lustre_file("examples/lustre/Thermostat.lus")
 
 
+def general():
+    verify_lustre_file("examples/lustre/S6b.lus")
+
+
 if __name__ == '__main__':
-    thermostat()
+    unknown()

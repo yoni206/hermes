@@ -1,23 +1,7 @@
-
-contract bSpec(input: int) returns(output: int);
+node abs(x:real) returns(y: real);
+var Absolute: bool;
 let
-   guarantee input > 10 => output < 0;
-tel
-
-node b(input: int) returns(output: int);
-(*@contract import bSpec(input) returns (output) ; *)
-let
-   output =  -1;
-tel
-
-
-contract aSpec(input: int) returns(output: int);
-let
-   guarantee false;
-tel
-
-node a(input: int) returns(output: int);
-(*@contract import aSpec(input) returns (output) ; *)
-let
-   output = b(input);
+   y = if (x >= 5.0) then x else -x;
+   Absolute = y >= 0.0;
+   --%PROPERTY Absolute;
 tel
