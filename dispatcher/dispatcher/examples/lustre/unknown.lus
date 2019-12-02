@@ -1,0 +1,14 @@
+contract quinticSpec(input: real) returns(n, quinticSum: real);
+let
+   guarantee quinticSum * n * n = n* n * (1.0/12.0) * n * n *  (1.0 + n) * (1.0 + n) * (2.0 * n * n + 2.0 * n - 1.0);
+tel
+
+
+node quintic(input: real) returns(n, quinticSum: real);
+(*@contract import quinticSpec(input) returns (n, quinticSum) ; *)
+    var sum: real;
+let
+    n = 1.0 -> 1.0 + pre n;
+    sum = 1.0 -> n + pre sum;
+    quinticSum = 1.0 -> (n * n * n * n * n) + pre quinticSum;
+tel

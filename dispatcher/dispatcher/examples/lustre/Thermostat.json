@@ -1,0 +1,252 @@
+[
+  {
+    "objectType" : "kind2Options",
+    "enabled" :
+    [
+      "bmc",
+      "ind",
+      "ind2",
+      "ic3",
+      "invgents",
+      "invgenos",
+      "invgenintos",
+      "invgenintos"
+    ],
+    "timeout" : 5.000000,
+    "bmcMax" : 0,
+    "compositional" : true,
+    "modular" : true
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "info",
+    "source" : "parse",
+    "value" : "kind2 v1.1.0-486-g3e68273a"
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System Since has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "analysisStart",
+    "top" : "ThermostatController_Impl",
+    "concrete" :
+    [
+      "Since"
+    ],
+    "abstract" :
+    [
+      "SetDesiredTemperature",
+      "ControlTemperature"
+    ],
+    "assumptions" :
+    [
+      ["Since",1]
+    ]
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Initial temperature is in range[1]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 64,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Deadband and Diff are positive values[2]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 65,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "No activation signal is enabled if switch is in Off[3]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 66,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Cooling system is turned On only if switch is in Cool[4]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 67,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Heating system is turned On only if switch is in Heat[5]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 68,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Activation signals are never enabled at the same time[6]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 69,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Cooling system is On only if current temperature is higher than setpoint[12]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 75,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Heating system is On only if current temperature is lower than setpoint[13]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 76,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Cooling system is On if switch is in Cool and temperature is higher than setpoint plus deadband[14]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 77,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Heating system is On if switch is in Heat and temperature is lower than setpoint minus deadband[15]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 78,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "SetDesiredTemperature[l87c42].assume[l28c2][1]",
+    "scope" : "SetDesiredTemperature",
+    "line" : 28,
+    "column" : 2,
+    "source" : "Assumption",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.055},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Once heating system is On, it remains On as long as setpoint hasn't reached and switch is in Heat[17]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 80,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.076},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "System is Off if current temperature is in the dead zone and system was Off in the previous step[11]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 74,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.076},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Once cooling system is On, it remains On as long as setpoint hasn't reached and switch is in Cool[16]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 79,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.076},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Setpoint doesn't increase if the down button is pressed[10]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 73,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.239},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Setpoint doesn't decrease if the up button is pressed[9]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 72,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.239},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Setpoint is always in range[7]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 70,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.239},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "Setpoint doesn't change if no button is pressed[8]",
+    "scope" : "ThermostatController_Impl",
+    "line" : 71,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.239},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {"objectType" : "analysisStop"}
+]
