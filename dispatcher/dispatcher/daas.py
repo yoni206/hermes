@@ -18,6 +18,7 @@ class VerificationTask:
         self.language = lang
         self.additional_options = options
         self.solvers = solvers
+        self.timeout = 30
 
 class VerificationResult:
     def __init__(self):
@@ -56,7 +57,9 @@ def verify_smt(task):
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
-    kind2_command = [solvers_dir + "/model_checkers/kind2", "--color", "false"]
+    # kind2_command = [solvers_dir + "/model_checkers/kind2", "--color", "false"]
+    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
+                     "--timeout", str(task.timeout), "--ind_print_cex", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -75,7 +78,7 @@ def verify_lustre(task):
     result = VerificationResult()
     result.id = task.id
     result.result = ""
-    result.explanation = result_string[result_string.find("======="):] # str(result_json)
+    result.explanation = str(result_string)  # result_string[result_string.find("======="):] #
     return result
 
 

@@ -32,6 +32,7 @@ def solve_reasoning_graph():
         if query["multiModels"]:
             additional_options = ["--block-models=values", "--incremental"]
         task = VerificationTask(query["id"], query["query"], LANG[query["lang"]], additional_options, ["normal"])
+        task.timeout = solver_input["timeout"]
         result = verify(task)
         solver_output["results"].append(result)
 
