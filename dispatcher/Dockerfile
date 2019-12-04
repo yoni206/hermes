@@ -19,9 +19,7 @@ COPY dispatcher /dispatcher
 
 RUN cp /dispatcher/solvers/releases/z3-4.8.5-x64-ubuntu-16.04/bin/z3 /bin/ && \
     cp /dispatcher/solvers/releases/yices-2.6.1/bin/yices-smt2 /bin/ && \
-    cp /dispatcher/solvers/releases/cvc4_master /bin/cvc4
+    cp /dispatcher/solvers/releases/cvc4_master /bin/cvc4 && \
+    cd /dispatcher && make
 
 WORKDIR /dispatcher
-
-CMD ./run_server.sh
-
