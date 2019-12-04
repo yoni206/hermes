@@ -1,0 +1,23 @@
+
+contract bSpec(input: int) returns(output: int);
+let
+   guarantee false;
+tel
+
+node b(input: int) returns(output: int);
+(*@contract import bSpec(input) returns (output) ; *)
+let
+   output =  -1;
+tel
+
+
+contract aSpec(input: int) returns(output: int);
+let
+   guarantee false;
+tel
+
+node a(input: int) returns(output: int);
+(*@contract import aSpec(input) returns (output) ; *)
+let
+   output = b(input);
+tel

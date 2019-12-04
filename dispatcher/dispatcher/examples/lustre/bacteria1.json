@@ -1,0 +1,172 @@
+[
+  {
+    "objectType" : "kind2Options",
+    "enabled" :
+    [
+      "bmc",
+      "ind",
+      "ind2",
+      "ic3",
+      "invgents",
+      "invgenos",
+      "invgenintos",
+      "invgenintos"
+    ],
+    "timeout" : 5.000000,
+    "bmcMax" : 0,
+    "compositional" : true,
+    "modular" : true
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "info",
+    "source" : "parse",
+    "value" : "kind2 v1.1.0-486-g3e68273a"
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System sofar has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System hasHappened has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System first has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "analysisStart",
+    "top" : "bacteriaPopulation",
+    "concrete" :
+    [
+      "sofar",
+      "hasHappened",
+      "first"
+    ],
+    "abstract" : [],
+    "assumptions" :
+    [
+      ["first",1]
+    ]
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec._one_mode_active",
+    "scope" : "bacteriaPopulation",
+    "line" : 57,
+    "column" : 3,
+    "source" : "OneModeActive",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.032},
+    "answer" : {"source" : "ic3", "value" : "valid"}
+  }
+,
+  {"objectType" : "analysisStop"}
+,
+  {
+    "objectType" : "analysisStart",
+    "top" : "bacteriaPopulation",
+    "concrete" :
+    [
+      "sofar",
+      "hasHappened",
+      "first"
+    ],
+    "abstract" : [],
+    "assumptions" :
+    [
+      ["first",1]
+    ]
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].stable.ensure[l80c4][1]",
+    "scope" : "bacteriaPopulation",
+    "line" : 80,
+    "column" : 4,
+    "source" : "Ensure",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.042},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].decreasing.ensure[l72c4][1]",
+    "scope" : "bacteriaPopulation",
+    "line" : 72,
+    "column" : 4,
+    "source" : "Ensure",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.042},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].guarantee[l39c3][2]",
+    "scope" : "bacteriaPopulation",
+    "line" : 39,
+    "column" : 3,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.042},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].guarantee[l52c3][4]",
+    "scope" : "bacteriaPopulation",
+    "line" : 52,
+    "column" : 3,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.052},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].guarantee[l44c3][3]",
+    "scope" : "bacteriaPopulation",
+    "line" : 44,
+    "column" : 3,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.052},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].guarantee[l36c3][1]",
+    "scope" : "bacteriaPopulation",
+    "line" : 36,
+    "column" : 3,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.052},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "bacteriaPopulationSpec[l90c12].increasing.ensure[l63c4][1]",
+    "scope" : "bacteriaPopulation",
+    "line" : 63,
+    "column" : 4,
+    "source" : "Ensure",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.052},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {"objectType" : "analysisStop"}
+]

@@ -1,0 +1,199 @@
+[
+  {
+    "objectType" : "kind2Options",
+    "enabled" :
+    [
+      "bmc",
+      "ind",
+      "ind2",
+      "ic3",
+      "invgents",
+      "invgenos",
+      "invgenintos",
+      "invgenintos"
+    ],
+    "timeout" : 5.000000,
+    "bmcMax" : 0,
+    "compositional" : true,
+    "modular" : true
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "info",
+    "source" : "parse",
+    "value" : "kind2 v1.1.0-486-g3e68273a"
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System Max has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System ToInt has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System UnchangedReal has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "log",
+    "level" : "note",
+    "source" : "parse",
+    "value" : "System InitiallyHolds has no property, skipping verification step."
+  }
+,
+  {
+    "objectType" : "analysisStart",
+    "top" : "CruiseControllerSystem_Impl",
+    "concrete" :
+    [
+      "UnchangedReal",
+      "ToInt",
+      "Max",
+      "InitiallyHolds"
+    ],
+    "abstract" :
+    [
+      "SetSpeed",
+      "ControlSpeed"
+    ],
+    "assumptions" :
+    [
+      ["InitiallyHolds",1]
+    ]
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "2. Cruise Controller System is disabled initially[2]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 100,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.062},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "SetSpeed[l113c55].assume[l62c2][1]",
+    "scope" : "SetSpeed",
+    "line" : 62,
+    "column" : 2,
+    "source" : "Assumption",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.062},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "SetSpeed[l113c55].assume[l63c2][2]",
+    "scope" : "SetSpeed",
+    "line" : 63,
+    "column" : 2,
+    "source" : "Assumption",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.062},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "ControlSpeed[l114c28].assume[l77c2][1]",
+    "scope" : "ControlSpeed",
+    "line" : 77,
+    "column" : 2,
+    "source" : "Assumption",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.062},
+    "answer" : {"source" : "ind", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "7. Force is zero if Cruise Controller System is enabled and the desired speed is not greater than the current speed[7]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 105,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.506},
+    "answer" : {"source" : "invgenos", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "8. Force is positive if Cruise Controller System is enabled and the desired speed is greater than the current speed[8]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 106,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.506},
+    "answer" : {"source" : "invgenos", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "3. When Cruise Controller System is disabled, the desired speed does not get changed[3]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 101,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.577},
+    "answer" : {"source" : "ind2", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "4. When Cruise Controller System is enabled and speed increase request does not exceed the maximum cruise controller speed, the desired speed is then increased accordingly[4]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 102,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.577},
+    "answer" : {"source" : "ind2", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "5. When Cruise Controller System is enabled and speed decrease request does not make desired speed become less than the minimum cruise controller speed, the desired speed is then decreased accordingly[5]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 103,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.577},
+    "answer" : {"source" : "ind2", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "6. When Cruise Controller System is enabled and no button is pressed, the desired speed does not get changed[6]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 104,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.577},
+    "answer" : {"source" : "ind2", "value" : "valid"}
+  }
+,
+  {
+    "objectType" : "property",
+    "name" : "1. Cruise Controller System is enabled only if desired speed is within Cruise Controller minimum and maximun speed[1]",
+    "scope" : "CruiseControllerSystem_Impl",
+    "line" : 99,
+    "column" : 2,
+    "source" : "Guarantee",
+    "runtime" : {"unit" : "sec", "timeout" : false, "value" : 1.558},
+    "answer" : {"source" : "invgenos", "value" : "valid"}
+  }
+,
+  {"objectType" : "analysisStop"}
+]

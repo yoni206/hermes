@@ -1,15 +1,18 @@
-import os
-import dispatcher
+import json
 import multiprocessing
+import os
 import subprocess
 from enum import Enum
-import json
 
-TMP_DIR="tmp"
+import dispatcher
+
+TMP_DIR = "tmp"
+
 
 class LANG(Enum):
     SMTLIB = "smtlib"
     LUSTRE = "lustre"
+
 
 class VerificationTask:
     def __init__(self, id="", query="", lang=LANG.SMTLIB, options="", solvers=["normal"]):
@@ -18,6 +21,7 @@ class VerificationTask:
         self.language = lang
         self.additional_options = options
         self.solvers = solvers
+
 
 class VerificationResult:
     def __init__(self):
@@ -28,8 +32,9 @@ class VerificationResult:
     def __str__(self):
         return (self.id + "\n" + self.result + "\n" + self.explanation)
 
-#arg task is a VerificationTask
-#result is a VerificationResult
+
+# arg task is a VerificationTask
+# result is a VerificationResult
 def verify_smt(task):
     filename = task.id + ".smt2"
     if not os.path.exists(TMP_DIR):
@@ -53,10 +58,12 @@ def verify_smt(task):
     result.explanation = " ".join(disp_result_lines[1:])
     return result
 
+
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
-    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json"]
+    kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
+                     "--timeout", "5", "--ind_print_cex", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -68,10 +75,9 @@ def verify_lustre(task):
     print('[dispatcher] Running Kind2: {}'.format(" ".join(kind2_command)))
     result_object = subprocess.run(kind2_command, stdout=subprocess.PIPE)
     result_string = result_object.stdout.decode('utf-8')
-    #ignore warnings:
+    # ignore warnings:
     result_string = result_string[result_string.find("["):]
     result_json = json.loads(result_string)
-    
     result = VerificationResult()
     result.id = task.id
     result.result = ""
@@ -85,7 +91,8 @@ def verify(task):
     elif task.language == LANG.LUSTRE:
         return verify_lustre(task)
     else:
-        assert(False)
+        assert (False)
+
 
 def test1():
     with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/bug.smt2", "r") as f:
@@ -110,8 +117,9 @@ def test2():
     result = verify(task)
     print(result)
 
-def test_json():
-    with open("examples/lustre/SW_agree.LUS") as f:
+
+def verify_lustre_file(file_name):
+    with open(file_name) as f:
         lustre = f.read()
     task = VerificationTask()
     task.id = "test_json"
@@ -120,5 +128,50 @@ def test_json():
     result = verify(task)
     print(result)
 
+
+def test_json():
+    verify_lustre_file("examples/lustre/SW_agree.LUS")
+
+
+def s5b():
+    verify_lustre_file("examples/lustre/S5b.lus")
+
+
+def s5c():
+    verify_lustre_file("examples/lustre/S5c.lus")
+
+
+def s6():
+    verify_lustre_file("examples/lustre/S6.lus")
+
+
+def unknown():
+    verify_lustre_file("examples/lustre/unknown.lus")
+
+
+def bacteria1():
+    verify_lustre_file("examples/lustre/bacteria1.lus")
+
+
+def bacteria2():
+    verify_lustre_file("examples/lustre/bacteria2.lus")
+
+
+def array():
+    verify_lustre_file("examples/lustre/array.lus")
+
+
+def cruise_controller():
+    verify_lustre_file("examples/lustre/CruiseController.lus")
+
+
+def thermostat():
+    verify_lustre_file("examples/lustre/Thermostat.lus")
+
+
+def general():
+    verify_lustre_file("examples/lustre/S6.lus")
+
+
 if __name__ == '__main__':
-    test_json()
+    general()

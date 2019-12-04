@@ -1,0 +1,136 @@
+[
+{
+  "objectType" : "kind2Options",
+  "enabled" :
+  [
+    "bmc",
+    "ind",
+    "ind2",
+    "ic3",
+    "invgents",
+    "invgenos",
+    "invgenintos",
+    "invgenintos"
+  ],
+  "timeout" : 5.000000,
+  "bmcMax" : 0,
+  "compositional" : true,
+  "modular" : true
+}
+,
+{
+  "objectType" : "log",
+  "level" : "info",
+  "source" : "parse",
+  "value" : "kind2 v1.1.0-488-gcc1e9bd5"
+}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "slide",
+  "concrete" : [],
+  "abstract" : [],
+  "assumptions" : []
+}
+,
+{
+  "objectType" : "property",
+  "name" : "((n > 1) => (true -> (A[1] = (pre s))))",
+  "line" : 4,
+  "column" : 4,
+  "source" : "PropAnnot",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.023},
+  "k" : 0,
+  "answer" : {"source" : "ind", "value" : "unknown"},
+  "counterExample" :
+  [
+    {
+      "blockType" : "node",
+      "name" : "slide",
+      "streams" :
+      [
+        {
+          "name" : "n",
+          "type" : "int",
+          "class" : "input",
+          "instantValues" :
+          [
+            [0, 2]
+          ]
+        },
+        {
+          "name" : "s",
+          "type" : "int",
+          "class" : "input",
+          "instantValues" :
+          [
+            [0, 5]
+          ]
+        },
+        {
+          "name" : "A",
+          "type" : "array of int",
+          "class" : "output",
+          "instantValues" :
+          [
+            [0, [5, 4]]
+          ]
+        }
+      ]
+    }
+  ]
+}
+,
+{
+  "objectType" : "property",
+  "name" : "((n > 1) => (true -> (A[1] = (pre s))))",
+  "line" : 4,
+  "column" : 4,
+  "source" : "PropAnnot",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.023},
+  "k" : 1,
+  "answer" : {"source" : "ic3", "value" : "falsifiable"},
+  "counterExample" :
+  [
+    {
+      "blockType" : "node",
+      "name" : "slide",
+      "streams" :
+      [
+        {
+          "name" : "n",
+          "type" : "int",
+          "class" : "input",
+          "instantValues" :
+          [
+            [0, 2],
+            [1, 2]
+          ]
+        },
+        {
+          "name" : "s",
+          "type" : "int",
+          "class" : "input",
+          "instantValues" :
+          [
+            [0, 3],
+            [1, 4]
+          ]
+        },
+        {
+          "name" : "A",
+          "type" : "array of int",
+          "class" : "output",
+          "instantValues" :
+          [
+            [0, [3, -1]],
+            [1, [4, -1]]
+          ]
+        }
+      ]
+    }
+  ]
+}
+,
+{"objectType" : "analysisStop"}
+]
