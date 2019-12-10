@@ -15,11 +15,13 @@ class LANG(Enum):
 
 
 class VerificationTask:
-    def __init__(self):
-        self.id = ""
-        self.query = ""
-        self.language = LANG.SMTLIB
-        self.additional_options = ""
+    def __init__(self, id="", query="", lang=LANG.SMTLIB, options="", solvers=["normal"]):
+        self.id = id
+        self.query = query
+        self.language = lang
+        self.additional_options = options
+        self.solvers = solvers
+        self.timeout = 30
 
 
 class VerificationResult:
@@ -43,7 +45,7 @@ def verify_smt(task):
         f.write(task.query)
     config = dispatcher.Config()
     config.ncpus = multiprocessing.cpu_count()
-    config.verbose = False
+    config.verbose = True
     config.encoding = "plain"
     config.solvers = task.solvers
     config.models = True
@@ -61,8 +63,9 @@ def verify_smt(task):
 def verify_lustre(task):
     script_dir = os.path.dirname(os.path.realpath(__file__))
     solvers_dir = script_dir + "/solvers"
+    # kind2_command = [solvers_dir + "/model_checkers/kind2", "--color", "false"]
     kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
-                     "--timeout", "5", "--ind_print_cex", "true"]
+                     "--timeout", str(task.timeout), "--ind_print_cex", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
@@ -71,15 +74,13 @@ def verify_lustre(task):
     with open(tmp_path, "w") as f:
         f.write(task.query)
     kind2_command.append(tmp_path)
+    print('[dispatcher] Running Kind2: {}'.format(" ".join(kind2_command)))
     result_object = subprocess.run(kind2_command, stdout=subprocess.PIPE)
     result_string = result_object.stdout.decode('utf-8')
-    # ignore warnings:
-    result_string = result_string[result_string.find("["):]
-    result_json = json.loads(result_string)
     result = VerificationResult()
     result.id = task.id
     result.result = ""
-    result.explanation = str(result_json)
+    result.explanation = str(result_string)  # result_string[result_string.find("======="):] #
     return result
 
 
@@ -105,7 +106,7 @@ def test1():
 
 
 def test2():
-    with open("/home/yoniz/git/hermes/dispatcher/dispatcher/examples/simple/simple_get_value.smt2") as f:
+    with open("examples/simple/simple_get_value.smt2") as f:
         smtlib = f.read()
     task = VerificationTask()
     task.id = "test2"
