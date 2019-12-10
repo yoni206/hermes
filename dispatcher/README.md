@@ -13,7 +13,7 @@
     - generic: running the query using CVC4
 
 ## Installation:
-  - cd to the main directory
+  - cd to the main directory (the directory that contains the current README file)
   - run:  
     `# docker build -t dispatcher .`
 
@@ -25,14 +25,14 @@
   - run the following command:  
     `# docker run -v <absolute_path>:/smt_files/ -it dispatcher python3 dispatcher.py /smt_files/<filename> -s <mode>`  
     where:
-      - `<path>` is the path to an smt2 file
+      - `<filename>` is the name to an smt2 file in <absolute_path>
       - `<mode>` is either "normal" (for running a portfolio) or "generic" (for running CVC4)
 
 Example:
   - The following run will return a result quickly:  
-    `# python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s normal`  
+    `# docker run -v <absolute_path-to-main-dir>/dispatcher/examples/smtlib:/smt_files/ -it dispatcher python3 dispatcher.py /smt_files/term-UCZhjg.smt2 -s normal`  
   - The following run will take long time (few minutes) before terminating:  
-    `# python3 dispatcher.py examples/smtlib/term-UCZhjg.smt2 -s generic`
+    `# docker run -v <absolute_path-to-main-dir>/dispatcher/examples/smtlib:/smt_files/ -it dispatcher python3 dispatcher.py /smt_files/term-UCZhjg.smt2 -s generic`  
 
 Additional Options:
 - Using the -s option, `<mode>` can have more values than "generic" or "normal". 
