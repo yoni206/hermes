@@ -65,7 +65,7 @@ def verify_lustre(task):
     solvers_dir = script_dir + "/solvers"
     # kind2_command = [solvers_dir + "/model_checkers/kind2", "--color", "false"]
     kind2_command = [solvers_dir + "/model_checkers/kind2", "-json", "--modular", "true", "--compositional", "true",
-                     "--timeout", str(task.timeout), "--ind_print_cex", "true"]
+                     "--timeout_analysis", str(task.timeout), "--ind_print_cex", "true"]
 
     filename = task.id + ".LUS"
     if not os.path.exists(TMP_DIR):
