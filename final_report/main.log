@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  14 JUL 2020 15:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  14 JUL 2020 16:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -53,18 +53,18 @@ Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
 (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -136,23 +136,20 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 8.
+(Font)              <12> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 8.
+(Font)              <8> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 8.
-
-
-LaTeX Warning: No \author given.
+(Font)              <6> on input line 9.
 
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 164.
+(Font)              <7> on input line 165.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 164.
+(Font)              <5> on input line 165.
 Package epstopdf Info: Source file: <plot/cactus_qfnra_dispatcher_cvc4_z3.eps>
 (epstopdf)                    date: 2020-07-14 13:55:07
 (epstopdf)                    size: 2938534 bytes
@@ -162,7 +159,7 @@ onverted-to.pdf>
 (epstopdf)                    size: 354321 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/cactus_qfnra_dispatch
 er_cvc4_z3-eps-converted-to.pdf plot/cactus_qfnra_dispatcher_cvc4_z3.eps>
-(epstopdf)             \includegraphics on input line 165.
+(epstopdf)             \includegraphics on input line 166.
 Package epstopdf Info: Output file is already uptodate.
 <plot/cactus_qfnra_dispatcher_cvc4_z3-eps-converted-to.pdf, id=15, 418.56375pt 
 x 318.18875pt>
@@ -170,7 +167,7 @@ File: plot/cactus_qfnra_dispatcher_cvc4_z3-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use plot/cactus_qfnra_dispatcher_cvc4_z3-eps-converted-to.pdf>
 Package pdftex.def Info: plot/cactus_qfnra_dispatcher_cvc4_z3-eps-converted-to.
-pdf  used on input line 165.
+pdf  used on input line 166.
 (pdftex.def)             Requested size: 172.5pt x 131.13309pt.
 Package epstopdf Info: Source file: <plot/cactus_qfnia_dispatcher_cvc4_z3.eps>
 (epstopdf)                    date: 2020-07-14 13:55:07
@@ -181,7 +178,7 @@ onverted-to.pdf>
 (epstopdf)                    size: 1041581 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/cactus_qfnia_dispatch
 er_cvc4_z3-eps-converted-to.pdf plot/cactus_qfnia_dispatcher_cvc4_z3.eps>
-(epstopdf)             \includegraphics on input line 167.
+(epstopdf)             \includegraphics on input line 168.
 Package epstopdf Info: Output file is already uptodate.
 <plot/cactus_qfnia_dispatcher_cvc4_z3-eps-converted-to.pdf, id=16, 418.56375pt 
 x 318.18875pt>
@@ -189,10 +186,10 @@ File: plot/cactus_qfnia_dispatcher_cvc4_z3-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use plot/cactus_qfnia_dispatcher_cvc4_z3-eps-converted-to.pdf>
 Package pdftex.def Info: plot/cactus_qfnia_dispatcher_cvc4_z3-eps-converted-to.
-pdf  used on input line 167.
+pdf  used on input line 168.
 (pdftex.def)             Requested size: 172.5pt x 131.13309pt.
 
-Overfull \hbox (24.0pt too wide) in paragraph at lines 164--169
+Overfull \hbox (24.0pt too wide) in paragraph at lines 165--170
  [] 
  []
 
@@ -205,7 +202,7 @@ verted-to.pdf>
 (epstopdf)                    size: 178356 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/scatter_qfnra_dispatc
 her_cvc4-eps-converted-to.pdf plot/scatter_qfnra_dispatcher_cvc4.eps>
-(epstopdf)             \includegraphics on input line 177.
+(epstopdf)             \includegraphics on input line 178.
 Package epstopdf Info: Output file is already uptodate.
 <plot/scatter_qfnra_dispatcher_cvc4-eps-converted-to.pdf, id=17, 368.37625pt x 
 365.365pt>
@@ -213,7 +210,7 @@ File: plot/scatter_qfnra_dispatcher_cvc4-eps-converted-to.pdf Graphic file (typ
 e pdf)
 <use plot/scatter_qfnra_dispatcher_cvc4-eps-converted-to.pdf>
 Package pdftex.def Info: plot/scatter_qfnra_dispatcher_cvc4-eps-converted-to.pd
-f  used on input line 177.
+f  used on input line 178.
 (pdftex.def)             Requested size: 172.5pt x 171.08601pt.
 Package epstopdf Info: Source file: <plot/scatter_qfnra_dispatcher_z3.eps>
 (epstopdf)                    date: 2020-07-14 13:55:07
@@ -224,7 +221,7 @@ rted-to.pdf>
 (epstopdf)                    size: 150488 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/scatter_qfnra_dispatc
 her_z3-eps-converted-to.pdf plot/scatter_qfnra_dispatcher_z3.eps>
-(epstopdf)             \includegraphics on input line 179.
+(epstopdf)             \includegraphics on input line 180.
 Package epstopdf Info: Output file is already uptodate.
 <plot/scatter_qfnra_dispatcher_z3-eps-converted-to.pdf, id=18, 364.36125pt x 36
 5.365pt>
@@ -232,10 +229,10 @@ File: plot/scatter_qfnra_dispatcher_z3-eps-converted-to.pdf Graphic file (type
 pdf)
 <use plot/scatter_qfnra_dispatcher_z3-eps-converted-to.pdf>
 Package pdftex.def Info: plot/scatter_qfnra_dispatcher_z3-eps-converted-to.pdf 
- used on input line 179.
+ used on input line 180.
 (pdftex.def)             Requested size: 172.5pt x 172.97037pt.
 
-Overfull \hbox (24.0pt too wide) in paragraph at lines 176--181
+Overfull \hbox (24.0pt too wide) in paragraph at lines 177--182
  [] 
  []
 
@@ -248,7 +245,7 @@ verted-to.pdf>
 (epstopdf)                    size: 1035732 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/scatter_qfnia_dispatc
 her_cvc4-eps-converted-to.pdf plot/scatter_qfnia_dispatcher_cvc4.eps>
-(epstopdf)             \includegraphics on input line 188.
+(epstopdf)             \includegraphics on input line 189.
 Package epstopdf Info: Output file is already uptodate.
 <plot/scatter_qfnia_dispatcher_cvc4-eps-converted-to.pdf, id=19, 371.3875pt x 3
 65.365pt>
@@ -256,7 +253,7 @@ File: plot/scatter_qfnia_dispatcher_cvc4-eps-converted-to.pdf Graphic file (typ
 e pdf)
 <use plot/scatter_qfnia_dispatcher_cvc4-eps-converted-to.pdf>
 Package pdftex.def Info: plot/scatter_qfnia_dispatcher_cvc4-eps-converted-to.pd
-f  used on input line 188.
+f  used on input line 189.
 (pdftex.def)             Requested size: 172.5pt x 169.70341pt.
 Package epstopdf Info: Source file: <plot/scatter_qfnia_dispatcher_z3.eps>
 (epstopdf)                    date: 2020-07-14 13:55:07
@@ -267,7 +264,7 @@ rted-to.pdf>
 (epstopdf)                    size: 1063013 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot/scatter_qfnia_dispatc
 her_z3-eps-converted-to.pdf plot/scatter_qfnia_dispatcher_z3.eps>
-(epstopdf)             \includegraphics on input line 190.
+(epstopdf)             \includegraphics on input line 191.
 Package epstopdf Info: Output file is already uptodate.
 <plot/scatter_qfnia_dispatcher_z3-eps-converted-to.pdf, id=20, 371.3875pt x 365
 .365pt>
@@ -275,10 +272,10 @@ File: plot/scatter_qfnia_dispatcher_z3-eps-converted-to.pdf Graphic file (type
 pdf)
 <use plot/scatter_qfnia_dispatcher_z3-eps-converted-to.pdf>
 Package pdftex.def Info: plot/scatter_qfnia_dispatcher_z3-eps-converted-to.pdf 
- used on input line 190.
+ used on input line 191.
 (pdftex.def)             Requested size: 172.5pt x 169.70341pt.
 
-Overfull \hbox (24.0pt too wide) in paragraph at lines 187--192
+Overfull \hbox (24.0pt too wide) in paragraph at lines 188--193
  [] 
  []
 
@@ -289,10 +286,10 @@ _qfnra_dispatcher_cvc4-eps-converted-to.pdf> <./plot/scatter_qfnra_dispatcher_z
 pdf> <./plot/scatter_qfnia_dispatcher_z3-eps-converted-to.pdf>]) [5]
 (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 3076 strings out of 492980
- 56497 string characters out of 6132509
+ 3075 strings out of 492980
+ 56481 string characters out of 6132509
  122412 words of memory out of 5000000
- 6626 multiletter control sequences out of 15000+600000
+ 6625 multiletter control sequences out of 15000+600000
  8101 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,26p,267b,339s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -306,7 +303,7 @@ pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10
 .pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.
 pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
 fb>
-Output written on main.pdf (5 pages, 3909964 bytes).
+Output written on main.pdf (5 pages, 3913650 bytes).
 PDF statistics:
  100 PDF objects out of 1000 (max. 8388607)
  77 compressed objects within 1 object stream

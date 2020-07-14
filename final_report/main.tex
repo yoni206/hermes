@@ -3,7 +3,8 @@
 \usepackage{cleveref}
 
 \title{Hermes: Final Report}
-
+\author{Clark Barrett, Mathias Preiner, Yoni Zohar
+\date{Stanford University}}
 \begin{document}
 \maketitle
 
@@ -11,10 +12,10 @@
 \subsection{Description}
 Part of the approach that underlies the HERMES project is
 ``choosing the right tool for the job``.
-And indeed, various sub-problems that are described in
+And indeed, sub-problems that are described in
 a HERMES module are dispatched to various
 reasoning engines such as SMT-solvers, model checkers, etc.
-This approach can be leverged also in a lower leverl of abstraction.
+This approach can be leverged also in a lower level of abstraction.
 When a (sub-)problem that is decided by HERMES to be solved by an SMT-solver, it is still
 required to determine \emph{which} SMT-solver will be used.
 
@@ -22,9 +23,9 @@ For this purpose, we have implemented and utilized a
 {\em query dispatcher}, that
 makes use of the fact that several solvers
 can be run in parallel.
-Thus, given an input file written in the SMT-LIB standard \cite{SMTLib2010}, we can dispatch it to several solvers in parallel,
+Thus, given an input file written in the SMT-LIB standard \cite{SMTLib2010}, we dispatch it to several solvers in parallel,
 return the result obtain by the first solver to get an answer, and
-terminate the run of the rest of the solvers.
+terminate the runs of the rest of the solvers.
 
 In order to not overuse the system's resources, and given the large number of SMT-solvers,
 not all possible solvers are executed, but a subset of them is being chosen.
@@ -92,18 +93,18 @@ the SMT-LIB competition
 and runs them in parallel,
 it is expected that it will outperform any single solver,
 unless it introduces overhead that skews these results.
-Luckily, the dispatcher is light weight and performs
+Luckily, the dispatcher is lightweight and performs
 as expected.
 
-To show this, we compared the performence of the dispatcher
-with the performence of two mainstream SMT-solvers,
+To show this, we compared the performance of the dispatcher
+with the performance of two mainstream SMT-solvers,
 namely Z3 and CVC4.
 As a benchmark set for the experiments we used the benchmarks that were chosen for the 2019 SMT competition in the single-query track on two divisions:
 QF\_NRA and QF\_NIA.
 These divisions include non-linear arithmetic formulas
 over the reals and integers, respectively.
 We measured how many benchmarks were solved as time
-elasped, with
+elapsed, with
 a time limit of 5 minutes and memory limit of 8GB.
 %
 The experiments were done on
@@ -117,8 +118,8 @@ is placed on the x-axis according to the time
 it took to solve the benchmark (or to reach a timeout).
 The points are ordered according to their corresponding
 running times on the different solvers, and so
-two points at the same place according to the x-axis
-do not necessarilly describe the same benchmark.
+two points at the same position according to the x-axis
+do not necessarily describe the same benchmark.
 The left plot describes the results on QF\_NRA and
 the right one describes the results on QF\_NIA.
 Consistently, the dispatcher solved more benchmarks
@@ -126,7 +127,7 @@ than Z3 and CVC4, overall and also at every time period,
 for both logics.
 
 \Cref{scatternra} contains two scatter plots.
-In these plots, every point corresponds to a benchamark
+In these plots, every point corresponds to a benchmark
 from the QF\_NRA family,
 and it is placed on the x-axis according to the
 solving time using CVC4 (on the left) and Z3 (on the right),
@@ -139,13 +140,13 @@ and points below the main diagonal correspond
 to benchmarks on which the dispatcher performed
 faster.
 %
-As noted in the plots' legands, the color of the points
-describes by which factor was the faster solver faster.
+As noted in the plots' legends, the color of the points
+describes by which factor was the better-performing solver faster.
 %
 It can be clearly seen that most of the points are below the main diagonal on both plots,
 which means that the dispatcher performed better
 than CVC4 and Z3 on QF\_NRA.
-
+%
 \Cref{scatternia} presents similar results for QF\_NIA formulas.
 
 Overall, out of 2842 QF\_NRA benchmarks,
