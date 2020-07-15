@@ -1,6 +1,11 @@
 \documentclass{article}
-\usepackage{graphicx}
+
 \usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subcaption}
+
+\title{Hermes: Final Report}
 
 \title{Hermes: Final Report}
 \author{Clark Barrett, Mathias Preiner, Yoni Zohar
@@ -194,7 +199,155 @@ CVC4 solved 6320.
 \caption{\label{scatternia}Scatter plots comparing the dispatcher against Z3 and CVC4 on benchmarks from QF\_NIA.}
 \end{figure}
 
+
+
+\section{Algorithm Selection for SMT}
+
+Using a parallel portfolio of SMT solvers to solve a problem will give you
+the best performance if the best solvers are run in parallel. However, the
+solver selection needs to be done by the user and the number of solvers to
+be run in parallel is limited by available resources.
+
+We investigated leveraging machine learning techniques to automate the
+solver selection while also reducing the resources required to solve problems.
+The general idea of this approach is to train a model that can predict which
+solver will be the fastest to solve a given problem based on features extracted
+from the problem.
+In collaboration with Joseph Scott and Vijay Ganesh from the University of
+Waterloo we developed such an algorithm selection tool called
+MachSMT~\footnote{\url{https://github.com/j29scott/MachSMT}}.
+
+\subsection{Overview}
+
+MachSMT employs empirical hardness models (EHMs) to perform algorithm
+selection.
+It uses the number of occurrences of grammatical constructs from the
+SMT-LIB language as features in combination with principal component analysis
+(PCA) and AdaBoosting to construct an EHM for each solver.
+An EHM for a given solver $S$ is a mapping from an input instance $I$ to a
+predicted runtime of $S$ on $I$.
+During evaluation or at runtime, given an input instance $I$, MachSMT queries
+all EHMs for all solvers (that were considered during training) over $I$, and
+outputs the solver name whose predicted runtime is the minimum over all
+solvers.
+
+\subsection{MachSMT Workflow}
+
+Figure~\ref{fig:machsmt} shows the overall workflow of MachSMT.
+To build models, MachSMT expects runtime data for a set of solvers on a set of
+input problems by means of a CSV file with columns \texttt{benchmark},
+\texttt{solver}, \texttt{score}.
+The \texttt{score} can be any value that the users wants to optimize for.
+In our case, it is the time required to solve a benchmark.
+Optionally, the user can provide custom features that will be considered when
+constructing EHMs.
+As a first step, MachSMT extracts features from each benchmark that are not yet
+in the feature database.
+It then constructs an EHM for each solver on the benchmarks in the given
+dataset.
+Once all EHMs are constructed the user can query MachSMT (selector) with a new
+input problem for which MachSMT will predict the fastest solver, which can then
+be used by the user to solve the input problem.
+
+Note that it is not required to rebuild the EHMs each time, but only if the
+training data set changes, e.g., when a user wants to include additional
+solvers or wants to train on a different family of input problems.
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{machsmt.png}
+  \caption{MachSMT workflow.}
+  \label{fig:machsmt}
+\end{figure}
+
+\subsubsection{Features and Preprocessing}
+
+MachSMT uses a feature vector with 148 entries, where each entry corresponds to
+a grammatical construct in the SMT-LIB language, e.g., commands like
+\texttt{assert}, \texttt{declare-const}, or
+theory symbols like \texttt{bvmul}, \texttt{fp.add}.
+Given an input instance, a script first computes the number of occurrences for
+each grammatical construct and populates the corresponding feature vector
+appropriately.
+MachSMT then performs the following preprocessing steps before constructing any
+learned models over a given dataset.
+First, all feature values are scaled to zero mean and unit variance, then
+polynomial features of degree two is computed, which is a common normalization
+in machine learning research.
+To prevent potential issues caused by a high dimensional feature space, we then
+apply principal component analysis and use the first 35 components, which
+results in a smaller feature vector and prevents further feature selection.
+The number of selected components was determined empirically.
+
+
+\subsubsection{User-defined Features}
+
+MachSMT provides a simple interface that allows users to define custom features
+by means of implementing a function in Python that returns a single
+floating-point number that represents a feature.
+The input to the function is the path to the input problem.
+If a user feature is to be considered by MachSMT, the user-defined function
+should return its floating-point representation, otherwise returns
+\texttt{None}.
+All user-defined features will be automatically included while building models
+with MachSMT.
+
+
+\subsection{Evaluation}
+
+We evaluated MachSMT on runtime data provided by the annual SMT competition
+from 2019 (SMT-COMP 2019)\footnote{\url{https://smt-comp.github.io/2019}}.
+
+In order to avoid overfitting in our evaluation, we perform $k$-fold cross
+validation (with $k = 5$) to randomly partition the dataset into $k$ subsets.
+A model is then trained over $k - 1$ subsets and asked to make predictions over
+the subset that is excluded from training.
+This process is repeated $k$ times per EHM in order to obtain a fair prediction
+for each input problem.
+
+We trained MachSMT on the SMT-COMP 2019 data on each division and compared
+it against all solvers participating in this division.
+We also compare MachSMT against the virtual best solver, which essentially
+corresponds to the dispatcher running all SMT solvers of the division in
+parallel.
+
+Figure~\ref{fig:machsmt_results} shows the results on selected SMT-COMP
+divisions in terms of cactus plots.
+In each of these divisions, MachSMT was able to beat the winner of the division
+and further was able to get very close to the virtual best solver in the
+QF\_UFBV division.
+
+\begin{figure}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{plot/machsmt_bv.png}
+    \caption{BV (SQ)}
+    \label{fig:machsmt_bv}
+  \end{subfigure}
+  \hspace{0.75em}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{plot/machsmt_qf_nra.png}
+    \caption{QF\_NRA (SQ)}
+    \label{fig:machsmt_qfnra}
+  \end{subfigure}\\[1.5em]
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{plot/machsmt_qf_ufbv.png}
+    \caption{QF\_UFBV (SQ)}
+    \label{fig:machsmt_qfufbv}
+  \end{subfigure}
+  \hspace{0.75em}
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{plot/machsmt_ufnia.png}
+    \caption{UFNIA (UC)}
+    \label{fig:machsmt_ufnia}
+  \end{subfigure}
+
+  \caption{MachSMT evaluated on selected SMT-COMP 2019 single query (SQ) and
+           unsat core (UC) divisions. Random corresponds to MachSMT making
+           random predictions without considering any EHMs.}
+  \label{fig:machsmt_results}
+\end{figure}
+
+
+
 \bibliography{mybib}{}
 \bibliographystyle{plain}
-
 \end{document}
