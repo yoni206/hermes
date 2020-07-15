@@ -206,7 +206,9 @@ CVC4 solved 6320.
 
 Using a parallel portfolio of SMT solvers to solve a problem will give you
 the best performance if the best solvers are run in parallel. However, the
-solver selection needs to be done by the user and the number of solvers to
+solver selection is not very flexible,
+and is (currently) limited to only taking the logic into account.
+Also, the number of solvers to
 be run in parallel is limited by available resources.
 
 We investigated leveraging machine learning techniques to automate the
@@ -296,7 +298,7 @@ with MachSMT.
 \subsection{Evaluation}
 
 We evaluated MachSMT on runtime data provided by the annual SMT competition
-from 2019 (SMT-COMP 2019)\footnote{\url{https://smt-comp.github.io/2019}}.
+from 2019 (SMT-COMP 2019) \cite{smtcomp2019}.
 
 In order to avoid overfitting in our evaluation, we perform $k$-fold cross
 validation (with $k = 5$) to randomly partition the dataset into $k$ subsets.
