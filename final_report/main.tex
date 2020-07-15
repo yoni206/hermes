@@ -222,11 +222,12 @@ MachSMT~\footnote{\url{https://github.com/j29scott/MachSMT}}.
 
 \subsection{Overview}
 
-MachSMT employs empirical hardness models (EHMs) to perform algorithm
-selection.
+MachSMT employs empirical hardness models (EHMs)~\cite{leyton2002learning}
+to perform algorithm selection.
 It uses the number of occurrences of grammatical constructs from the
 SMT-LIB language as features in combination with principal component analysis
-(PCA) and AdaBoosting to construct an EHM for each solver.
+(PCA)~\cite{pca} and Adaptive Boosting (AdaBoost)~\cite{drucker1997improving}
+to construct an EHM for each solver.
 An EHM for a given solver $S$ is a mapping from an input instance $I$ to a
 predicted runtime of $S$ on $I$.
 During evaluation or at runtime, given an input instance $I$, MachSMT queries
